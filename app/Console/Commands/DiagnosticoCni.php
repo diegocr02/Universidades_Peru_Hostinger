@@ -252,6 +252,12 @@ class DiagnosticoCni extends Command
         $vencidos === 0 ? $this->ok('Cierre automático de exámenes vencidos', 'al día')
             : $this->aviso('Cierre automático de exámenes vencidos', "{$vencidos} sin cerrar: falta el cron schedule:run");
 
+        if (config('contingencia.habilitado')) {
+            $problema = \App\Http\Controllers\Admin\ContingenciaController::problemaDeConfiguracion();
+            $problema === null ? $this->ok('Respaldos cifrados (contingencia)', 'listos: sodium y CNI_BACKUP_KEY correctos')
+                : $this->aviso('Respaldos cifrados (contingencia)', $problema);
+        }
+
         $commit = $this->commitActual();
         $commit ? $this->ok('Versión desplegada', $commit) : $this->aviso('Versión desplegada', 'no se pudo leer .git');
 

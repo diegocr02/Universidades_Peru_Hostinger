@@ -34,8 +34,9 @@
     </div>
     @if(session('status'))<div class="alert" role="status">{{ session('status') }}</div>@endif
     @if(session('error'))<div class="alert err" role="alert">{{ session('error') }}</div>@endif
+    @if($activo && $problema)<div class="alert err" role="alert">⚠️ {{ $problema }}</div>@endif
     <div class="grid">
-        <section class="card"><div class="muted">Sistema de respaldo</div><div class="big">{{ $activo ? 'Activado' : 'Desactivado' }}</div><span class="badge {{ $activo ? '' : 'bad' }}">{{ $activo ? 'Listo para pruebas' : 'Configura .env' }}</span></section>
+        <section class="card"><div class="muted">Sistema de respaldo</div><div class="big">{{ $activo ? 'Activado' : 'Desactivado' }}</div><span class="badge {{ $activo && !$problema ? '' : 'bad' }}">{{ !$activo ? 'Configura .env' : ($problema ? 'Falta configuración' : 'Listo para pruebas') }}</span></section>
         <section class="card"><div class="muted">Copias locales registradas</div><div class="big">{{ count($respaldos) }}</div><div class="muted">Hasta 50 recientes</div></section>
         <section class="card"><div class="muted">Destino externo A</div><div class="big">{{ $destinos['destino_a'] ? 'Configurado' : 'Pendiente' }}</div><span class="badge {{ $destinos['destino_a'] ? '' : 'neutral' }}">{{ $destinos['destino_a'] ? 'HTTPS habilitado' : 'Sin conexión externa' }}</span></section>
         <section class="card"><div class="muted">Destino externo B</div><div class="big">{{ $destinos['destino_b'] ? 'Configurado' : 'Pendiente' }}</div><span class="badge {{ $destinos['destino_b'] ? '' : 'neutral' }}">{{ $destinos['destino_b'] ? 'HTTPS habilitado' : 'Sin conexión externa' }}</span></section>
@@ -43,7 +44,7 @@
     <section class="card" style="margin-bottom:18px">
         <div class="top"><div><h2 style="margin-top:0">Crear un respaldo ahora</h2><p class="muted">Exporta las tablas InnoDB, comprime, cifra y verifica la copia. Si configuraste destinos HTTPS, intenta enviarla.</p></div>
             <form method="POST" action="{{ route('admin.contingencia.crear') }}" onsubmit="return confirm('¿Generar un nuevo respaldo cifrado?')">
-                @csrf <button type="submit" @disabled(!$activo)>🗄️ Generar respaldo</button>
+                @csrf <button type="submit" @disabled(!$activo || $problema)>🗄️ Generar respaldo</button>
             </form>
         </div>
     </section>

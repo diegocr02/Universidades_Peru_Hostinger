@@ -25,13 +25,34 @@ final class ContingenciaController extends Controller
         return view('admin.contingencia.index', [
             'respaldos' => $this->respaldos->listar(),
             'activo' => (bool) config('contingencia.habilitado'),
+            'problema' => self::problemaDeConfiguracion(),
             'destinos' => array_map(fn ($d): bool => !empty($d['url']) && !empty($d['token']),
                 (array) config('contingencia.destinos')),
         ]);
     }
 
+    /**
+     * Requisitos del servidor para cifrar, explicados en lenguaje simple.
+     * Devuelve null si todo está listo.
+     */
+    public static function problemaDeConfiguracion(): ?string
+    {
+        if (!extension_loaded('sodium')) {
+            return 'Falta activar la extensión PHP "sodium" en el hosting (hPanel → Avanzado → Configuración de PHP → Extensiones PHP). Sin ella no se pueden cifrar los respaldos.';
+        }
+        $clave = base64_decode((string) config('contingencia.clave'), true);
+        if ($clave === false || strlen($clave) !== SODIUM_CRYPTO_SECRETSTREAM_XCHACHA20POLY1305_KEYBYTES) {
+            return 'CNI_BACKUP_KEY no es válida en el .env: debe ser una clave de 32 bytes en base64.';
+        }
+
+        return null;
+    }
+
     public function crear(Request $request): RedirectResponse
     {
+        if ($problema = self::problemaDeConfiguracion()) {
+            return back()->with('error', $problema);
+        }
         try {
             $manifest = $this->respaldos->crear();
             $this->distribucion->enviar($manifest['id']);
