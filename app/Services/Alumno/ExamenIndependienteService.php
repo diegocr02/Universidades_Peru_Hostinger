@@ -5,6 +5,7 @@ namespace App\Services\Alumno;
 use App\Models\Usuario;
 use App\Services\IntentoService;
 use App\Support\PerfilExamenCni;
+use App\Support\BancoPracticaUnfv;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -22,10 +23,13 @@ class ExamenIndependienteService
             [$perfil, $area] = $this->perfilYArea($usuario);
             abort_unless(isset(PerfilExamenCni::DISTRIBUCION[$area->codigo]), 403);
 
-            $cuotas = PerfilExamenCni::DISTRIBUCION[$area->codigo];
+            $esUnfv = $area->codigo === 'C' && DB::table('areas')->where('nombre', BancoPracticaUnfv::area('AV'))->exists();
+            $cuotas = $esUnfv ? BancoPracticaUnfv::documento()['cuotas_practica'] : PerfilExamenCni::DISTRIBUCION[$area->codigo];
             // Una configuración nueva obtiene otra plantilla; no altera exámenes anteriores.
             $version = substr(hash('sha256', json_encode([$cuotas, PerfilExamenCni::ORDEN, 60, 5])), 0, 10);
-            $nombre = 'Examen independiente CNI · Área '.$area->codigo.' · '.$version;
+            $nombre = $esUnfv
+                ? 'Práctica general UNFV · '.BancoPracticaUnfv::version().' · '.$version
+                : 'Examen independiente CNI · Área '.$area->codigo.' · '.$version;
 
             return $this->abrirIntento($perfil, $area, $nombre, $cuotas, 60);
         }, 3);
@@ -80,7 +84,7 @@ class ExamenIndependienteService
         } else {
             $asignaturas = DB::table('areas')->where('activo', true)->pluck('id', 'nombre');
             foreach ($cuotas as $prefijo => $cantidad) {
-                $curso = PerfilExamenCni::CURSOS[$prefijo][0];
+                $curso = str_starts_with($nombre, 'Práctica general UNFV · ') ? BancoPracticaUnfv::area($prefijo) : PerfilExamenCni::CURSOS[$prefijo][0];
                 if (! isset($asignaturas[$curso])) {
                     throw ValidationException::withMessages([
                         'preguntas' => 'El banco del área '.$area->codigo.' aún no está completo: falta '.$curso.'.',
@@ -110,7 +114,7 @@ class ExamenIndependienteService
                 }
                 DB::table('simulacro_area')->insert([
                     'simulacro_id' => $simulacroId,
-                    'area_id' => $asignaturas[PerfilExamenCni::CURSOS[$prefijo][0]],
+                    'area_id' => $asignaturas[str_starts_with($nombre, 'Práctica general UNFV · ') ? BancoPracticaUnfv::area($prefijo) : PerfilExamenCni::CURSOS[$prefijo][0]],
                     'nivel' => 'mixto', 'cantidad_preguntas' => $cuotas[$prefijo],
                     'created_at' => $ahora, 'updated_at' => $ahora,
                 ]);
@@ -124,3 +128,4 @@ class ExamenIndependienteService
         ]);
     }
 }
+
