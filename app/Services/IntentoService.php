@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Support\PerfilExamenCni;
+use App\Support\PerfilExamenUnmsm;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -64,7 +65,8 @@ class IntentoService
                         throw ValidationException::withMessages(['carrera_id' => 'Tu área no está habilitada para este simulacro.']);
                     }
                 }
-                $preguntas = $this->sortearPreguntas($simulacro, (bool) ($datos['orden_por_curso'] ?? false));
+                $preguntas = $this->sortearPreguntas($simulacro, (bool) ($datos['orden_por_curso'] ?? false),
+                    (bool) ($datos['orden_de_cuotas'] ?? false));
             }
 
             $intentoId = DB::table('intentos')->insertGetId([
@@ -96,7 +98,33 @@ class IntentoService
     }
 
     /** Cuotas específicas primero, luego mixtas, sin repetir preguntas. */
-    private function sortearPreguntas(object $simulacro, bool $ordenPorCurso = false): Collection
+    /**
+     * Preguntas activas de una asignatura que pueden entrar a un examen: con la cantidad de
+     * alternativas pedida y una única clave (o sin clave si son del Excel, o con rúbrica completa
+     * si son actitudinales). La usan el sorteo y el aviso de disponibilidad del panel.
+     */
+    public function consultaElegibles(int $areaId, int $cantidadAlternativas, ?string $nivel = null): \Illuminate\Database\Query\Builder
+    {
+        $rubrica = PerfilExamenUnmsm::hayRubrica()
+            ? ' OR ((SELECT COUNT(*) FROM alternativas WHERE pregunta_id = p.id AND es_correcta = 1) = 0
+                AND (SELECT COUNT(*) FROM alternativas WHERE pregunta_id = p.id
+                    AND puntaje_actitudinal IS NOT NULL AND puntaje_actitudinal BETWEEN 0 AND '.PerfilExamenUnmsm::MAXIMO_ACTITUDINAL.') = '.$cantidadAlternativas.')'
+            : '';
+
+        return DB::table('preguntas as p')
+            ->join('temas as t', 't.id', '=', 'p.tema_id')
+            ->join('areas as a', 'a.id', '=', 't.area_id')
+            ->where('a.id', $areaId)
+            ->where('p.activo', true)->where('t.activo', true)->where('a.activo', true)
+            ->when($nivel !== null && $nivel !== 'mixto', fn ($q) => $q->where('p.nivel', $nivel))
+            ->whereRaw('(SELECT COUNT(*) FROM alternativas WHERE pregunta_id = p.id) = ?', [$cantidadAlternativas])
+            // Una clave; o ninguna si es del banco del Excel (codigo) y aún no tiene respuesta: se muestra pero no se califica.
+            ->whereRaw('((SELECT COUNT(*) FROM alternativas WHERE pregunta_id = p.id AND es_correcta = 1) = 1
+                OR (p.codigo IS NOT NULL AND (SELECT COUNT(*) FROM alternativas WHERE pregunta_id = p.id AND es_correcta = 1) = 0)'
+                .$rubrica.')');
+    }
+
+    private function sortearPreguntas(object $simulacro, bool $ordenPorCurso = false, bool $ordenDeCuotas = false): Collection
     {
         $cuotas = DB::table('simulacro_area')->where('simulacro_id', $simulacro->id)
             ->orderByRaw("CASE WHEN nivel = 'mixto' THEN 1 ELSE 0 END")->orderBy('id')->get();
@@ -106,17 +134,8 @@ class IntentoService
         $seleccionadas = collect();
         foreach ($cuotas as $cuota) {
             $cantidad = (int) $cuota->cantidad_preguntas;
-            $preguntas = DB::table('preguntas as p')
-                ->join('temas as t', 't.id', '=', 'p.tema_id')
-                ->join('areas as a', 'a.id', '=', 't.area_id')
-                ->where('a.id', $cuota->area_id)
-                ->where('p.activo', true)->where('t.activo', true)->where('a.activo', true)
-                ->when($cuota->nivel !== 'mixto', fn ($q) => $q->where('p.nivel', $cuota->nivel))
+            $preguntas = $this->consultaElegibles((int) $cuota->area_id, (int) $simulacro->cantidad_alternativas, $cuota->nivel)
                 ->whereNotIn('p.id', $seleccionadas->pluck('id')->all())
-                ->whereRaw('(SELECT COUNT(*) FROM alternativas WHERE pregunta_id = p.id) = ?', [(int) $simulacro->cantidad_alternativas])
-                // Una clave; o ninguna si es del banco del Excel (codigo) y aún no tiene respuesta: se muestra pero no se califica.
-                ->whereRaw('((SELECT COUNT(*) FROM alternativas WHERE pregunta_id = p.id AND es_correcta = 1) = 1
-                    OR (p.codigo IS NOT NULL AND (SELECT COUNT(*) FROM alternativas WHERE pregunta_id = p.id AND es_correcta = 1) = 0))')
                 ->inRandomOrder()->limit(max(0, $cantidad))->lockForUpdate()->get(['p.id', 'a.bloque', 'a.nombre as asignatura']);
             if ($cantidad < 1 || $preguntas->count() !== $cantidad) {
                 throw ValidationException::withMessages([
@@ -125,6 +144,10 @@ class IntentoService
                 ]);
             }
             $seleccionadas = $seleccionadas->concat($preguntas);
+        }
+        if ($ordenDeCuotas) {
+            // San Marcos: bloques en el orden de la plantilla (actitudinal, habilidades, conocimientos).
+            return $seleccionadas->values();
         }
         if ($ordenPorCurso) {
             return $seleccionadas->sortBy(fn ($p) => PerfilExamenCni::posicion($p->asignatura))->values();

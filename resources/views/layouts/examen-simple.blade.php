@@ -11,6 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Simulador de examen' }} · CNI</title>
     <link rel="stylesheet" href="{{ asset('css/examen-simple.css').'?v='.filemtime(public_path('css/examen-simple.css')) }}">
+    @stack('styles')
     @livewireStyles
 </head>
 <body>

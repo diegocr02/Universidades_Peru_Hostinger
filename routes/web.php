@@ -38,6 +38,7 @@ Route::middleware(['auth:web', EnsureActiveUser::class, FeatureAlumnoAreas::clas
         Route::post('/elegir-area', [OrientacionController::class, 'guardarArea'])->name('area.guardar');
         Route::get('/panel', [OrientacionController::class, 'panel'])->name('panel');
         Route::post('/carrera', [OrientacionController::class, 'guardarCarrera'])->name('carrera.guardar');
+        Route::post('/unmsm/area', [OrientacionController::class, 'guardarAreaUnmsm'])->name('unmsm.area');
         Route::get('/tema/{tema}', [OrientacionController::class, 'tema'])
             ->whereNumber('tema')->name('tema');
         Route::get('/resultados/{intento}', [OrientacionController::class, 'resultados'])
@@ -80,6 +81,7 @@ Route::middleware(['auth:web', EnsureActiveUser::class, FeatureAlumnoAreas::clas
         ->name('examen.independiente');
     Route::post('/alumno/examen/uni/{dia}', [ExamenController::class, 'diaUni'])
         ->whereIn('dia', ['1', '2', '3'])->name('examen.uni.dia');
+    Route::post('/alumno/examen/unmsm', [ExamenController::class, 'unmsm'])->name('examen.unmsm');
     Route::post('/simulacros/{simulacro}/iniciar', [ExamenController::class, 'iniciar'])
         ->whereNumber('simulacro')->name('examen.iniciar');
     Route::get('/intentos/{intento}/examen', Examen::class)

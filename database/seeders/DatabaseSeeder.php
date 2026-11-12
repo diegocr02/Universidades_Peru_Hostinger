@@ -10,6 +10,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CatalogoBancoCniSeeder::class,
+            // Banco San Marcos (preguntas, alternativas e imágenes SVG). Idempotente por código.
+            BancoUnmsmSeeder::class,
             SeccionSeeder::class,
             AreaPostulacionSeeder::class,
             CarreraSeeder::class,

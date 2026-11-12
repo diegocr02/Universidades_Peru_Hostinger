@@ -1,0 +1,133 @@
+/* Panel San Marcos (modalidad E). Se apoya en panel-alumno.css y solo afecta a .cni-unmsm. */
+.cni-alumno.cni-unmsm{
+    --sm-menu:#C89418;--sm-principal:#D4A017;--sm-boton:#E0AD24;--sm-activo:#B8860B;
+    --sm-fondo:#FFF9EB;--sm-tarjeta:#FFFDF7;--sm-borde:#E8D9B5;--sm-titulo:#684A13;
+    --sm-texto:#303030;--sm-ok:#34805A;--sm-mal:#B84A4A;--sm-tinta-oro:#2b1d04;
+    --accent:var(--sm-activo);--accent-dark:var(--sm-titulo);--navy:var(--sm-titulo);
+    --ink:var(--sm-texto);--muted:#6b5f4a;--line:var(--sm-borde);--pale:#FFF3D3;
+    background:var(--sm-fondo);color:var(--sm-texto)
+}
+body:has(.cni-unmsm){background:#FFF9EB}
+/* El panel ya muestra sus avisos; se evita repetirlos con el aviso genérico del layout. */
+body:has(.cni-unmsm)>main>.alert{display:none}
+.cni-unmsm .cni-alumno-workspace{background:var(--sm-fondo)}
+
+/* Menú lateral dorado con texto oscuro (contraste suficiente sobre amarillo). */
+.cni-alumno.cni-unmsm .cni-alumno-sidebar{background:var(--sm-menu);color:var(--sm-tinta-oro);box-shadow:inset -1px 0 0 #a87a0f}
+.cni-unmsm .cni-alumno-marca,.cni-unmsm .cni-alumno-marca small{color:var(--sm-tinta-oro)!important}
+.cni-unmsm .cni-alumno-marca-icon{background:var(--sm-tarjeta);color:var(--sm-titulo)}
+.cni-unmsm .cni-alumno-area-chip{background:#ffffff40;color:var(--sm-tinta-oro)}
+.cni-unmsm .cni-alumno-area-chip>span{color:var(--sm-titulo)}
+.cni-alumno.cni-unmsm .cni-alumno-menu a{color:var(--sm-tinta-oro)}
+.cni-alumno.cni-unmsm .cni-alumno-menu a:hover{background:#ffffff38;color:var(--sm-tinta-oro)}
+.cni-alumno.cni-unmsm .cni-alumno-menu a.is-active{background:var(--sm-activo);color:#1d1302;box-shadow:0 3px 10px #5a3f0626}
+.cni-unmsm .cni-alumno-salir{color:var(--sm-tinta-oro)}
+.cni-unmsm .cni-alumno-sidebar-toggle{background:var(--sm-tarjeta);color:var(--sm-titulo);border-color:var(--sm-borde)}
+.cni-unmsm .cni-alumno-topbar{background:var(--sm-tarjeta);border-bottom-color:var(--sm-borde)}
+.cni-unmsm .cni-alumno-top-title strong{color:var(--sm-titulo)}
+.cni-unmsm .cni-alumno-avatar{background:#F6E6B8;color:var(--sm-titulo)}
+
+/* Botones dorados con texto oscuro. */
+.cni-unmsm .cni-alumno-primary{background:var(--sm-boton);color:var(--sm-tinta-oro)!important}
+.cni-unmsm .cni-alumno-primary:hover{background:var(--sm-principal)}
+.cni-unmsm .cni-alumno-primary:focus-visible,.cni-unmsm a:focus-visible,.cni-unmsm button:focus-visible,.cni-unmsm summary:focus-visible{outline:3px solid var(--sm-titulo);outline-offset:2px}
+.cni-unmsm .cni-alumno-alert-ok{background:#eef7f1;border-color:#bfdccb;color:var(--sm-ok)}
+.sm-alerta-error{background:#fbefef;border-color:#e7c3c3;color:var(--sm-mal)}
+.sm-alerta-error p+p{margin-top:4px}
+
+/* Contenido centrado: una sola columna cómoda de leer en cualquier pantalla. */
+.cni-unmsm .cni-alumno-content{max-width:1040px;margin:0 auto;padding-top:28px}
+.cni-unmsm .cni-alumno-vista>*+*{margin-top:20px}
+
+/* Portada centrada. */
+.sm-hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:30px 20px 26px;
+    background:var(--sm-tarjeta);border:1px solid var(--sm-borde);border-radius:20px;box-shadow:0 4px 16px #684a130d}
+.sm-hero-logo{width:96px;height:96px;object-fit:contain}
+.sm-hero-overline{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sm-activo)}
+.sm-hero h1{margin:0;color:var(--sm-titulo);font-size:clamp(22px,3vw,32px);line-height:1.2;letter-spacing:-.01em}
+.sm-hero-saludo{margin:0;max-width:560px;color:var(--muted);font-size:14px}
+.sm-pildoras{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.sm-pildoras li{background:#FFF3D3;border:1px solid var(--sm-borde);border-radius:99px;padding:6px 14px;font-size:13px;color:var(--sm-titulo)}
+.sm-ficha{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0}
+@media(max-width:1100px){.sm-ficha{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.sm-ficha{grid-template-columns:1fr}}
+.sm-ficha div{background:var(--sm-tarjeta);border:1px solid var(--sm-borde);border-radius:14px;padding:14px 16px;text-align:center}
+.sm-ficha dt{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.sm-ficha dd{margin:4px 0 0;font-weight:750;color:var(--sm-texto)}
+.sm-info{margin:0;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6}
+.sm-info strong{color:var(--sm-titulo)}
+.sm-provisional{display:block;margin-top:4px;font-size:11.5px;color:#8a6a1d}
+.sm-aviso-eleccion{margin:0;padding:12px 16px;border-radius:12px;background:#FFF3D3;border:1px solid var(--sm-borde);color:var(--sm-titulo);font-size:13px;text-align:center}
+
+/* Tarjetas de área A, C y E. */
+.sm-areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin:0}
+.sm-area{display:flex;flex-direction:column;gap:10px;background:var(--sm-tarjeta);border:1px solid var(--sm-borde);border-top:4px solid var(--sm-borde);border-radius:14px;padding:18px;box-shadow:0 2px 6px #684a130a}
+.sm-area.is-autorizada{border-top-color:var(--sm-principal)}
+.sm-area.is-bloqueada{opacity:.72}
+/* app.css da estilo global a <header>; aquí se anula solo para la cabecera de la tarjeta. */
+.cni-unmsm .sm-area-cabecera{display:flex;justify-content:space-between;align-items:center;gap:8px;background:none;color:inherit;padding:0}
+.sm-area-codigo{font-size:11px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;color:var(--sm-activo)}
+.sm-etiqueta{font-size:11px;font-weight:750;padding:3px 9px;border-radius:99px;background:#f1ead8;color:#6b5f4a}
+.sm-etiqueta-ok{background:#e6f3ec;color:var(--sm-ok)}
+.sm-area h3{margin:0;font-size:16px;font-weight:850;color:var(--sm-titulo)}
+.sm-area-datos,.sm-distribucion ul{list-style:none;margin:0;padding:0;display:grid;gap:3px;font-size:12px}
+.sm-area-datos li,.sm-distribucion li{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--sm-borde);padding:3px 0}
+.sm-area-datos strong,.sm-distribucion strong{color:var(--sm-titulo)}
+.sm-distribucion summary{cursor:pointer;font-size:12px;font-weight:750;color:var(--sm-titulo)}
+.sm-distribucion ul{margin-top:6px}
+.sm-area-nota{margin:0;font-size:12px;font-weight:650}
+.sm-disponibilidad{background:#FFF3D3;border:1px solid var(--sm-borde);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--sm-titulo)}
+.sm-disponibilidad p{margin:0}
+.sm-disponibilidad ul{margin:6px 0 0;padding-left:18px}
+.sm-area-acciones{margin-top:auto;display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding-top:6px}
+.sm-area-acciones form{margin:0}
+.sm-enlace{font-size:12px;font-weight:750;color:var(--sm-titulo)!important;text-decoration:underline!important}
+.sm-referencia{margin:0;text-align:center;font-size:12px;color:var(--muted);background:var(--sm-tarjeta);border:1px solid var(--sm-borde);border-radius:12px;padding:12px 16px}
+.sm-referencia strong{color:var(--sm-titulo)}
+
+/* Tablas, historial y estadísticas. */
+.cni-unmsm .cni-historial-tarjeta{background:var(--sm-tarjeta);border-color:var(--sm-borde);box-shadow:0 2px 6px #684a130a;margin-bottom:16px}
+.cni-unmsm .cni-historial-tabla thead th{background:#F6EBCB;color:var(--sm-titulo)}
+.cni-unmsm .cni-historial-tabla tbody tr:nth-child(even){background:#FFF8E6}
+.cni-unmsm .cni-historial-resultado{color:var(--sm-titulo)!important}
+.sm-boton-tabla{border:0;border-radius:8px;background:var(--sm-boton);color:var(--sm-tinta-oro);font-weight:750;font-size:12px;padding:6px 12px;cursor:pointer}
+.sm-boton-tabla:hover{background:var(--sm-principal)}
+.sm-acciones-tabla form{margin:0}
+.sm-rendir{margin-top:14px}
+.sm-titulo-seccion{color:var(--sm-titulo);font-size:22px;font-weight:850;margin:0 0 4px;text-align:center}
+.sm-resumen{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:0 0 16px}
+.sm-resumen div{background:var(--sm-tarjeta);border:1px solid var(--sm-borde);border-radius:12px;padding:12px 14px}
+.sm-resumen dt{font-size:11px;color:var(--muted)}
+.sm-resumen dd{margin:4px 0 0;font-size:20px;font-weight:850;color:var(--sm-titulo)}
+.sm-resumen small{font-size:12px;color:var(--muted);font-weight:650}
+.sm-sube{color:var(--sm-ok)}.sm-baja{color:var(--sm-mal)}
+.sm-bloque{background:var(--sm-tarjeta);border:1px solid var(--sm-borde);border-radius:14px;padding:16px 18px;margin-bottom:16px}
+.sm-bloque h3,.cni-unmsm .cni-historial-cabecera h3{margin:0 0 10px;font-size:15px;font-weight:850;color:var(--sm-titulo)}
+.sm-barras{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.sm-barras li{display:grid;grid-template-columns:minmax(120px,190px) 1fr auto;align-items:center;gap:12px;font-size:12px}
+.sm-barra{height:10px;border-radius:99px;background:#F1E6C8;overflow:hidden}
+.sm-barra>span{display:block;height:100%;background:var(--sm-principal);border-radius:99px}
+.sm-barras strong{color:var(--sm-titulo);white-space:nowrap}
+.sm-nota{margin:0 0 10px;font-size:12px;color:var(--muted)}
+.cni-unmsm .cni-alumno-empty{background:var(--sm-tarjeta);border-color:var(--sm-borde);color:var(--muted)}
+
+/* Perfil. */
+.cni-unmsm .cni-alumno-datos{background:var(--sm-tarjeta);border-color:var(--sm-borde)}
+.cni-unmsm .cni-alumno-datos h2{color:var(--sm-titulo)}
+.sm-carrera{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:16px;font-size:12px}
+.sm-carrera label{width:100%;font-weight:750;color:var(--sm-titulo)}
+.sm-carrera select{min-width:220px;padding:9px 10px;border:1px solid var(--sm-borde);border-radius:8px;background:#fff;font:inherit}
+
+@media(max-width:680px){
+    .sm-area-acciones form,.sm-area-acciones button{width:100%}
+    .sm-barras li{grid-template-columns:1fr;gap:4px}
+    .sm-hero{padding:22px 14px}.sm-hero-logo{width:72px;height:72px}
+}
+
+/* Títulos de tarjetas centrados y tablas con aire. */
+.cni-unmsm .cni-historial-cabecera{justify-content:center;text-align:center}
+.cni-unmsm .cni-historial-cabecera h2,.cni-unmsm .cni-historial-cabecera h3{width:100%;text-align:center}
+.cni-unmsm .cni-historial-tabla td,.cni-unmsm .cni-historial-tabla th{padding-top:11px;padding-bottom:11px}
+.cni-unmsm .sm-rendir{display:flex;justify-content:center}
+.cni-unmsm .sm-nota,.cni-unmsm .cni-alumno-empty{text-align:center}
+.cni-unmsm .sm-area h3{min-height:2.6em}

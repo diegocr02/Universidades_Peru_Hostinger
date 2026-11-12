@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Services\IntentoService;
+use App\Support\PerfilExamenUnmsm;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
@@ -142,8 +143,15 @@ class Examen extends Component
         $preguntas = $this->preguntas;
         $this->actual = max(0, min($this->actual, $preguntas->count() - 1));
         $simulacro = $intento->simulacro_id ? DB::table('simulacros')->find($intento->simulacro_id) : null;
+        $areaUnmsm = PerfilExamenUnmsm::areaDeNombre($simulacro?->nombre);
 
         return view('livewire.examen', [
+            // Solo los exámenes San Marcos reciben encabezado y marcas de revisión; UNI no cambia.
+            'unmsm' => $areaUnmsm === null ? null : [
+                'universidad' => config('unmsm.universidad'),
+                'area' => 'Área '.$areaUnmsm.' · '.PerfilExamenUnmsm::AREAS[$areaUnmsm],
+                'carrera' => $intento->carrera_id ? DB::table('carreras')->where('id', $intento->carrera_id)->value('nombre') : null,
+            ],
             'intento' => $intento,
             'simulacro' => $simulacro,
             'numeroIntento' => DB::table('intentos')->where('usuario_id', $intento->usuario_id)
@@ -168,6 +176,7 @@ class Examen extends Component
         $area = $usuario->areaPostulacion ?? $usuario->carrera?->areaPostulacion;
 
         return view('livewire.examen', [
+            'unmsm' => null,
             'intento' => null,
             'simulacro' => (object) ['nombre' => 'Examen · '.($area?->nombre ?? ''), 'tiempo_limite' => 60],
             'numeroIntento' => null,
@@ -217,6 +226,15 @@ class Examen extends Component
             ->exists();
 
         if ($esUndc) {
+            return;
+        }
+
+        // San Marcos: el envío es una operación correcta; se informa como aviso, no como error.
+        $nombre = DB::table('intentos as i')->join('simulacros as s', 's.id', '=', 'i.simulacro_id')
+            ->where('i.id', $intentoId)->where('i.usuario_id', $this->usuarioId())->value('s.nombre');
+        if (PerfilExamenUnmsm::areaDeNombre($nombre) !== null) {
+            session()->flash('status', $mensaje);
+
             return;
         }
 

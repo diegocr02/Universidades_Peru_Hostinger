@@ -7,9 +7,21 @@
 @push('scripts')
     <script src="{{ asset('js/examen.js').'?v='.filemtime(public_path('js/examen.js')) }}"></script>
 @endpush
+@push('styles')
+    {{-- El @if va dentro del @push: fuera de él deja texto antes de la raíz y Livewire la pierde. --}}
+    @if($unmsm)<link rel="stylesheet" href="{{ asset('css/examen-unmsm.css').'?v='.filemtime(public_path('css/examen-unmsm.css')) }}">@endif
+@endpush
 <div class="examen-distribucion" :class="{ 'is-mapa-abierto': mapaAbierto }" x-data="examen({{ $intentoId }}, @js($limiteMs))" data-ahora="{{ $ahoraMs }}"
+     @if($unmsm) data-modalidad="unmsm" @endif
      @keydown.escape.window="confirmar = false; mapaAbierto = false">
     <div class="examen">
+    @if($unmsm)
+        <header class="examen-unmsm-cabecera" aria-label="Datos del examen">
+            <span class="examen-unmsm-universidad">{{ $unmsm['universidad'] }}</span>
+            <strong>{{ $unmsm['area'] }}</strong>
+            <span>{{ $unmsm['carrera'] ? 'Carrera: '.$unmsm['carrera'] : 'Carrera no seleccionada' }}</span>
+        </header>
+    @endif
     <div class="examen-superior">
         <strong class="examen-reloj" wire:ignore x-text="tiempo || @js($tiempoInicial)" role="timer" aria-label="Tiempo restante" aria-live="off">{{ $tiempoInicial }}</strong>
         <button type="button" class="examen-finalizar" @click="confirmar = true" @disabled($sinBanco)>Finalizar examen</button>
@@ -59,6 +71,18 @@
                             </button>
                         @endforeach
                     </div>
+                    @if($unmsm)
+                        {{-- La marca vive en el navegador: wire:ignore evita que Livewire la borre al guardar una respuesta;
+                             wire:key crea un botón nuevo (y Alpine lo inicializa) al cambiar de pregunta. --}}
+                        <div wire:key="revisar-{{ (int) $pregunta->orden }}" wire:ignore>
+                            <button type="button" class="examen-revisar" x-data @click="alternar({{ (int) $pregunta->orden }})"
+                                    :class="{ 'is-activo': marcada({{ (int) $pregunta->orden }}) }"
+                                    :aria-pressed="String(marcada({{ (int) $pregunta->orden }}))">
+                                <span aria-hidden="true">⚑</span>
+                                <span x-text="marcada({{ (int) $pregunta->orden }}) ? 'Quitar marca de revisión' : 'Marcar para revisar'">Marcar para revisar</span>
+                            </button>
+                        </div>
+                    @endif
                     <span class="examen-guardado" aria-live="polite">
                         <span wire:loading wire:target="responder">Guardando…</span>
                         <span wire:loading.remove wire:target="responder">@if($elegida) Respuesta guardada @endif</span>
@@ -92,13 +116,16 @@
                 <button type="button" wire:key="mapa-{{ $item->id }}" wire:click="ir({{ $indice }})" @click="if (window.innerWidth < 1200) mapaAbierto = false"
                         @class(['examen-mapa-numero', 'is-respondida' => ($respuestas[$item->id] ?? null) !== null, 'is-actual' => $indice === $actual])
                         @if($indice === $actual) aria-current="step" @endif
-                        aria-label="Pregunta {{ $indice + 1 }}{{ ($respuestas[$item->id] ?? null) !== null ? ', respondida' : ', sin responder' }}">{{ $indice + 1 }}</button>
+                        aria-label="Pregunta {{ $indice + 1 }}{{ ($respuestas[$item->id] ?? null) !== null ? ', respondida' : ', sin responder' }}">{{ $indice + 1 }}@if($unmsm)<span class="examen-mapa-marca" wire:ignore x-show="marcada({{ (int) $item->orden }})" x-cloak aria-hidden="true"></span>@endif</button>
             @endforeach
         </div>
         <ul class="examen-mapa-leyenda" aria-label="Estados de las preguntas">
             <li><span class="examen-estado-actual" aria-hidden="true"></span>Actual</li>
             <li><span class="examen-estado-respondida" aria-hidden="true"></span>Respondida</li>
             <li><span class="examen-estado-pendiente" aria-hidden="true"></span>Pendiente</li>
+            @if($unmsm)
+                <li><span class="examen-estado-revisar" aria-hidden="true"></span>Marcada para revisar</li>
+            @endif
         </ul>
     </aside>
 

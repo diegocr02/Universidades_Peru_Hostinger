@@ -64,6 +64,12 @@ class PanelesPorAreaTest extends TestCase
 
                 continue;
             }
+            // San Marcos (E) tiene su panel propio con las áreas A, C y E.
+            if ($codigo === 'E') {
+                $respuesta->assertViewIs('alumno.unmsm.panel')->assertSee('panel-unmsm.css');
+
+                continue;
+            }
             $respuesta->assertViewIs('alumno.panel')
                 ->assertSee('panel-alumno.css')
                 ->assertSee('Dar examen')
@@ -159,7 +165,8 @@ class PanelesPorAreaTest extends TestCase
 
     public function test_el_panel_ofrece_dar_examen_del_area(): void
     {
-        $this->actingAs($this->estudiante('E'), 'web');
+        // El área E usa ahora el panel San Marcos (ver ExamenUnmsmTest); D sigue en el panel compartido.
+        $this->actingAs($this->estudiante('D'), 'web');
         $html = $this->get(route('alumno.panel'))->assertOk()->getContent();
 
         $this->assertStringContainsString(route('examen.independiente'), $html);
@@ -169,7 +176,8 @@ class PanelesPorAreaTest extends TestCase
 
     public function test_menu_usa_mi_perfil_mi_progreso_historial_para_cada_area(): void
     {
-        foreach (['C', 'D', 'E'] as $codigo) {
+        // E (San Marcos) tiene su propio menú de cuatro opciones; ver ExamenUnmsmTest.
+        foreach (['C', 'D'] as $codigo) {
             $this->actingAs($this->estudiante($codigo), 'web');
             $html = $this->get(route('alumno.panel'))->assertOk()->getContent();
 

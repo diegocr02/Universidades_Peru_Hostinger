@@ -1,0 +1,30 @@
+/* Examen San Marcos: solo se carga en intentos San Marcos y solo afecta a [data-modalidad="unmsm"]. */
+html:has([data-modalidad="unmsm"]),body:has([data-modalidad="unmsm"]){background:#FFF9EB}
+body:has([data-modalidad="unmsm"]) .cni-examen-barra{background:#C89418;color:#2b1d04}
+body:has([data-modalidad="unmsm"]) .cni-examen-avatar{background:#FFFDF7;color:#684A13}
+[data-modalidad="unmsm"] .examen,[data-modalidad="unmsm"] .examen-mapa{background:#FFFDF7;border-color:#E8D9B5}
+[data-modalidad="unmsm"] .examen-unmsm-cabecera{display:flex;flex-wrap:wrap;justify-content:center;text-align:center;align-items:baseline;gap:4px 14px;padding:0 0 12px;margin-bottom:12px;border-bottom:1px solid #E8D9B5;color:#303030;font-size:12px}
+[data-modalidad="unmsm"] .examen-unmsm-cabecera strong{color:#684A13;font-size:14px}
+[data-modalidad="unmsm"] .examen-unmsm-universidad{width:100%;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#B8860B}
+[data-modalidad="unmsm"] .examen-reloj,[data-modalidad="unmsm"] .examen-ver{color:#684A13}
+[data-modalidad="unmsm"] .examen-finalizar{background:#E0AD24;color:#2b1d04}
+[data-modalidad="unmsm"] .examen-finalizar:hover{background:#D4A017}
+[data-modalidad="unmsm"] .examen-progreso-barra>span{background:#D4A017}
+[data-modalidad="unmsm"] .examen-boton{background:#E0AD24;color:#2b1d04}
+[data-modalidad="unmsm"] .examen-boton:hover{background:#D4A017}
+[data-modalidad="unmsm"] .examen-boton-secundario,[data-modalidad="unmsm"] .examen-boton-secundario:hover{background:#FFF3D3;color:#684A13}
+[data-modalidad="unmsm"] .examen-modal-caja{background:#FFFDF7}
+[data-modalidad="unmsm"] .examen-enunciado{color:#303030}
+[data-modalidad="unmsm"] .examen-curso{color:#B8860B;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+[data-modalidad="unmsm"] .examen-opcion.is-elegida{background:#FFF3D3;border-color:#B8860B}
+[data-modalidad="unmsm"] .examen-boton:focus-visible,[data-modalidad="unmsm"] button:focus-visible{outline-color:#684A13}
+[data-modalidad="unmsm"] .examen-revisar{display:inline-flex;align-items:center;gap:6px;margin-top:10px;border:1px solid #E8D9B5;background:#FFFDF7;color:#684A13;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700}
+[data-modalidad="unmsm"] .examen-revisar.is-activo{background:#FFF3D3;border-color:#B8860B}
+[data-modalidad="unmsm"] .examen-mapa-numero{background:#FFFDF7;border-color:#E8D9B5;color:#303030}
+[data-modalidad="unmsm"] .examen-mapa-numero.is-respondida{background:#F6E6B8;border-color:#D4A017}
+[data-modalidad="unmsm"] .examen-mapa-numero.is-actual{outline-color:#684A13;color:#684A13}
+[data-modalidad="unmsm"] .examen-mapa-numero{position:relative;overflow:hidden}
+[data-modalidad="unmsm"] .examen-mapa-marca{position:absolute;left:0;right:0;bottom:0;height:4px;background:#B84A4A}
+[data-modalidad="unmsm"] .examen-estado-actual{background:#684A13}
+[data-modalidad="unmsm"] .examen-estado-respondida{background:#F6E6B8}
+[data-modalidad="unmsm"] .examen-estado-revisar{display:inline-block;width:12px;height:12px;border-radius:3px;background:#FFFDF7;box-shadow:inset 0 -4px 0 #B84A4A;border:1px solid #E8D9B5}

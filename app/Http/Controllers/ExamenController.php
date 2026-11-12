@@ -46,6 +46,22 @@ class ExamenController extends Controller
         return redirect()->route('examen', $intento->id);
     }
 
+    /** Examen San Marcos del área autorizada; si falta la distribución o el banco, vuelve al panel con el motivo. */
+    public function unmsm(Request $request, ExamenIndependienteService $examenes): RedirectResponse
+    {
+        abort_unless($request->user('web')?->rol === 'estudiante', 403);
+        if ($request->user('web')->area_postulacion_id === null && $request->user('web')->carrera_id === null) {
+            return redirect()->route('alumno.elegir-area');
+        }
+        try {
+            $intento = $examenes->iniciarUnmsm($request->user('web'));
+        } catch (ValidationException $e) {
+            return redirect()->route('alumno.panel')->withErrors($e->errors());
+        }
+
+        return redirect()->route('examen', $intento->id);
+    }
+
     /** Reanuda el intento en curso del simulacro o inicia uno nuevo, y abre el examen. */
     public function iniciar(Request $request, int $simulacro, IntentoService $intentos): RedirectResponse
     {

@@ -1,0 +1,67 @@
+/* Resultados San Marcos: dorado y crema, independiente de UNI/UNDC. */
+body:has(.sm-res)>header{display:none!important}
+body:has(.sm-res)>main{max-width:none;margin:0;padding:0}
+body:has(.sm-res)>main>.alert{display:none}
+body:has(.sm-res){background:#FFF9EB}
+.sm-res{--oro:#D4A017;--boton:#E0AD24;--activo:#B8860B;--menu:#C89418;--tarjeta:#FFFDF7;--borde:#E8D9B5;--titulo:#684A13;--texto:#303030;--ok:#34805A;--mal:#B84A4A;--suave:#6b5f4a;
+    min-height:100vh;color:var(--texto);font-family:Inter,'Segoe UI',Arial,sans-serif;font-size:14px;line-height:1.45}
+.sm-res-barra{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--menu);color:#2b1d04;padding:12px clamp(16px,4vw,48px)}
+.sm-res-marca{display:flex;align-items:center;gap:12px;color:#2b1d04;text-decoration:none}
+.sm-res-marca strong{display:block;font-size:17px}.sm-res-marca small{display:block;font-size:11px}
+.sm-res-volver{color:var(--titulo);font-weight:750;font-size:13px;text-decoration:underline}
+.sm-res-barra .sm-res-volver{color:#2b1d04}
+.sm-res-main{max-width:1000px;margin:0 auto;padding:24px 16px 56px}
+.sm-res-eyebrow{margin:0;text-align:center;color:var(--activo);font-size:11px;font-weight:800;letter-spacing:.08em}
+.sm-res h1{margin:4px 0 22px;text-align:center;color:var(--titulo);font-size:clamp(22px,3vw,30px)}
+.sm-res-aviso{background:#eef7f1;border:1px solid #bfdccb;color:var(--ok);padding:10px 14px;border-radius:10px;font-size:13px}
+.sm-res-tarjeta{background:var(--tarjeta);border:1px solid var(--borde);border-radius:14px;padding:18px clamp(14px,2.4vw,24px);margin-bottom:16px;box-shadow:0 2px 6px #684a130a}
+.sm-res-tarjeta h2{margin:0 0 14px;text-align:center;font-size:17px;color:var(--titulo)}
+.sm-res-datos,.sm-res-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 16px;margin:0}
+.sm-res-datos dt,.sm-res-kpis dt{font-size:11px;color:var(--suave);text-transform:uppercase;letter-spacing:.04em}
+.sm-res-datos dd{margin:2px 0 0;font-weight:700}
+.sm-res-kpis div{background:#FFF8E6;border:1px solid var(--borde);border-radius:10px;padding:10px 12px}
+.sm-res-kpis dd{margin:4px 0 0;font-size:19px;font-weight:850;color:var(--titulo)}
+.sm-res-kpis small{font-size:11px;color:var(--suave);font-weight:600}
+.sm-ok{color:var(--ok)!important}.sm-mal{color:var(--mal)!important}
+.sm-res-puntaje{display:flex;flex-wrap:wrap;justify-content:center;text-align:center;align-items:baseline;gap:6px 14px;margin-bottom:14px}
+.sm-res-puntaje span{font-size:12px;color:var(--suave);text-transform:uppercase;letter-spacing:.05em;width:100%}
+.sm-res-puntaje strong{font-size:clamp(32px,5vw,44px);color:var(--titulo);line-height:1}
+.sm-res-puntaje small{color:var(--suave);font-size:14px}
+.sm-res-formula,.sm-res-referencia{margin:12px 0 0;font-size:12px;color:var(--suave)}
+.sm-res-referencia{background:#FFF3D3;border:1px solid var(--borde);border-radius:10px;padding:10px 12px;color:var(--titulo)}
+.sm-res-barras{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.sm-res-barras li{display:grid;grid-template-columns:minmax(130px,200px) 1fr auto;align-items:center;gap:12px;font-size:12px}
+.sm-res-asig{font-weight:700}
+.sm-res-barra{height:10px;border-radius:99px;background:#F1E6C8;overflow:hidden}
+.sm-res-barra>span{display:block;height:100%;background:var(--oro);border-radius:99px}
+.sm-res-valor{white-space:nowrap;color:var(--suave)}.sm-res-valor strong{color:var(--titulo);margin-left:6px}
+.sm-res-columnas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
+.sm-res-columnas h3{margin:0 0 6px;font-size:14px;color:var(--titulo)}
+.sm-res-columnas p,.sm-res-columnas ul{margin:0;font-size:13px}
+.sm-res-columnas ul{padding-left:18px}
+.sm-res-retro-cabecera{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:12px}
+.sm-res-retro-cabecera p{margin:0;font-size:12px;color:var(--suave)}
+.sm-res-retro-cabecera label{font-size:12px;font-weight:700;color:var(--titulo);display:flex;align-items:center;gap:8px}
+.sm-res-retro-cabecera select{padding:7px 9px;border:1px solid var(--borde);border-radius:8px;background:#fff;font:inherit}
+.sm-res-lista{display:grid;gap:12px}
+.sm-res-pregunta{border:1px solid var(--borde);border-radius:12px;padding:14px;background:#fff}
+.sm-res-pregunta-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:12px;color:var(--suave)}
+.sm-res-estado{font-weight:800}
+.sm-res-estado-correcta{color:var(--ok)}.sm-res-estado-incorrecta{color:var(--mal)}.sm-res-estado-actitudinal{color:var(--activo)}
+.sm-res-pregunta h3{margin:8px 0;font-size:14px;color:var(--texto)}
+.sm-res-imagen{max-width:100%;height:auto;border-radius:8px;margin-bottom:8px}
+.sm-res-respuestas{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0 0 8px;font-size:12px}
+.sm-res-opciones{display:grid;gap:6px}
+.sm-res-opcion{display:flex;align-items:flex-start;gap:10px;border:1px solid #efe6cf;border-radius:8px;padding:7px 10px;font-size:13px}
+.sm-res-opcion small{margin-left:auto;white-space:nowrap;color:var(--activo);font-weight:700}
+.sm-res-opcion.is-elegida{border-color:var(--activo)}
+.sm-res-opcion.is-correcta{background:#eaf5ef;border-color:var(--ok)}
+.sm-res-opcion.is-error{background:#fbefef;border-color:var(--mal)}
+.sm-res-letra{font-weight:800;color:var(--titulo);min-width:16px}
+.sm-res-imagen-alt{display:block;max-width:220px;height:auto;margin-top:4px}
+.sm-res-explicacion{margin-top:10px;background:#FFF8E6;border-radius:8px;padding:10px 12px;font-size:13px}
+.sm-res-explicacion strong{color:var(--titulo)}.sm-res-explicacion p{margin:4px 0 0}
+.sm-res-vacio{font-size:13px;color:var(--suave)}
+.sm-res-volver-pie{display:inline-block;margin-top:8px}
+.sm-res a:focus-visible,.sm-res select:focus-visible{outline:3px solid var(--titulo);outline-offset:2px}
+@media(max-width:640px){.sm-res-barras li{grid-template-columns:1fr;gap:4px}.sm-res-valor{white-space:normal}}

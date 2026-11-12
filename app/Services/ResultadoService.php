@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\PerfilExamenUnmsm;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -34,6 +35,8 @@ class ResultadoService
 
     public function obtenerRespuestas(int $intentoId): Collection
     {
+        $rubrica = PerfilExamenUnmsm::hayRubrica();
+
         return DB::table('respuestas_estudiante as re')
             ->join('preguntas as p', 're.pregunta_id', '=', 'p.id')
             ->join('temas as t', 'p.tema_id', '=', 't.id')
@@ -53,7 +56,33 @@ class ResultadoService
             )
             // Preguntas del banco aún sin respuesta registrada en el Excel (0 claves).
             ->selectRaw('(SELECT COUNT(*) FROM alternativas WHERE pregunta_id = re.pregunta_id AND es_correcta = 1) as claves')
+            // Preguntas actitudinales de San Marcos: se califican con la rúbrica de cada alternativa.
+            ->when($rubrica, fn ($q) => $q->addSelect('alt.puntaje_actitudinal')
+                ->selectRaw('(SELECT COUNT(*) FROM alternativas WHERE pregunta_id = re.pregunta_id AND puntaje_actitudinal IS NOT NULL) as con_rubrica'))
             ->get();
+    }
+
+    /** Actitudinal: asignatura "Actitudinal", sin clave y con rúbrica registrada en sus alternativas. */
+    public function esActitudinal(object $respuesta): bool
+    {
+        return ($respuesta->area_nombre ?? null) === PerfilExamenUnmsm::ASIGNATURA_ACTITUDINAL
+            && (int) ($respuesta->claves ?? 0) === 0
+            && (int) ($respuesta->con_rubrica ?? 0) > 0;
+    }
+
+    /** Puntaje actitudinal: el de la alternativa elegida (0 a 20); en blanco o doble marca, 0. Nunca descuenta. */
+    public function puntajeActitudinal(object $respuesta): float
+    {
+        if ($respuesta->estado_respuesta === 'doble_marca' || $respuesta->alternativa_id === null) {
+            return 0.0;
+        }
+        if ((int) $respuesta->alternativa_pregunta_id !== (int) $respuesta->pregunta_id) {
+            throw ValidationException::withMessages([
+                'respuesta' => 'La alternativa no pertenece a la pregunta.',
+            ]);
+        }
+
+        return max(0.0, min(PerfilExamenUnmsm::MAXIMO_ACTITUDINAL, (float) $respuesta->puntaje_actitudinal));
     }
 
     public function validarAlternativasCorrectas(int $intentoId): void
@@ -69,9 +98,13 @@ class ResultadoService
             ->where('re.intento_id', $intentoId)
             ->groupBy('re.pregunta_id', 'p.codigo')
             // Excepción: una pregunta del banco del Excel (con codigo) aún sin respuesta no se califica.
+            // Excepción San Marcos: una pregunta actitudinal no tiene clave, sino rúbrica.
             ->havingRaw(
                 'SUM(CASE WHEN alt.es_correcta = 1 THEN 1 ELSE 0 END) > 1
-                 OR (SUM(CASE WHEN alt.es_correcta = 1 THEN 1 ELSE 0 END) = 0 AND p.codigo IS NULL)'
+                 OR (SUM(CASE WHEN alt.es_correcta = 1 THEN 1 ELSE 0 END) = 0 AND p.codigo IS NULL'
+                .(PerfilExamenUnmsm::hayRubrica()
+                    ? ' AND SUM(CASE WHEN alt.puntaje_actitudinal IS NOT NULL THEN 1 ELSE 0 END) = 0' : '')
+                .')'
             )
             ->pluck('re.pregunta_id');
 
@@ -213,6 +246,30 @@ class ResultadoService
             $actualizaciones = [];
 
             foreach ($respuestas as $respuesta) {
+                if ($this->esActitudinal($respuesta)) {
+                    // Rúbrica: no es correcta ni incorrecta y no cuenta en los totales ordinarios.
+                    // Misma unidad que las ordinarias: milésimas enteras.
+                    $milesimas = (int) round($this->puntajeActitudinal($respuesta) * 1000);
+                    $enBlanco = $respuesta->alternativa_id === null;
+                    $totales['puntaje_total'] += $milesimas;
+                    $actualizaciones[] = [
+                        'id' => $respuesta->id,
+                        'estado' => $respuesta->estado_respuesta === 'doble_marca' ? 'doble_marca'
+                            : ($enBlanco ? 'en_blanco' : null),
+                        'puntaje' => $milesimas / 1000,
+                    ];
+                    $areaId = (int) $respuesta->area_id;
+                    $resultadosArea[$areaId] ??= [
+                        'area_id' => $areaId, 'total_preguntas' => 0, 'aciertos' => 0,
+                        'incorrectas' => 0, 'en_blanco' => 0, 'puntaje' => 0, 'actitudinal' => true,
+                    ];
+                    $resultadosArea[$areaId]['total_preguntas']++;
+                    $resultadosArea[$areaId]['en_blanco'] += $enBlanco ? 1 : 0;
+                    $resultadosArea[$areaId]['puntaje'] += $milesimas;
+
+                    continue;
+                }
+
                 $estado = $this->clasificarRespuesta($respuesta);
                 $puntaje = $this->calcularPuntaje($estado, $simulacro);
                 $milesimas = (int) round($puntaje * 1000);
@@ -262,10 +319,11 @@ class ResultadoService
             foreach ($resultadosArea as &$area) {
                 $area['puntaje'] = $area['puntaje'] / 1000;
 
-                $area['porcentaje'] = round(
-                    ($area['aciertos'] / $area['total_preguntas']) * 100,
-                    2
-                );
+                // En la parte actitudinal el porcentaje es el del puntaje posible, no de aciertos.
+                $area['porcentaje'] = ($area['actitudinal'] ?? false)
+                    ? round(max(0, $area['puntaje']) / ($area['total_preguntas'] * PerfilExamenUnmsm::MAXIMO_ACTITUDINAL) * 100, 2)
+                    : round(($area['aciertos'] / $area['total_preguntas']) * 100, 2);
+                unset($area['actitudinal']);
             }
 
             unset($area);

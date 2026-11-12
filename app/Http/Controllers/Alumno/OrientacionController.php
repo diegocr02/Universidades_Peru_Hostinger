@@ -10,6 +10,8 @@ use App\Services\ResultadoService;
 use App\Services\SimulacroService;
 use App\Services\Alumno\DashboardEstudianteService;
 use App\Services\Alumno\PanelUniService;
+use App\Services\Alumno\PanelUnmsmService;
+use App\Support\PerfilExamenUnmsm;
 use App\Services\Alumno\ProgresoAlumnoService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -93,6 +95,18 @@ class OrientacionController extends Controller
                 'area' => $area,
                 'carrera' => $carrera,
                 'uni' => app(PanelUniService::class)->obtener($usuario),
+            ]);
+        }
+
+        // San Marcos (área E): panel propio con las áreas A, C y E de la UNMSM.
+        if ($area->codigo === PerfilExamenUnmsm::MODALIDAD) {
+            return view('alumno.unmsm.panel', [
+                'usuario' => $usuario,
+                'area' => $area,
+                'carrera' => $carrera,
+                'carreras' => $carrera ? collect() : Carrera::query()->where('activo', true)
+                    ->where('area_postulacion_id', $area->id)->orderBy('nombre')->get(),
+                'unmsm' => app(PanelUnmsmService::class)->obtener($usuario),
             ]);
         }
 
@@ -214,6 +228,28 @@ class OrientacionController extends Controller
         ]);
     }
 
+    /** Área San Marcos (A, C o E): se elige una sola vez, solo en la modalidad San Marcos. */
+    public function guardarAreaUnmsm(Request $request): RedirectResponse
+    {
+        $usuario = $this->estudiante($request);
+        $area = $usuario->areaPostulacion()->first() ?? $usuario->carrera?->areaPostulacion;
+        abort_unless($area && $area->activo && $area->codigo === PerfilExamenUnmsm::MODALIDAD, 403);
+        // Se lee el valor guardado, no el de la sesión: otra pestaña pudo haberlo elegido ya.
+        abort_if(Usuario::query()->whereKey($usuario->id)->value('area_unmsm') !== null, 403,
+            'Tu área de San Marcos ya fue seleccionada.');
+
+        $datos = $request->validate([
+            'area_unmsm' => ['required', 'string', Rule::in(array_keys(PerfilExamenUnmsm::AREAS))],
+        ]);
+
+        $guardado = Usuario::query()->whereKey($usuario->id)->whereNull('area_unmsm')
+            ->update(['area_unmsm' => $datos['area_unmsm']]);
+        abort_unless($guardado === 1, 409, 'El área ya se seleccionó desde otra sesión.');
+
+        return redirect()->route('alumno.panel')
+            ->with('status', 'Área '.$datos['area_unmsm'].' de San Marcos seleccionada.');
+    }
+
     // Carrera opcional: sirve para personalizar el perfil sin bloquear el examen por área.
     public function guardarCarrera(Request $request): RedirectResponse
     {
@@ -251,14 +287,32 @@ class OrientacionController extends Controller
             ->leftJoin('simulacros as s', 's.id', '=', 'i.simulacro_id')
             ->where('i.id', $intento)
             ->where('i.usuario_id', $usuario->id)
-            ->select('i.id', 's.nombre as simulacro_nombre')
+            ->select('i.id', 'i.fecha_inicio', 'i.fecha_fin', 'i.carrera_id', 's.nombre as simulacro_nombre')
             ->firstOrFail();
 
         // El servicio rechaza los intentos sin finalizar o todavía sin calificación.
         $resultado = $resultados->mostrar($intento);
+        $areaUnmsm = PerfilExamenUnmsm::areaDeNombre($intentoActual->simulacro_nombre);
 
         // Las soluciones sólo se consultan después de validar propietario y finalización.
         [$preguntas, $alternativas] = $this->revisionDelIntento($intento);
+
+        if ($areaUnmsm !== null) {
+            return view('alumno.unmsm.resultados', [
+                'usuario' => $usuario,
+                'resultado' => $resultado,
+                'intento' => $intentoActual,
+                'areaUnmsm' => $areaUnmsm,
+                'carrera' => $intentoActual->carrera_id
+                    ? DB::table('carreras')->where('id', $intentoActual->carrera_id)->value('nombre') : null,
+                'numero' => DB::table('intentos as i')->join('simulacros as s', 's.id', '=', 'i.simulacro_id')
+                    ->where('i.usuario_id', $usuario->id)->where('i.id', '<=', $intento)
+                    ->where('s.nombre', 'like', PerfilExamenUnmsm::prefijo($areaUnmsm).'%')->count(),
+                'actitudinal' => (float) (app(PanelUnmsmService::class)->actitudinalPorIntento(collect([$intento]))[$intento] ?? 0),
+                'preguntas' => $preguntas,
+                'alternativasPorPregunta' => $alternativas,
+            ]);
+        }
 
         if (! str_starts_with((string) ($intentoActual->simulacro_nombre ?? ''), 'UNDC - Admisión Ordinaria Tipo ')) {
             // Día UNI: desglose con la escala de su propia plantilla (CalificacionUniService).
@@ -291,25 +345,36 @@ class OrientacionController extends Controller
      */
     private function revisionDelIntento(int $intento): array
     {
-        $preguntas = DB::table('respuestas_estudiante as re')
+        return [$this->preguntasRevision($intento), $this->alternativasRevision($intento)];
+    }
+
+    private function preguntasRevision(int $intento): \Illuminate\Support\Collection
+    {
+        return DB::table('respuestas_estudiante as re')
             ->join('preguntas as p', 'p.id', '=', 're.pregunta_id')
             ->join('temas as t', 't.id', '=', 'p.tema_id')
             ->join('areas as a', 'a.id', '=', 't.area_id')
             ->where('re.intento_id', $intento)
             ->orderBy('re.orden')
             ->select(
-                're.orden', 're.alternativa_id', 're.estado_respuesta',
+                're.orden', 're.alternativa_id', 're.estado_respuesta', 're.puntaje_obtenido',
                 'p.id as pregunta_id', 'p.enunciado', 'p.imagen', 'p.solucion',
                 'a.nombre as asignatura'
             )
             ->get();
+    }
 
-        $alternativas = DB::table('alternativas')
-            ->whereIn('pregunta_id', $preguntas->pluck('pregunta_id'))
+    private function alternativasRevision(int $intento): \Illuminate\Support\Collection
+    {
+        $columnas = ['id', 'pregunta_id', 'letra', 'texto', 'imagen', 'es_correcta'];
+        if (PerfilExamenUnmsm::hayRubrica()) {
+            $columnas[] = 'puntaje_actitudinal';
+        }
+
+        return DB::table('alternativas')
+            ->whereIn('pregunta_id', DB::table('respuestas_estudiante')->where('intento_id', $intento)->select('pregunta_id'))
             ->orderBy('letra')
-            ->get(['id', 'pregunta_id', 'letra', 'texto', 'imagen', 'es_correcta'])
+            ->get($columnas)
             ->groupBy('pregunta_id');
-
-        return [$preguntas, $alternativas];
     }
 }
