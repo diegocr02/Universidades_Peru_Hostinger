@@ -57,8 +57,11 @@ function AsegurarServidorQa {
     }
     Write-Host '  Encendiendo el servidor QA en http://127.0.0.1:8001 ...' -ForegroundColor Yellow
     $env:APP_ENV = 'qa'
+    # OPcache solo para este servidor (como en un hosting real); ver tests\quality\php-qa\opcache.ini
+    $env:PHP_INI_SCAN_DIR = (Resolve-Path 'tests\quality\php-qa').Path
     $script:servidorIniciado = Start-Process -FilePath 'php' -ArgumentList 'artisan', 'serve', '--host=127.0.0.1', '--port=8001' -WindowStyle Hidden -PassThru
     Remove-Item Env:APP_ENV
+    Remove-Item Env:PHP_INI_SCAN_DIR
     for ($i = 0; $i -lt 30; $i++) {
         Start-Sleep -Milliseconds 500
         if (ServidorQaActivo) { Write-Host '  Servidor QA listo.' -ForegroundColor Green; return $true }
