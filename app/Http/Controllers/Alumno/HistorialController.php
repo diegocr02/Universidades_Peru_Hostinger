@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Alumno;
 
 use App\Http\Controllers\Controller;
+use App\Support\UniversidadExamen;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -14,10 +15,15 @@ class HistorialController extends Controller
 {
     public function index(): View
     {
+        $codigo = UniversidadExamen::codigoDelAlumno(auth('web')->user());
+
         $intentos = DB::table('intentos as i')
             ->leftJoin('simulacros as s', 's.id', '=', 'i.simulacro_id')
             ->where('i.usuario_id', auth('web')->id())
             ->where('i.estado', '!=', 'en_curso')
+            // Simulacros solo de la universidad actual; las prácticas sin simulacro se conservan.
+            ->when($codigo !== null, fn ($q) => $q->where(fn ($w) => $w->whereNull('i.simulacro_id')
+                ->orWhere(fn ($s) => UniversidadExamen::filtrar($s, $codigo))))
             ->orderByDesc('i.fecha_inicio')->orderByDesc('i.id')
             ->select('i.id', 'i.tipo', 'i.estado', 'i.fecha_inicio', 'i.fecha_fin', 'i.total_preguntas',
                 'i.correctas', 'i.incorrectas', 'i.en_blanco', 'i.puntaje_total', 's.nombre as simulacro')

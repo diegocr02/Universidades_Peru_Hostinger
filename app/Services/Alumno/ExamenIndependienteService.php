@@ -15,7 +15,7 @@ use Illuminate\Validation\ValidationException;
 class ExamenIndependienteService
 {
     /** Escala del examen independiente CNI (A–E); la UNI usa config/examen_uni.php. */
-    private const VALORES_CNI = ['puntaje_correcta' => 20, 'puntaje_incorrecta' => -1.125, 'puntaje_blanco' => 0];
+    public const VALORES_CNI =['puntaje_correcta' => 20, 'puntaje_incorrecta' => -1.125, 'puntaje_blanco' => 0];
 
     public function __construct(private readonly IntentoService $intentos) {}
 

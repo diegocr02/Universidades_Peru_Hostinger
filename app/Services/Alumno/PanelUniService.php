@@ -4,6 +4,7 @@ namespace App\Services\Alumno;
 
 use App\Models\Usuario;
 use App\Support\PerfilExamenCni;
+use App\Support\UniversidadExamen;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -99,6 +100,8 @@ class PanelUniService
             ->leftJoin('simulacros as s', 's.id', '=', 'i.simulacro_id')
             ->where('i.usuario_id', $usuario->id)
             ->where('i.tipo', 'simulacro')
+            // Solo exámenes UNI: no se mezclan intentos de otras universidades.
+            ->tap(fn ($q) => UniversidadExamen::filtrar($q, 'B'))
             ->when($soloIntento !== null, fn ($q) => $q->where('i.id', $soloIntento))
             ->orderByDesc('i.fecha_inicio')->orderByDesc('i.id')
             ->limit(200)

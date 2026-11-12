@@ -31,7 +31,7 @@ class ProgresoAlumnoTest extends TestCase
 
     private function simulacro(string $nombre, int $puntosPorAcierto): int
     {
-        return DB::table('simulacros')->insertGetId([
+        $id = DB::table('simulacros')->insertGetId([
             'nombre' => $nombre, 'tiempo_limite' => 60,
             'total_preguntas' => 10, 'cantidad_alternativas' => 4,
             'puntaje_correcta' => $puntosPorAcierto, 'puntaje_incorrecta' => -1,
@@ -39,6 +39,13 @@ class ProgresoAlumnoTest extends TestCase
             'fecha_inicio' => now()->subWeek(), 'fecha_fin' => now()->addWeek(),
             'activo' => true, 'created_at' => now(), 'updated_at' => now(),
         ]);
+        // El progreso solo cuenta exámenes de la universidad del alumno (área C).
+        DB::table('area_postulacion_simulacro')->insert([
+            'simulacro_id' => $id,
+            'area_postulacion_id' => DB::table('areas_postulacion')->where('codigo', 'C')->value('id'),
+        ]);
+
+        return $id;
     }
 
     private function intento(int $usuarioId, int $simulacroId, ?float $puntaje, int $dias): void

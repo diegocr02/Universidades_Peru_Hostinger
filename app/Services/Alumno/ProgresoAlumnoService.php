@@ -3,6 +3,7 @@
 namespace App\Services\Alumno;
 
 use App\Models\Usuario;
+use App\Support\UniversidadExamen;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -12,12 +13,17 @@ use Illuminate\Support\Facades\DB;
  */
 class ProgresoAlumnoService
 {
-    public function obtener(Usuario $usuario): array
+    /** @param  string|null  $codigoArea  universidad del panel; null usa la del alumno */
+    public function obtener(Usuario $usuario, ?string $codigoArea = null): array
     {
+        $codigoArea ??= UniversidadExamen::codigoDelAlumno($usuario);
+
         $filas = DB::table('intentos as i')
             ->join('simulacros as s', 's.id', '=', 'i.simulacro_id')
             ->where('i.usuario_id', $usuario->id)
             ->where('i.tipo', 'simulacro')
+            // La gráfica solo compara exámenes de la misma universidad.
+            ->when($codigoArea !== null, fn ($q) => UniversidadExamen::filtrar($q, $codigoArea))
             ->whereIn('i.estado', ['finalizado', 'enviado_auto'])
             ->whereNotNull('i.puntaje_total')
             ->where('i.total_preguntas', '>', 0)

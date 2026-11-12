@@ -10,9 +10,11 @@ use App\Services\ResultadoService;
 use App\Services\SimulacroService;
 use App\Services\Alumno\DashboardEstudianteService;
 use App\Services\Alumno\PanelUniService;
+use App\Services\Alumno\PanelUnfvService;
 use App\Services\Alumno\ReferenciaIngresoService;
 use App\Services\Alumno\PanelUnmsmService;
 use App\Support\PerfilExamenUnmsm;
+use App\Support\UniversidadExamen;
 use App\Services\Alumno\ProgresoAlumnoService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -139,6 +141,17 @@ class OrientacionController extends Controller
             ]);
         }
 
+        // Villarreal (área C): panel propio con la práctica general UNFV.
+        if ($area->codigo === 'C') {
+            return view('alumno.unfv.panel', [
+                'usuario' => $usuario,
+                'area' => $area,
+                'carrera' => $carrera,
+                'unfv' => app(PanelUnfvService::class)->obtener($usuario),
+                'progreso' => $progresoService->obtener($usuario, $area->codigo),
+            ]);
+        }
+
         // No hace falta elegir carrera: el área guardada determina qué examen se ofrece.
         $simulacros = $this->simulacrosDelArea($usuario, $area, $carrera, $servicio);
 
@@ -153,6 +166,8 @@ class OrientacionController extends Controller
             ->leftJoin('simulacros as s', 's.id', '=', 'i.simulacro_id')
             ->where('i.usuario_id', $usuario->id)
             ->where('i.tipo', 'simulacro')
+            // Historial solo de la universidad del panel: no se mezclan intentos.
+            ->tap(fn ($q) => UniversidadExamen::filtrar($q, $area->codigo))
             ->select('i.*', 's.nombre as simulacro_nombre', 's.puntaje_correcta')
             ->when($busqueda !== '', function ($query) use ($busqueda) {
                 $query->where(function ($q) use ($busqueda) {
@@ -195,7 +210,7 @@ class OrientacionController extends Controller
             'simulacros' => $simulacros,
             'intentos' => $intentos,
             'dashboard' => $dashboard->obtener($usuario, $simulacros),
-            'progreso' => $progresoService->obtener($usuario),
+            'progreso' => $progresoService->obtener($usuario, $area->codigo),
             'esVistaPrevia' => false,
         ]);
     }

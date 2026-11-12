@@ -182,14 +182,14 @@ class OrientacionAlumnoTest extends TestCase
             'id' => $estudiante->id, 'area_postulacion_id' => $this->area('C'), 'carrera_id' => null,
         ]);
         $this->get(route('alumno.panel'))->assertOk()->assertSee('Villarreal')
-            ->assertSee('Dar examen');
+            ->assertSee('Examen UNFV');
         $this->get(route('alumno.elegir-area'))->assertRedirect(route('alumno.panel'));
         $this->post('/logout')->assertRedirect('/login');
 
         $this->post('/login', ['usuario' => 'primer_ingreso', 'password' => 'ClaveCNI2026!'])
             ->assertRedirect(route('alumno.panel'));
         $this->get(route('alumno.panel'))->assertOk()->assertSee('Villarreal')
-            ->assertSee('Dar examen');
+            ->assertSee('Examen UNFV');
         $this->post(route('alumno.area.guardar'), ['area_id' => $this->area('E')])->assertForbidden();
     }
 

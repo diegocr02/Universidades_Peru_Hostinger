@@ -140,7 +140,7 @@ class ExamenIndependienteTest extends TestCase
 
     public function test_el_boton_del_panel_inicia_directamente_sin_selector_de_simulacro_o_carrera(): void
     {
-        $this->actingAs($this->alumno('C'), 'web')->get(route('alumno.panel'))
+        $this->actingAs($this->alumno('D'), 'web')->get(route('alumno.panel'))
             ->assertOk()->assertSee(route('examen.independiente'), false)
             ->assertSee('Dar examen')->assertDontSee('Elegir simulacro')
             ->assertDontSee('Carrera de interés')->assertDontSee('0 disponibles');

@@ -64,6 +64,15 @@ class PanelesPorAreaTest extends TestCase
 
                 continue;
             }
+            // Villarreal (C) tiene su panel propio con la práctica general UNFV.
+            if ($codigo === 'C') {
+                $respuesta->assertViewIs('alumno.unfv.panel')->assertSee('panel-unfv.css')
+                    ->assertSee(route('examen.independiente'), false)
+                    ->assertSee('href="#progreso"', false)
+                    ->assertSee('href="#historial"', false);
+
+                continue;
+            }
             // San Marcos (E) tiene su panel propio con las áreas A, C y E.
             if ($codigo === 'E') {
                 $respuesta->assertViewIs('alumno.unmsm.panel')->assertSee('panel-unmsm.css');
@@ -127,7 +136,8 @@ class PanelesPorAreaTest extends TestCase
 
     public function test_menu_lateral_tiene_cuatro_opciones_y_un_boton_para_contraerlo(): void
     {
-        $this->actingAs($this->estudiante('C'), 'web');
+        // Panel compartido (área D); Villarreal, UNI, UNDC y San Marcos tienen panel propio.
+        $this->actingAs($this->estudiante('D'), 'web');
         $html = $this->get(route('alumno.panel'))->assertOk()->getContent();
 
         $this->assertSame(1, preg_match(
@@ -150,7 +160,7 @@ class PanelesPorAreaTest extends TestCase
 
     public function test_mi_perfil_abre_de_entrada_con_portada_y_datos_del_alumno(): void
     {
-        $this->actingAs($this->estudiante('C'), 'web');
+        $this->actingAs($this->estudiante('D'), 'web');
         $html = $this->get(route('alumno.panel'))->assertOk()->getContent();
 
         $this->assertStringContainsString('id="perfil" data-panel-view="perfil"', $html);

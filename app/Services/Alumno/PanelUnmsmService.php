@@ -5,6 +5,7 @@ namespace App\Services\Alumno;
 use App\Models\Usuario;
 use App\Services\IntentoService;
 use App\Support\PerfilExamenUnmsm;
+use App\Support\UniversidadExamen;
 use App\Support\BancoUnmsmJson;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -103,6 +104,8 @@ class PanelUnmsmService
             ->leftJoin('carreras as c', 'c.id', '=', 'i.carrera_id')
             ->where('i.usuario_id', $usuario->id)
             ->where('i.tipo', 'simulacro')
+            // Solo exámenes de San Marcos: no se mezclan intentos de otras universidades.
+            ->tap(fn ($q) => UniversidadExamen::filtrar($q, 'E'))
             ->orderByDesc('i.fecha_inicio')->orderByDesc('i.id')
             ->limit(300)
             ->get([

@@ -12,10 +12,8 @@
     );
     $tipoA = $simulacrosUndc->first(fn (array $s) => str_contains($s['nombre'], 'Tipo A'));
     $tipoB = $simulacrosUndc->first(fn (array $s) => str_contains($s['nombre'], 'Tipo B'));
-    $idsUndc = $simulacrosUndc->pluck('id')->map(fn ($id) => (int) $id)->all();
-    $historialUndc = $intentos->getCollection()->filter(
-        fn ($i) => in_array((int) $i->simulacro_id, $idsUndc, true)
-    );
+    // El controlador ya entrega solo intentos de exámenes UNDC (UniversidadExamen).
+    $historialUndc = $intentos->getCollection();
     $nombreEstudiante = trim($usuario->nombres.' '.($usuario->apellidos ?? ''));
     $logoUndc = asset('images/undc/logo-undc.png');
 @endphp
@@ -79,7 +77,7 @@
             <div class="ud-stats" aria-label="Resumen de la preparación">
                 <div><span>Modalidades disponibles</span><strong>02</strong><small>Tipo A y Tipo B</small></div>
                 <div><span>Preguntas por examen</span><strong>100</strong><small>19 asignaturas por perfil</small></div>
-                <div><span>Tu historial</span><strong>{{ $historialUndc->count() }}</strong><small>Intentos visibles en esta página</small></div>
+                <div><span>Tu historial</span><strong>{{ $intentos->total() }}</strong><small>Intentos UNDC registrados</small></div>
             </div>
             <div class="ud-welcome-note"><img src="{{ $logoUndc }}" alt="" width="60" height="60"><div><strong>Universidad Nacional de Cañete</strong><p>Practica a tu ritmo. Selecciona Exámenes para elegir Tipo A o Tipo B.</p></div></div>
             </section>

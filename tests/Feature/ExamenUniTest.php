@@ -66,10 +66,14 @@ class ExamenUniTest extends TestCase
 
     public function test_otras_areas_conservan_su_panel(): void
     {
-        $this->actingAs($this->alumno('C'), 'web')
+        $this->actingAs($this->alumno('D'), 'web')
             ->get(route('alumno.panel'))
             ->assertOk()
             ->assertViewIs('alumno.panel');
+        $this->actingAs($this->alumno('C', 'alumno_unfv'), 'web')
+            ->get(route('alumno.panel'))
+            ->assertOk()
+            ->assertViewIs('alumno.unfv.panel');
     }
 
     public function test_cada_dia_crea_su_examen_con_cuotas_y_180_minutos(): void
