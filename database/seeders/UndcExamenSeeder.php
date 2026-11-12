@@ -9,13 +9,13 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
 
-/** Perfiles de demostración UNDC A/B. Mantiene bancos separados entre tipos. */
+/** Exámenes UNDC tipo A y B. Mantiene bancos separados entre tipos. */
 final class UndcExamenSeeder extends Seeder
 {
     public function run(): void
     {
-        if (! app()->environment(['local', 'testing'])) {
-            throw new RuntimeException('Este seeder solo se ejecuta en entorno local/testing.');
+        if (! app()->environment(['local', 'testing']) && ! config('cni.undc_banco_produccion')) {
+            throw new RuntimeException('Fuera de local/testing requiere CNI_UNDC_BANCO_PRODUCCION=true en .env.');
         }
 
         PerfilExamenUndc::validar();
@@ -53,8 +53,9 @@ final class UndcExamenSeeder extends Seeder
                     'puntaje_correcta' => 1.000,
                     'puntaje_incorrecta' => -0.200,
                     'puntaje_blanco' => 0.000,
-                    'fecha_inicio' => $ahora->copy()->subDay(),
-                    'fecha_fin' => $ahora->copy()->addMonths(3),
+                    // Disponibilidad permanente, igual que las demás plantillas de examen.
+                    'fecha_inicio' => '2000-01-01 00:00:00',
+                    'fecha_fin' => '2099-12-31 23:59:59',
                     'activo' => false, // El banco se valida y habilita en UndcPreguntasSeeder.
                     'updated_at' => $ahora,
                 ];
@@ -81,12 +82,10 @@ final class UndcExamenSeeder extends Seeder
                     ]);
                 }
 
-                // SOLO PARA DEMO LOCAL: permite a cuentas CNI existentes iniciar el examen.
-                // Antes de integrar con el selector de universidades, sustituir esta
-                // asociación temporal por autorización específica por carrera/universidad.
+                // Solo los estudiantes de la UNDC (área A del selector de universidades) rinden estos exámenes.
                 DB::table('area_postulacion_simulacro')
                     ->where('simulacro_id', $simulacroId)->delete();
-                $ids = DB::table('areas_postulacion')->where('activo', true)->pluck('id');
+                $ids = DB::table('areas_postulacion')->where('activo', true)->where('codigo', 'A')->pluck('id');
                 foreach ($ids as $id) {
                     DB::table('area_postulacion_simulacro')->insert([
                         'area_postulacion_id' => $id,

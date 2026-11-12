@@ -14,8 +14,8 @@ final class UndcPreguntasSeeder extends Seeder
 {
     public function run(): void
     {
-        if (! app()->environment(['local', 'testing'])) {
-            throw new RuntimeException('El banco preliminar solo puede cargarse en local/testing.');
+        if (! app()->environment(['local', 'testing']) && ! config('cni.undc_banco_produccion')) {
+            throw new RuntimeException('Fuera de local/testing requiere CNI_UNDC_BANCO_PRODUCCION=true en .env.');
         }
 
         $ruta = database_path('data/undc_preguntas_practica.json');
@@ -135,7 +135,7 @@ final class UndcPreguntasSeeder extends Seeder
                         throw new RuntimeException("Banco incompleto en área {$cuota->area_id}: {$cantidad} / {$cuota->cantidad_preguntas}.");
                     }
                 }
-                // Banco completo en entorno local: habilitar para demostración.
+                // Banco completo y validado: se habilita el examen.
                 DB::table('simulacros')->where('id', $simulacro->id)->update([
                     'activo' => true, 'updated_at' => $ahora,
                 ]);
