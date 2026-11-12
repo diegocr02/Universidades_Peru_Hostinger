@@ -922,6 +922,36 @@ body:has(.cni-alumno){background:#f8f9fe}
     }
 }
 
+/* Escudos completos y centrados en el espacio del banner. */
+.cni-alumno[data-area="C"] .cni-alumno-banner .cni-alumno-mascota,
+.cni-alumno[data-area="E"] .cni-alumno-banner .cni-alumno-mascota{
+    top:0;
+    bottom:0;
+    right:0;
+    width:36%;
+    height:100%;
+    max-width:none;
+    max-height:none;
+    object-fit:contain;
+    object-position:center;
+}
+@media(max-width:680px){
+    .cni-alumno[data-area="C"] .cni-alumno-vista-perfil>.cni-alumno-banner,
+    .cni-alumno[data-area="E"] .cni-alumno-vista-perfil>.cni-alumno-banner{
+        padding-bottom:230px;
+    }
+    .cni-alumno[data-area="C"] .cni-alumno-welcome,
+    .cni-alumno[data-area="E"] .cni-alumno-welcome{
+        max-width:100%;
+    }
+    .cni-alumno[data-area="C"] .cni-alumno-banner .cni-alumno-mascota,
+    .cni-alumno[data-area="E"] .cni-alumno-banner .cni-alumno-mascota{
+        top:auto;
+        width:100%;
+        height:210px;
+    }
+}
+
 /* Encuadre de las mascotas originales de Ciencias Básicas y Economía. */
 .cni-alumno[data-area="B"] .cni-alumno-banner .cni-alumno-mascota,
 .cni-alumno[data-area="D"] .cni-alumno-banner .cni-alumno-mascota{

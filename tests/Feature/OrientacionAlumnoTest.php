@@ -35,6 +35,27 @@ class OrientacionAlumnoTest extends TestCase
         return DB::table('areas_postulacion')->where('codigo', $codigo)->value('id');
     }
 
+    public function test_alumno_puede_volver_a_elegir_universidad(): void
+    {
+        $alumno = $this->alumno('cambiar', $this->carrera('Derecho'));
+        $this->actingAs($alumno, 'web');
+        $this->get(route('alumno.panel'))->assertOk()->assertSee('Cambiar universidad');
+        $this->get(route('alumno.universidad.cambiar'))->assertOk()
+            ->assertSee(route('alumno.universidad.guardar'));
+        $this->assertDatabaseHas('usuarios', ['id' => $alumno->id, 'carrera_id' => $this->carrera('Derecho')]);
+        $this->post(route('alumno.universidad.guardar'), ['area_id' => 99999])
+            ->assertSessionHasErrors('area_id');
+        $this->post(route('alumno.universidad.guardar'), ['area_id' => $this->area('C')])
+            ->assertRedirect(route('alumno.panel'));
+        $this->assertDatabaseHas('usuarios', ['id' => $alumno->id,
+            'area_postulacion_id' => $this->area('C'), 'carrera_id' => null]);
+        $this->actingAs($alumno->fresh(), 'web')->get(route('alumno.panel'))->assertOk()->assertSee('Villarreal');
+        $alumno->update(['rol' => 'docente']);
+        $this->actingAs($alumno->fresh(), 'web');
+        $this->get(route('alumno.universidad.cambiar'))->assertForbidden();
+        $this->post(route('alumno.universidad.guardar'), ['area_id' => $this->area('B')])->assertForbidden();
+    }
+
     private function carrera(string $nombre): int
     {
         return DB::table('carreras')->where('nombre', $nombre)->value('id');

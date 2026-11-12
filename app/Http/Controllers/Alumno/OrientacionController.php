@@ -22,6 +22,34 @@ use Illuminate\View\View;
 
 class OrientacionController extends Controller
 {
+    public function cambiarUniversidad(Request $request): View
+    {
+        $this->estudiante($request);
+
+        return view('alumno.elegir-area', [
+            'areas' => AreaPostulacion::query()->where('activo', true)->orderBy('codigo')->get(),
+            'cambiandoUniversidad' => true,
+        ]);
+    }
+
+    public function guardarUniversidad(Request $request): RedirectResponse
+    {
+        $usuario = $this->estudiante($request);
+        $datos = $request->validate([
+            'area_id' => ['required', 'integer', Rule::exists('areas_postulacion', 'id')->where('activo', true)->whereIn('codigo', ['A', 'B', 'C', 'E'])],
+        ]);
+
+        DB::transaction(function () use ($usuario, $datos) {
+            $perfil = Usuario::query()->lockForUpdate()->findOrFail($usuario->id);
+            $areaActual = $perfil->area_postulacion_id ?? $perfil->carrera?->area_postulacion_id;
+            if ((int) $areaActual !== (int) $datos['area_id']) {
+                $perfil->update(['area_postulacion_id' => (int) $datos['area_id'], 'carrera_id' => null]);
+            }
+        });
+
+        return redirect()->route('alumno.panel')->with('status', 'Universidad seleccionada correctamente.');
+    }
+
     private function estudiante(Request $request): Usuario
     {
         $usuario = $request->user('web');

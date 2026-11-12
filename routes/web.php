@@ -34,6 +34,8 @@ Route::get('/panel', Panel::class)
 
 Route::middleware(['auth:web', EnsureActiveUser::class, FeatureAlumnoAreas::class])
     ->prefix('alumno')->name('alumno.')->group(function () {
+        Route::get('/cambiar-universidad', [OrientacionController::class, 'cambiarUniversidad'])->name('universidad.cambiar');
+        Route::post('/cambiar-universidad', [OrientacionController::class, 'guardarUniversidad'])->name('universidad.guardar');
         Route::get('/elegir-area', [OrientacionController::class, 'elegirArea'])->name('elegir-area');
         Route::post('/elegir-area', [OrientacionController::class, 'guardarArea'])->name('area.guardar');
         Route::get('/panel', [OrientacionController::class, 'panel'])->name('panel');

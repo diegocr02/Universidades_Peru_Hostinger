@@ -32,6 +32,7 @@
             <a href="#inicio" class="ud-active" data-ud-nav="inicio">⌂ <span>Inicio</span></a>
             <a href="#examenes" data-ud-nav="examenes">▤ <span>Exámenes</span></a>
             <a href="#resultados" data-ud-nav="resultados">◷ <span>Mis resultados</span></a>
+                <a href="{{ route('alumno.universidad.cambiar') }}"><span aria-hidden="true">&#8644;</span> Cambiar universidad</a>
         </nav>
 
         <div class="ud-sidebar-bottom">

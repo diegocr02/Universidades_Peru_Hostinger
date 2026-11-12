@@ -48,7 +48,11 @@
     </form>
 
     <div class="selector-page__encabezado">
-        <p class="selector-page__eyebrow">PRIMERA VEZ <strong>EN EL SIMULADOR</strong></p>
+        <p class="selector-page__eyebrow">{{ ($cambiandoUniversidad ?? false) ? 'CAMBIAR UNIVERSIDAD' : 'PRIMERA VEZ' }} <strong>EN EL SIMULADOR</strong></p>
+        @if($cambiandoUniversidad ?? false)
+            <p><a href="{{ route('alumno.panel') }}">Volver a mi panel</a></p>
+            <p>Al cambiar de universidad podrás elegir una nueva carrera. Tus intentos anteriores se conservarán.</p>
+        @endif
         <h1 id="selector-titulo">¿A qué universidad deseas postular?</h1>
         <p class="selector-page__subtitulo">Elige tu universidad y personalizaremos tu panel de estudio para su examen de admisión</p>
     </div>
@@ -62,7 +66,7 @@
                 ];
             @endphp
             <form class="area-opcion area-tarjeta" data-area="{{ $area->codigo }}"
-                  method="POST" action="{{ route('alumno.area.guardar') }}"
+                  method="POST" action="{{ route(($cambiandoUniversidad ?? false) ? 'alumno.universidad.guardar' : 'alumno.area.guardar') }}"
                   aria-labelledby="area-titulo-{{ $area->id }}">
                 @csrf
                 <input type="hidden" name="area_id" value="{{ $area->id }}">

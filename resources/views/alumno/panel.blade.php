@@ -35,7 +35,8 @@
                 <a href="#perfil" class="is-active" aria-current="location"><span aria-hidden="true">♙</span> Mi perfil</a>
                 <a href="#progreso"><span aria-hidden="true">▤</span> Mi progreso</a>
                 <a href="#historial"><span aria-hidden="true">◷</span> Historial</a>
-            </nav>
+                <a href="{{ route('alumno.universidad.cambiar') }}"><span aria-hidden="true">&#8644;</span> Cambiar universidad</a>
+        </nav>
         </div>
         <div class="cni-alumno-sidebar-bottom">
             @unless($esVistaPrevia)
@@ -113,7 +114,7 @@
     const sidebar = panel.querySelector('#cni-alumno-sidebar');
     const toggle = panel.querySelector('[data-sidebar-toggle]');
     const backdrop = panel.querySelector('[data-sidebar-backdrop]');
-    const links = [...sidebar.querySelectorAll('.cni-alumno-menu a')];
+    const links = [...sidebar.querySelectorAll('.cni-alumno-menu a[href^="#"]')];
     const mobile = window.matchMedia('(max-width: 680px)');
     let abierto = !mobile.matches;
 
