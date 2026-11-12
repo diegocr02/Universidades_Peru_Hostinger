@@ -58,6 +58,9 @@ php artisan migrate --force
 # 5. Bancos de preguntas (idempotentes: omiten las que ya existen)
 php artisan db:seed --class=BancoUnmsmSeeder --force
 php artisan db:seed --class=UnfvPreguntasSeeder --force
+# UNDC (requiere CNI_UNDC_BANCO_PRODUCCION=true en .env; primero los exámenes, luego el banco)
+php artisan db:seed --class=UndcExamenSeeder --force
+php artisan db:seed --class=UndcPreguntasSeeder --force
 
 # 6. Archivos públicos → public_html (sin tocar index.php, .htaccess ni storage; no borra nada)
 rsync -a --checksum --exclude=/index.php --exclude=/storage --exclude=/.htaccess public/ ../public_html/
@@ -106,6 +109,7 @@ No subir nunca `.env`, `.env.qa` ni `tests/quality/.credenciales-qa.json` (está
 | Fecha | Versión | Notas |
 |---|---|---|
 | 12/11/2026 | `b82dbcc` (desde `c4b12e8`) | 3 migraciones (columnas `area_unmsm` y `puntaje_actitudinal`, `codigo` de preguntas a 80). Bancos San Marcos (390) y UNFV (150, 153 imágenes). 37 archivos copiados a `public_html`. Verificado: `/up`, login, CSS e imágenes en 200 y 0 errores en el log. Respaldo: `~/respaldos-cni/20261112-073414/`. Estado anterior del servidor en `git stash`. Cron pendiente de crear |
+| 12/11/2026 | `6f5a423` | Banco UNDC nuevo (200 preguntas, tipos A y B) y exámenes UNDC activos solo para el área A, sin caducidad. `.env`: `CNI_UNDC_BANCO_PRODUCCION=true`. Verificado: 100 preguntas por tipo, `/up` y login en 200, 0 errores. Respaldo: `~/respaldos-cni/20261112-081029/` (incluye copia del `.env`) |
 
 ## Volver atrás (si algo falla)
 
