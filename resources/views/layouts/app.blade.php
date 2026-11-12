@@ -16,6 +16,11 @@
             @auth('web')
                 <nav aria-label="Navegación principal">
                     <a href="{{ route((auth('web')->user()->rol === 'admin' && config('cni.administracion_academica_enabled')) ? 'admin.inicio' : (auth('web')->user()->rol === 'docente' ? 'docente.panel' : ((config('cni.alumno_areas_enabled') && auth('web')->user()->rol === 'estudiante') ? 'alumno.panel' : 'panel'))) }}">Mi panel</a>
+                    @if(config('contingencia.panel_habilitado')
+                        && auth('web')->user()->rol === 'admin'
+                        && hash_equals((string) config('contingencia.administrador_usuario', 'Super_Admin'), (string) auth('web')->user()->usuario))
+                        <a href="{{ route('admin.contingencia.index') }}">🛡️ Centro de contingencia</a>
+                    @endif
                     <span>{{ auth('web')->user()->nombres }} · {{ auth('web')->user()->rol }}</span>
                     @if(request()->routeIs('alumno.resultados'))
                         <form method="GET" action="{{ route('alumno.panel') }}"><button type="submit">Regresa</button></form>

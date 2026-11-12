@@ -25,6 +25,17 @@
                     </a>
                 @endforeach
             </nav>
+            @if(config('contingencia.panel_habilitado')
+                && auth('web')->user()->rol === 'admin'
+                && hash_equals((string) config('contingencia.administrador_usuario', 'Super_Admin'), (string) auth('web')->user()->usuario))
+                <div class="cni-nav-caption">SEGURIDAD Y RESPALDOS</div>
+                <nav class="cni-nav" aria-label="Seguridad de la información">
+                    <a href="{{ route('admin.contingencia.index') }}" @class(['cni-nav__link', 'is-current' => request()->routeIs('admin.contingencia.*')])
+                       @if(request()->routeIs('admin.contingencia.*')) aria-current="page" @endif>
+                        <span class="cni-nav__icon" aria-hidden="true">🛡️</span><span>Centro de contingencia</span>
+                    </a>
+                </nav>
+            @endif
             <div class="cni-nav-caption">ALUMNOS</div>
             <nav class="cni-nav" aria-label="Administración de alumnos">
                 <a href="{{ route('admin.alumnos.index') }}" @class(['cni-nav__link', 'is-current' => request()->routeIs('admin.alumnos.*')]) @if(request()->routeIs('admin.alumnos.*')) aria-current="page" @endif>
