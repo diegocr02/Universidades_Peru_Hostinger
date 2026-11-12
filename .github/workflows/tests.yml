@@ -3,7 +3,8 @@ on:
   pull_request:
     branches: [develop, main]
   push:
-    branches: [develop, feature/kiss-sesiones-web]
+    # deploy/hostinger: la rama que se publica en el hosting también debe pasar las pruebas.
+    branches: [develop, feature/kiss-sesiones-web, deploy/hostinger]
 permissions:
   contents: read
 jobs:

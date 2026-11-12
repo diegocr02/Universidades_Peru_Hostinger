@@ -1,0 +1,341 @@
+
+   PASS  Tests\Unit\ExampleTest
+  ✓ that true is true                                                                                            0.01s
+
+   PASS  Tests\Unit\IndicadorAdmisionUndcServiceTest
+  ✓ sin fuente verificada no inventa ingreso                                                                     0.24s
+  ✓ si hay regla verificada y escala compatible compara                                                          0.02s
+  ✓ no compara escala oficial de 250 con simulacro de 100                                                        0.02s
+  ✓ los puntajes negativos no rompen porcentaje                                                                  0.02s
+
+   PASS  Tests\Unit\ResultadoServiceTest
+  ✓ calcula puntaje correcto
+  ✓ calcula puntaje incorrecto
+  ✓ calcula puntaje en blanco
+  ✓ calcula puntaje doble marca
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   PASS  Tests\Feature\AccesoPanelOficialTest
+  ✓ alumno inicia un simulacro real desde el boton de su portada                                                 1.06s
+  ✓ alumno de otra area no puede iniciar el simulacro                                                            0.13s
+  ✓ panel superadmin esta disponible solo para rol admin                                                         0.08s
+  ✓ panel superadmin respeta bandera de configuracion                                                            0.04s
+
+   PASS  Tests\Feature\AdministracionAcademicaTest
+  ✓ admin accede desde login y docente y alumno no pueden administrar                                            0.09s
+  ✓ con panel academico apagado el admin conserva su login original                                              0.06s
+  ✓ admin crea carrera asignatura y tema desde la interfaz                                                       0.06s
+  ✓ solo excel permite cargar o modificar el banco                                                               1.94s
+
+   PASS  Tests\Feature\AuditoriaCatalogoTest
+  ✓ auditoria de catalogo completo es lectura y no modifica registros                                            0.07s
+  ✓ auditoria detecta catalogo anterior en lugar de modificarlo                                                  0.05s
+
+   PASS  Tests\Feature\AuthModuleTest
+  ✓ login web crea sesion y regenera su identificador                                                            0.05s
+  ✓ login json usa la misma sesion sin emitir tokens                                                             0.03s
+  ✓ credenciales incorrectas e inactividad no crean sesion                                                       0.45s
+  ✓ password incorrecta no ingresa y formulario muestra error                                                    0.24s
+  ✓ datos incompletos se validan en html y json                                                                  0.04s
+  ✓ logout invalida sesion y regenera csrf                                                                       0.05s
+  ✓ logout json cierra la misma sesion                                                                           0.04s
+  ✓ todos los modulos requieren sesion                                                                           0.04s
+  ✓ cuenta desactivada despues del login pierde acceso                                                           0.04s
+  ✓ login comparte limite entre html y json                                                                      2.12s
+  ✓ login real da acceso a los modulos con la misma sesion                                                       0.04s
+  ✓ bearer no sustituye una sesion web                                                                           0.03s
+  ✓ endpoints de modulos conservan web csrf y guard unico                                                        0.03s
+  ✓ csrf rechaza login y operaciones sin token                                                                   0.04s
+
+   PASS  Tests\Feature\BancoGestionTest
+  ✓ menu muestra solo las tres secciones y la entrada redirige a subtemas                                        0.06s
+  ✓ catalogo registra todos los cursos sin preguntas ni duplicados                                               0.13s
+  ✓ descarga la plantilla vacia compatible con el importador                                                     0.05s
+  ✓ importa desde el panel sin crear simulacros y reimportar no duplica                                          0.10s
+  ✓ no reemplaza preguntas que ya se usaron en un examen                                                         0.08s
+  ✓ rechaza archivos invalidos y el acceso de docentes y estudiantes                                             0.07s
+  ✓ filtra preguntas y permite ver las inactivas                                                                 0.13s
+  ✓ validacion no guarda y confirmacion exige el mismo archivo validado                                          0.08s
+  ✓ validacion rechaza archivo invalido y plantilla vacia                                                        0.04s
+
+   PASS  Tests\Feature\BancoPracticaUnfvTest
+  ✓ importa imagenes y claves sin duplicar y el examen solo usa el banco unfv                                    1.41s
+
+   PASS  Tests\Feature\BancoUniJsonTest
+  ✓ importa el json sin cambiar claves ni sobrescribir preguntas existentes                                      0.72s
+  ✓ el banco json permite iniciar los tres dias uni                                                              0.44s
+
+   PASS  Tests\Feature\BancoUnmsmJsonTest
+  ✓ importa json con claves e imagenes y no reescribe registros                                                  2.11s
+  ✓ c y e sortean solo su matematica y conservan los intentos anteriores                                         1.97s
+  ✓ rechaza una clave ambigua y svg activo                                                                       0.06s
+
+   PASS  Tests\Feature\CalificacionUniTest
+  ✓ cada dia perfecto vale 600 y los tres suman 1800                                                             0.87s
+  ✓ todo en blanco vale cero y no cuenta como incorrecta                                                         0.45s
+  ✓ dia 2 todo incorrecto da menos 120 sin redondear a cero                                                      0.50s
+  ✓ caso mixto 468 345 288 suma 1101 y equivale a 12 23                                                          0.80s
+  ✓ la nota referencial redondea y usa cero como minimo visual                                                   0.34s
+  ✓ los intentos de alumnos diferentes no se mezclan                                                             0.81s
+  ✓ se usa el ultimo intento calificado y se conserva el historial                                               0.55s
+  ✓ un intento sin terminar no cuenta y el resultado es parcial                                                  0.69s
+  ✓ el resultado del dia coincide con el resumen y lo guardado                                                   0.48s
+  ✓ recalificar no suma ni descuenta dos veces                                                                   0.49s
+  ✓ intentos con la escala anterior no se recalifican ni se mezclan                                              0.33s
+
+   PASS  Tests\Feature\CienciasBasicasPanelTest
+  ✓ solo abre para estudiantes del area b y respeta el flujo principal                                           0.12s
+  ✓ panel muestra el diseno sin datos inventados y no reemplaza el principal                                     0.10s
+
+   PASS  Tests\Feature\CincoAreasMariaDBTest
+  ✓ usa mariadb real cuando ci lo exige                                                                          0.11s
+  ✓ los cinco simulacros tienen cuotas distintas y una sola area asignada                                        0.12s
+  ✓ login area guardada examen y resultados del alumno con datos reales                                          0.21s
+  ✓ un area ya elegida no ve ni inicia simulacros genericos sin asignacion                                       0.12s
+  ✓ el servidor rechaza iniciar examen de otra area                                                              0.12s
+
+   PASS  Tests\Feature\CrearSuperAdminTest
+  ✓ crea superadmin con password hasheado y acceso al panel                                                      0.05s
+  ✓ segunda ejecucion no duplica ni cambia credenciales                                                          0.04s
+  ✓ no convierte una cuenta de estudiante en administrador                                                       0.05s
+  ✓ no crea cuenta si contrasena es demasiado corta                                                              0.05s
+
+   PASS  Tests\Feature\DespliegueSeguroAlumnoTest
+  ✓ nuevo flujo esta activo en el entorno de pruebas                                                             0.05s
+  ✓ desactivado conserva panel anterior y no expone las nuevas pantallas                                         0.06s
+
+   PASS  Tests\Feature\ExamenIndependienteTest
+  ✓ cada area genera cien preguntas con sus cuotas y el orden acordado                                           0.63s
+  ✓ reanuda sin resortear ni reiniciar el tiempo y luego permite otro intento                                    0.48s
+  ✓ si el banco es insuficiente no deja un intento incompleto                                                    0.32s
+  ✓ sin banco muestra error y solo estudiantes activos pueden iniciar                                            0.06s
+  ✓ el boton del panel inicia directamente sin selector de simulacro o carrera                                   0.06s
+  ✓ el banco vacio abre la misma pantalla sin crear intentos y luego el excel permite un examen real             0.36s
+  ✓ las acciones de la pantalla sin banco no guardan ni finalizan                                                0.02s
+  ✓ la pantalla vacia tambien exige una sesion de estudiante                                                     0.05s
+  ✓ el examen independiente se cierra al cumplir una hora                                                        0.34s
+
+   PASS  Tests\Feature\ExamenPantallaTest
+  ✓ iniciar crea el intento y al repetir lo reanuda                                                              0.14s
+  ✓ iniciar un simulacro no disponible vuelve con error                                                          0.12s
+  ✓ muestra la pregunta con su area sin revelar la clave                                                         0.15s
+  ✓ solo el dueno puede abrir su examen                                                                          0.13s
+  ✓ un invitado va al login                                                                                      0.12s
+  ✓ un intento cerrado redirige al panel con aviso                                                               0.13s
+  ✓ responder guarda y navegar cambia de pregunta                                                                0.18s
+  ✓ al reanudar abre la primera pregunta sin responder                                                           0.14s
+  ✓ finalizar envia el examen y vuelve al panel                                                                  0.15s
+  ✓ enviar desde el modal tras responder y navegar finaliza y redirige                                           0.21s
+  ✓ el x data del examen no cambia entre renders                                                                 0.15s
+  ✓ si el tiempo termino no guarda y envia automaticamente                                                       0.16s
+  ✓ el temporizador del navegador no cierra antes de tiempo                                                      0.15s
+
+   PASS  Tests\Feature\ExamenServiceTest
+  ✓ el seeder deja un simulacro de 40 preguntas y 60 minutos                                                     0.11s
+  ✓ las preguntas incluyen area tema y bloque sin la clave                                                       0.12s
+  ✓ en curso reanuda el mismo intento solo para su dueno                                                         0.13s
+  ✓ en curso cierra el intento vencido                                                                           0.13s
+  ✓ respuestas devuelve lo guardado en orden                                                                     0.12s
+  ✓ el endpoint mostrar conserva el formato de respuestas                                                        0.12s
+
+   PASS  Tests\Feature\ExamenUniTest
+  ✓ el panel del area b muestra los tres dias                                                                    0.06s
+  ✓ otras areas conservan su panel                                                                               0.06s
+  ✓ cada dia crea su examen con cuotas y 180 minutos                                                             0.35s
+  ✓ volver a entrar reanuda el intento abierto                                                                   0.28s
+  ✓ alumnos de otras areas no pueden rendir dias uni                                                             0.27s
+  ✓ dia inexistente no tiene ruta                                                                                0.06s
+  ✓ el banco uni alcanza para los tres dias y no se duplica                                                      0.53s
+  ✓ al terminar el alumno revisa sus aciertos y errores con la solucion                                          0.44s
+  ✓ banco incompleto vuelve al panel con el motivo                                                               0.03s
+
+   PASS  Tests\Feature\ExamenUnmsmTest
+  ✓ cada area a c e arma cien preguntas con su distribucion y noventa minutos                                    0.55s
+  ✓ sin distribucion oficial no crea intentos y avisa en el panel                                                0.35s
+  ✓ banco insuficiente muestra disponibilidad y no crea examen incompleto                                        0.24s
+  ✓ reanuda sin reiniciar el tiempo y permite volver a rendir                                                    0.48s
+  ✓ califica ordinarias con penalidad y actitudinales con rubrica                                                0.55s
+  ✓ conserva puntajes negativos                                                                                  0.45s
+  ✓ al vencer el tiempo se envia solo bloquea respuestas y califica una vez                                      0.41s
+  ✓ el seeder genera el banco completo con imagenes y cada area arma su examen                                   1.64s
+  ✓ el examen uni no recibe estilos ni extras de san marcos                                                      0.39s
+  ✓ el area san marcos puede cambiarse solo dentro de la modalidad                                               0.07s
+  ✓ cambiar area conserva el intento abierto y permite practicar otra                                            0.48s
+  ✓ control de acceso entre uni y san marcos                                                                     0.35s
+  ✓ panel tiene cinco opciones y las tres areas con datos reales                                                 0.48s
+  ✓ los intentos anteriores del area e se conservan aparte                                                       0.05s
+
+   PASS  Tests\Feature\ExampleTest
+  ✓ the application returns a successful response                                                                0.02s
+
+   PASS  Tests\Feature\HistorialPanelAlumnoTest
+  ✓ historial filtra ordena y mantiene los intentos del alumno                                                   0.08s
+
+   PASS  Tests\Feature\HistorialPorUniversidadTest
+  ✓ cada universidad ve solo sus intentos                                                                        0.05s
+  ✓ paneles undc y general no mezclan el historial                                                               0.07s
+  ✓ al cambiar de universidad el panel nuevo no muestra intentos anteriores                                      0.07s
+
+   PASS  Tests\Feature\ImportarAlumnosExcelTest
+  ✓ importa excel real y conecta login seccion y lista docente                                                   0.10s
+  ✓ permisos en pantalla plantilla validacion e importacion                                                      0.08s
+  ✓ rechaza duplicados del archivo y cuentas existentes sin modificarlas                                         0.07s
+  ✓ rechaza filas incompletas secciones inexistentes inactivas y plantilla vacia                                 0.08s
+  ✓ confirmacion revalida todo y no deja una importacion parcial                                                 0.06s
+  ✓ no permite importar sin validar ni cambiar el archivo o el usuario                                           0.08s
+  ✓ validacion vencida y seccion desactivada despues de validar no importan                                      0.05s
+  ✓ genera nombre apellido y sufijos sin modificar cuentas existentes                                            0.09s
+  ✓ la plantilla ya no pide usuario y los nombres invalidos no crean cuentas                                     0.05s
+  ✓ dni obligatorio de ocho digitos sin letras y sin notacion cientifica                                         0.11s
+  ✓ dni se lee como texto y no se expone en la vista previa                                                      0.05s
+
+   PASS  Tests\Feature\ImportarBancoExcelTest
+  ✓ importa preguntas con imagen alternativas y respuesta                                                        0.15s
+  ✓ volver a importar no duplica                                                                                 0.07s
+  ✓ cada area tiene 100 preguntas y la habilidad comun                                                           0.04s
+  ✓ sin preguntas suficientes no crea simulacros                                                                 0.06s
+  ✓ pregunta sin respuesta no suma ni resta                                                                      0.05s
+  ✓ archivo inexistente falla con mensaje                                                                        0.05s
+
+   PASS  Tests\Feature\InicioTest
+  ✓ la pagina inicial muestra el nombre del proyecto                                                             0.03s
+
+   PASS  Tests\Feature\IntegridadRespuestasTest
+  ✓ servicio rechaza alternativa de otra pregunta sin guardar nada                                               0.12s
+  ✓ api rechaza alternativa de otra pregunta con 422                                                             0.13s
+  ✓ intento finalizado no acepta respuestas ni cambia su calificacion                                            0.13s
+  ✓ api rechaza responder un intento finalizado con 422                                                          0.14s
+
+   PASS  Tests\Feature\IntentosModuleTest
+  ✓ las rutas del modulo estan definidas                                                                         0.02s
+  ✓ el contrato json existe                                                                                      0.02s
+
+   PASS  Tests\Feature\OrientacionAlumnoTest
+  ✓ alumno puede volver a elegir universidad                                                                     0.09s
+  ✓ primer login ofrece cinco areas                                                                              0.05s
+  ✓ seleccion de area abre panel y guarda carrera del mismo grupo                                                0.06s
+  ✓ carrera ajena y area inactiva son rechazadas                                                                 0.07s
+  ✓ area y carrera persisten entre sesiones y no pueden reemplazarse                                             0.08s
+  ✓ solo muestra examenes de su area y backend rechaza otras areas                                               0.15s
+  ✓ un alumno no ve resultados ajenos                                                                            0.07s
+  ✓ url del examen no permite saltarse la eleccion de carrera                                                    0.13s
+  ✓ elegir area una vez muestra panel y recuerda eleccion sin carrera                                            0.07s
+  ✓ alumno sin carrera rinde simulacro exclusivo de su area                                                      0.19s
+  ✓ seeder no reasigna codigos legados sin migracion                                                             0.06s
+
+   PASS  Tests\Feature\PanelTest
+  ✓ panel muestra solo intentos del usuario actual                                                               0.05s
+
+   PASS  Tests\Feature\PanelesPorAreaTest
+  ✓ cinco areas usan misma ruta y plantilla pero identidad diferente                                             0.08s
+  ✓ eleccion persiste y llega a la misma pagina para cada area                                                   0.10s
+  ✓ una cuenta sin area ve el selector en vez del panel                                                          0.05s
+  ✓ las urls anteriores de diego y dafne redirigen al panel unificado                                            0.05s
+  ✓ los temas de otras areas no se abren mediante url directa                                                    0.04s
+  ✓ menu lateral tiene cuatro opciones y un boton para contraerlo                                                0.06s
+  ✓ mi perfil abre de entrada con portada y datos del alumno                                                     0.06s
+  ✓ el panel ofrece dar examen del area                                                                          0.07s
+  ✓ menu usa mi perfil mi progreso historial para cada area                                                      0.06s
+  ✓ docente no puede abrir el panel de alumno                                                                    0.06s
+
+   PASS  Tests\Feature\PreguntasModuleTest
+  ✓ el archivo de rutas existe                                                                                   0.02s
+  ✓ el controlador existe                                                                                        0.02s
+  ✓ el servicio existe                                                                                           0.02s
+  ✓ el contrato json es valido                                                                                   0.03s
+
+   PASS  Tests\Feature\ProgresoAlumnoTest
+  ✓ muestra solo intentos calificados del alumno y normaliza escalas diferentes                                  0.06s
+  ✓ sin intentos muestra estado vacio sin puntajes inventados                                                    0.04s
+  ✓ no usa una nota historica cuando no existe resultado calificado                                              0.03s
+
+   PASS  Tests\Feature\RecorridoSimulacroTest
+  ✓ recorrido completo desde login hasta resultados                                                              0.13s
+  ✓ no crea intentos parciales si el banco no alcanza                                                            0.07s
+  ✓ no sortea preguntas sin una unica clave o con numero incorrecto de opciones                                  0.08s
+  ✓ el sorteo respeta cuotas especificas y mixtas sin duplicar                                                   0.07s
+  ✓ rechaza simulacro inactivo y fuera de fechas                                                                 0.07s
+  ✓ otro estudiante no lee ni modifica intentos o resultados ajenos                                              0.08s
+  ✓ se puede cambiar y borrar una respuesta pero no cruzar alternativas                                          0.09s
+  ✓ respuesta fuera de tiempo se rechaza y el cierre si persiste                                                 0.08s
+  ✓ consultar intento vencido lo finaliza y califica                                                             0.08s
+  ✓ comando cierra y califica sin necesitar que el navegador siga abierto                                        0.08s
+  ✓ una configuracion usada no se edita y no se pierden respuestas                                               0.07s
+  ✓ fallo al calificar no deja finalizacion ni resultados parciales                                              0.06s
+  ✓ el sorteo conserva la secuencia de bloques                                                                   0.08s
+  ✓ area de postulacion se comprueba con el perfil y no con un id enviado                                        0.08s
+  ✓ pregunta existente pero ajena al sorteo no se puede responder                                                0.06s
+  ✓ se conserva el puntaje negativo de las penalizaciones                                                        0.09s
+
+   PASS  Tests\Feature\ReferenciaIngresoTest
+  ✓ uni no muestra veredicto ni puntos faltantes antes de completar los tres dias                                0.02s
+  ✓ san marcos compara milesimas y el minimo depende del area                                                    0.02s
+  ✓ uni requiere tres dias y compara la mitad del primer puesto                                                  0.02s
+
+   PASS  Tests\Feature\ResultadosModuleTest
+  ✓ el request rechaza un intento vacio                                                                          0.02s
+  ✓ el request rechaza un id negativo                                                                            0.02s
+  ✓ el request rechaza un id no numerico                                                                         0.02s
+  ✓ el request requiere autenticacion                                                                            0.02s
+  ✓ el request acepta un usuario autenticado                                                                     0.02s
+
+   PASS  Tests\Feature\SeccionesDocenteTest
+  ✓ cada docente solo ve su seccion y sus alumnos                                                                0.08s
+  ✓ alumnos sin intentos aparecen en la tabla                                                                    0.07s
+  ✓ api lista solo resultados de la seccion de cada docente                                                      0.07s
+  ✓ api bloquea consulta y calificacion de otra seccion                                                          0.05s
+  ✓ docente sin seccion no accede a resultados de otros                                                          0.07s
+  ✓ seccion inactiva impide ver alumnos y resultados                                                             0.06s
+  ✓ estudiante no puede abrir el panel docente                                                                   0.06s
+  ✓ login docente redirige al panel compartido                                                                   0.11s
+  ✓ administrador conserva acceso global a resultados                                                            0.04s
+
+   PASS  Tests\Feature\SimulacrosCarreraTest
+  ✓ perfiles distintos según carrera y bloqueo de acceso cruzado                                                 0.16s
+  ✓ no se puede configurar una carrera en otro grupo ni superar banco                                            0.11s
+
+   PASS  Tests\Feature\SimulacrosModuleTest
+  ✓ docente crea simulacro con sus areas                                                                         0.06s
+  ✓ datos incompletos devuelven error de validacion                                                              0.05s
+  ✓ la suma de preguntas por area debe igualar el total                                                          0.05s
+  ✓ fecha fin debe ser posterior a fecha inicio                                                                  0.05s
+  ✓ estudiante no puede crear ni editar                                                                          0.05s
+  ✓ sin sesion no hay acceso                                                                                     0.06s
+  ✓ simulacro inexistente devuelve 404                                                                           0.06s
+  ✓ actualizar reemplaza areas sin duplicar                                                                      0.07s
+  ✓ estudiante solo ve simulacros activos                                                                        0.06s
+  ✓ catalogo demo coincide con las cinco areas aprobadas                                                         0.06s
+  ✓ api rechaza asignaturas y areas postulacion inactivas                                                        0.06s
+  ✓ servicio impide cuotas inconsistentes sin pasarlas por form request                                          0.04s
+  ✓ actualizacion no desvincula carrera de su area si se omite carrera id                                        0.07s
+  ✓ servicio no permite repetir asignatura y nivel                                                               0.05s
+
+   PASS  Tests\Feature\VaciarBancoPreguntasTest
+  ✓ solo super admin ve el boton y puede usarlo                                                                  0.06s
+  ✓ sin confirmacion valida no se borra nada                                                                     0.03s
+  ✓ reinicia completamente banco historial imagenes e ids                                                        0.10s
+  ✓ se puede reiniciar demo con intentos en curso                                                                0.92s
+
+  Tests:    234 passed (10589 assertions)
+  Duration: 44.41s

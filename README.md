@@ -73,6 +73,15 @@ php artisan test
 
 Los cambios se proponen mediante Pull Request a `develop`; no se modifica `main` directamente.
 
+## Pruebas de calidad (PHPUnit, k6 y Playwright)
+
+```powershell
+.\tests\quality\ejecutar-pruebas.ps1                 # las tres pruebas y un resumen final explicado
+.\tests\quality\ejecutar-pruebas.ps1 -Solo e2e -VerNavegador
+```
+
+k6 y Playwright usan un entorno QA local aislado (base `simulador_cni_qa`, puerto 8001), nunca la base de trabajo ni producción. Resultados, evidencias y cómo preparar el entorno QA: [`docs/INFORME-CALIDAD-ATAM.md`](docs/INFORME-CALIDAD-ATAM.md). Despliegue en el hosting: [`docs/DESPLIEGUE-HOSTINGER.md`](docs/DESPLIEGUE-HOSTINGER.md).
+
 ## Recorrido del simulacro
 
 `php artisan test --filter=RecorridoSimulacroTest` comprueba el recorrido usando SQLite en memoria. El inicio asigna preguntas, la finalización califica y los resultados se consultan con la misma sesión web. No requiere nuevas migraciones ni seeders.

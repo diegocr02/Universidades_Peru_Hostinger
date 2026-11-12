@@ -40,3 +40,11 @@ Homestead.json
 *.cni
 *.sql.gz
 *.sql.gz.tmp
+
+# Pruebas de calidad locales (k6 / Playwright): entorno, credenciales y reportes
+.env.qa
+/tests/quality/.credenciales-qa.json
+/tests/quality/node_modules/
+/tests/quality/playwright-report/
+/tests/quality/test-results/
+/tests/quality/resultados/

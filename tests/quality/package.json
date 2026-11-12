@@ -1,0 +1,13 @@
+{
+    "name": "cni-pruebas-calidad",
+    "private": true,
+    "type": "module",
+    "description": "Pruebas E2E (Playwright) del Simulador CNI contra el entorno QA local. No forma parte del frontend Laravel.",
+    "scripts": {
+        "e2e": "playwright test",
+        "reporte": "playwright show-report playwright-report"
+    },
+    "devDependencies": {
+        "@playwright/test": "1.56.1"
+    }
+}
