@@ -345,18 +345,37 @@ class ExamenUnmsmTest extends TestCase
         $this->assertSame(180, (int) DB::table('simulacros')->where('id', $intento->simulacro_id)->value('tiempo_limite'));
     }
 
-    public function test_el_area_san_marcos_se_elige_una_sola_vez_y_solo_en_la_modalidad(): void
+    public function test_el_area_san_marcos_puede_cambiarse_solo_dentro_de_la_modalidad(): void
     {
         $alumno = $this->alumno(null);
         $this->actingAs($alumno, 'web')->post(route('alumno.unmsm.area'), ['area_unmsm' => 'B'])
             ->assertSessionHasErrors('area_unmsm');
         $this->post(route('alumno.unmsm.area'), ['area_unmsm' => 'C'])->assertRedirect(route('alumno.panel'));
         $this->assertSame('C', DB::table('usuarios')->where('id', $alumno->id)->value('area_unmsm'));
-        $this->post(route('alumno.unmsm.area'), ['area_unmsm' => 'A'])->assertForbidden();
-        $this->assertSame('C', DB::table('usuarios')->where('id', $alumno->id)->value('area_unmsm'));
+        $this->post(route('alumno.unmsm.area'), ['area_unmsm' => 'A'])->assertRedirect(route('alumno.panel'));
+        $this->assertSame('A', DB::table('usuarios')->where('id', $alumno->id)->value('area_unmsm'));
+        $this->actingAs($alumno->fresh(), 'web')->get(route('alumno.panel'))->assertOk()
+            ->assertDontSee('No autorizada')->assertSee('Elegir Área C')->assertSee('Elegir Área E')
+            ->assertDontSee('Distribución de preguntas provisional del simulador, no oficial.');
 
         $uni = $this->alumno(null, 'alumno_uni', 'B');
         $this->actingAs($uni, 'web')->post(route('alumno.unmsm.area'), ['area_unmsm' => 'A'])->assertForbidden();
+    }
+
+    public function test_cambiar_area_conserva_el_intento_abierto_y_permite_practicar_otra(): void
+    {
+        $this->configurar();
+        $this->banco();
+        $alumno = $this->alumno('A', 'cambio_area');
+        $anterior = $this->iniciar($alumno);
+        $ids = $this->preguntasConAsignatura($anterior->id)->pluck('id')->all();
+        $this->actingAs($alumno, 'web')->post(route('alumno.unmsm.area'), ['area_unmsm' => 'C'])
+            ->assertRedirect(route('alumno.panel'));
+        $nuevo = $this->iniciar($alumno->fresh());
+        $this->assertNotSame($anterior->id, $nuevo->id);
+        $this->assertSame($ids, $this->preguntasConAsignatura($anterior->id)->pluck('id')->all());
+        $this->get(route('examen', $anterior->id))->assertOk();
+        $this->actingAs($alumno->fresh(), 'web')->get(route('alumno.panel'))->assertOk()->assertSee('Elegir Área A')->assertSee('Elegir Área E');
     }
 
     public function test_control_de_acceso_entre_uni_y_san_marcos(): void
@@ -377,7 +396,7 @@ class ExamenUnmsmTest extends TestCase
         $this->assertDatabaseCount('intentos', 0);
     }
 
-    public function test_panel_tiene_cuatro_opciones_y_las_tres_areas_con_datos_reales(): void
+    public function test_panel_tiene_cinco_opciones_y_las_tres_areas_con_datos_reales(): void
     {
         $this->configurar();
         $this->banco();
@@ -386,7 +405,8 @@ class ExamenUnmsmTest extends TestCase
         $html = $this->get(route('alumno.panel'))->assertOk()->assertViewIs('alumno.unmsm.panel')->getContent();
 
         $this->assertSame(1, preg_match('/<nav class="cni-alumno-menu"[^>]*>(.*?)<\/nav>/s', $html, $menu));
-        $this->assertSame(4, preg_match_all('/<a\b/', $menu[1]));
+        $this->assertSame(5, preg_match_all('/<a\b/', $menu[1]));
+        $this->assertStringContainsString(route('alumno.universidad.cambiar'), $menu[1]);
         foreach (['#inicio' => 'Inicio', '#intentos' => 'Mis intentos', '#historial' => 'Historial', '#perfil' => 'Mi perfil'] as $href => $texto) {
             $this->assertMatchesRegularExpression('/href="'.$href.'"[^>]*>.*?'.$texto.'/s', $menu[1]);
         }

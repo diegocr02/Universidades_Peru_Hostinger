@@ -43,7 +43,7 @@
 
     <section class="examen-pregunta" wire:key="pregunta-{{ $pregunta?->id ?? 'vacia' }}" aria-label="Pregunta del examen">
         @if($pregunta)
-            <span class="examen-curso">{{ $pregunta->area }}</span>
+            <span class="examen-curso">{{ $unmsm ? \App\Support\PerfilExamenUnmsm::etiqueta($pregunta->area) : $pregunta->area }}</span>
             <div @class(['examen-contenido-pregunta', 'examen-contenido-pregunta--con-imagen' => (bool) $pregunta->imagen])>
                 <div class="examen-material">
                     @if(trim($pregunta->enunciado) !== '')
@@ -52,6 +52,15 @@
                     @if($pregunta->imagen)
                         <img class="examen-imagen" src="{{ asset($pregunta->imagen) }}" alt="Pregunta {{ $actual + 1 }}"
                              @if(trim($pregunta->enunciado) === '') id="enunciado-{{ $pregunta->id }}" @endif>
+                        @if($unmsm)
+                            <div x-data class="examen-figura-acciones">
+                                <button type="button" class="examen-ampliar-figura" @click="$refs.figura.showModal()">Ampliar figura ↗</button>
+                                <dialog x-ref="figura" class="examen-figura-dialog" @click.self="$el.close()" aria-label="Figura ampliada de la pregunta {{ $actual + 1 }}">
+                                    <form method="dialog"><button type="submit" autofocus>Cerrar imagen ×</button></form>
+                                    <img src="{{ asset($pregunta->imagen) }}" alt="Figura ampliada de la pregunta {{ $actual + 1 }}">
+                                </dialog>
+                            </div>
+                        @endif
                     @endif
                 </div>
                 <div class="examen-respuestas">

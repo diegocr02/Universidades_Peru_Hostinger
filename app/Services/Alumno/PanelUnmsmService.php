@@ -5,6 +5,7 @@ namespace App\Services\Alumno;
 use App\Models\Usuario;
 use App\Services\IntentoService;
 use App\Support\PerfilExamenUnmsm;
+use App\Support\BancoUnmsmJson;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -76,6 +77,7 @@ class PanelUnmsmService
                 'faltantes' => [],
             ];
         }
+        $cuotas = BancoUnmsmJson::mapearCuotas($area, $cuotas);
         $asignaturas = DB::table('areas')->where('activo', true)->pluck('id', 'nombre');
         $faltantes = [];
         foreach ($cuotas as $asignatura => $cantidad) {

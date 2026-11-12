@@ -4,8 +4,8 @@
 - La cuenta con rol **`admin`** actúa como superadministrador académico. Por KISS no se creó un cuarto rol `superadmin` incompatible con el enum actual. Las cuentas `docente` y `estudiante` no acceden al panel.
 - Login `/login` → `/administracion` si el usuario es `admin`.
 - Desde el panel se crean **carreras por área A-E**, asignaturas (`areas`) y temas (`temas`).
-- `/administracion/preguntas` registra, consulta, actualiza y desactiva preguntas con cuatro alternativas y una sola correcta.
-- Imágenes **JPG, PNG o WebP de hasta 2 MB**, almacenadas como archivos en `storage/app/public/preguntas`; la base guarda en `preguntas.imagen` la ruta pública `storage/preguntas/archivo`.
+- `/administracion/preguntas` permite consultar y desactivar preguntas. La carga y actualización desde la interfaz se hacen mediante `/administracion/importar-excel`; el formulario manual antiguo ya no forma parte de la aplicación.
+- El importador conserva las imágenes del Excel en `storage/app/public/banco`. El banco base UNI también se carga desde [JSON](banco-uni-json.md).
 - `/administracion/simulacros` publica un examen general de área o exclusivo de una carrera. Distribuye cantidades entre asignaturas del banco; comprueba que existan suficientes preguntas válidas antes de publicar.
 - Migración **aditiva** `2026_10_22_000002_add_carrera_id_to_simulacros_table.php`: campo nullable con FK; se conservan simulacros históricos y perfiles generales.
 - La pantalla del alumno filtra los exámenes por área y carrera; el servicio backend también rechaza intentos de carreras no autorizadas. `intentos.carrera_id` conserva el perfil de carrera cuando se inicia.
@@ -37,5 +37,5 @@ El panel nuevo **permanece desactivado por defecto** al fusionar el PR: `CNI_ADM
 - Carreras y asignaturas se crean de manera explícita; no se insertan datos académicos ficticios en producción.
 - Las preguntas ya utilizadas no se editan (historial inmutable); la baja es lógica.
 - Un simulacro general de área sigue disponible para alumnos del área aunque aún no hayan indicado carrera; un simulacro específico exige que la carrera coincida. Esta combinación conserva el flujo previo.
-- Por simplicidad el formulario del administrador registra cuatro alternativas y cuotas de nivel mixto. La API preexistente soporta formatos avanzados (2–26 alternativas, niveles); se pueden ampliar los formularios en otra revisión.
+- La interfaz del banco utiliza el importador Excel. La API preexistente conserva sus formatos de alternativas y niveles.
 - No hay cambio de `main` ni despliegue automático al hosting por este PR.

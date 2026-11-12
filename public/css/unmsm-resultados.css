@@ -1,15 +1,17 @@
-/* Resultados San Marcos: dorado y crema, independiente de UNI/UNDC. */
+/* Resultados San Marcos: azul, rojo y dorado del escudo. */
 body:has(.sm-res)>header{display:none!important}
 body:has(.sm-res)>main{max-width:none;margin:0;padding:0}
 body:has(.sm-res)>main>.alert{display:none}
-body:has(.sm-res){background:#FFF9EB}
-.sm-res{--oro:#D4A017;--boton:#E0AD24;--activo:#B8860B;--menu:#C89418;--tarjeta:#FFFDF7;--borde:#E8D9B5;--titulo:#684A13;--texto:#303030;--ok:#34805A;--mal:#B84A4A;--suave:#6b5f4a;
+body:has(.sm-res){background:#F5F7FB}
+.sm-res{--oro:#D4A017;--boton:#E0AD24;--activo:#9A2638;--menu:#163A67;--tarjeta:#FFFFFF;--borde:#DAE2ED;--titulo:#173D70;--texto:#26364A;--ok:#34805A;--mal:#B84A4A;--suave:#5B6C80;
     min-height:100vh;color:var(--texto);font-family:Inter,'Segoe UI',Arial,sans-serif;font-size:14px;line-height:1.45}
-.sm-res-barra{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--menu);color:#2b1d04;padding:12px clamp(16px,4vw,48px)}
-.sm-res-marca{display:flex;align-items:center;gap:12px;color:#2b1d04;text-decoration:none}
+.sm-res .sm-res-topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;min-height:84px;height:auto;overflow:visible;border-bottom:4px solid var(--oro);border-radius:0;background:linear-gradient(110deg,#163A67,#224D80 65%,#842A3B);color:#fff;padding:16px clamp(16px,4vw,48px)}
+.sm-res-marca{display:flex;align-items:center;gap:12px;min-width:0;color:#fff!important;text-decoration:none}
+.sm-res-marca img{flex:none;object-fit:contain;background:#fff;border-radius:10px;padding:3px}
 .sm-res-marca strong{display:block;font-size:17px}.sm-res-marca small{display:block;font-size:11px}
 .sm-res-volver{color:var(--titulo);font-weight:750;font-size:13px;text-decoration:underline}
-.sm-res-barra .sm-res-volver{color:#2b1d04}
+.sm-res-topbar .sm-res-volver{color:#fff;background:#ffffff14;border:1px solid #ffffff40;border-radius:9px;padding:9px 13px;line-height:1.4;text-decoration:none}
+.sm-res-topbar .sm-res-volver:hover{background:#ffffff26}
 .sm-res-main{max-width:1000px;margin:0 auto;padding:24px 16px 56px}
 .sm-res-eyebrow{margin:0;text-align:center;color:var(--activo);font-size:11px;font-weight:800;letter-spacing:.08em}
 .sm-res h1{margin:4px 0 22px;text-align:center;color:var(--titulo);font-size:clamp(22px,3vw,30px)}
@@ -33,7 +35,7 @@ body:has(.sm-res){background:#FFF9EB}
 .sm-res-barras li{display:grid;grid-template-columns:minmax(130px,200px) 1fr auto;align-items:center;gap:12px;font-size:12px}
 .sm-res-asig{font-weight:700}
 .sm-res-barra{height:10px;border-radius:99px;background:#F1E6C8;overflow:hidden}
-.sm-res-barra>span{display:block;height:100%;background:var(--oro);border-radius:99px}
+.sm-res-barra>span{display:block;height:100%;background:linear-gradient(90deg,var(--titulo),#4587BD);border-radius:99px}
 .sm-res-valor{white-space:nowrap;color:var(--suave)}.sm-res-valor strong{color:var(--titulo);margin-left:6px}
 .sm-res-columnas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
 .sm-res-columnas h3{margin:0 0 6px;font-size:14px;color:var(--titulo)}
@@ -50,6 +52,7 @@ body:has(.sm-res){background:#FFF9EB}
 .sm-res-estado-correcta{color:var(--ok)}.sm-res-estado-incorrecta{color:var(--mal)}.sm-res-estado-actitudinal{color:var(--activo)}
 .sm-res-pregunta h3{margin:8px 0;font-size:14px;color:var(--texto)}
 .sm-res-imagen{max-width:100%;height:auto;border-radius:8px;margin-bottom:8px}
+.sm-res-ampliar{display:inline-block;color:var(--titulo);font-size:12px;font-weight:700;text-decoration:underline;margin-bottom:10px}
 .sm-res-respuestas{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0 0 8px;font-size:12px}
 .sm-res-opciones{display:grid;gap:6px}
 .sm-res-opcion{display:flex;align-items:flex-start;gap:10px;border:1px solid #efe6cf;border-radius:8px;padding:7px 10px;font-size:13px}
@@ -65,3 +68,4 @@ body:has(.sm-res){background:#FFF9EB}
 .sm-res-volver-pie{display:inline-block;margin-top:8px}
 .sm-res a:focus-visible,.sm-res select:focus-visible{outline:3px solid var(--titulo);outline-offset:2px}
 @media(max-width:640px){.sm-res-barras li{grid-template-columns:1fr;gap:4px}.sm-res-valor{white-space:normal}}
+@media(max-width:480px){.sm-res .sm-res-topbar{align-items:flex-start;gap:12px}.sm-res-topbar .sm-res-volver{width:100%;text-align:center}.sm-res-marca strong{font-size:16px}}

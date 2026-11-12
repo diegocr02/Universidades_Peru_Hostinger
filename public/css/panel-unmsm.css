@@ -1,27 +1,27 @@
 /* Panel San Marcos (modalidad E). Se apoya en panel-alumno.css y solo afecta a .cni-unmsm. */
 .cni-alumno.cni-unmsm{
-    --sm-menu:#C89418;--sm-principal:#D4A017;--sm-boton:#E0AD24;--sm-activo:#B8860B;
-    --sm-fondo:#FFF9EB;--sm-tarjeta:#FFFDF7;--sm-borde:#E8D9B5;--sm-titulo:#684A13;
-    --sm-texto:#303030;--sm-ok:#34805A;--sm-mal:#B84A4A;--sm-tinta-oro:#2b1d04;
+    --sm-menu:#163A67;--sm-principal:#D4A017;--sm-boton:#E0AD24;--sm-activo:#9A2638;
+    --sm-fondo:#F5F7FB;--sm-tarjeta:#FFFFFF;--sm-borde:#DAE2ED;--sm-titulo:#173D70;
+    --sm-texto:#26364A;--sm-ok:#34805A;--sm-mal:#B84A4A;--sm-tinta-oro:#2b1d04;
     --accent:var(--sm-activo);--accent-dark:var(--sm-titulo);--navy:var(--sm-titulo);
-    --ink:var(--sm-texto);--muted:#6b5f4a;--line:var(--sm-borde);--pale:#FFF3D3;
+    --ink:var(--sm-texto);--muted:#5B6C80;--line:var(--sm-borde);--pale:#EDF3FA;
     background:var(--sm-fondo);color:var(--sm-texto)
 }
-body:has(.cni-unmsm){background:#FFF9EB}
+body:has(.cni-unmsm){background:#F5F7FB}
 /* El panel ya muestra sus avisos; se evita repetirlos con el aviso genérico del layout. */
 body:has(.cni-unmsm)>main>.alert{display:none}
 .cni-unmsm .cni-alumno-workspace{background:var(--sm-fondo)}
 
-/* Menú lateral dorado con texto oscuro (contraste suficiente sobre amarillo). */
-.cni-alumno.cni-unmsm .cni-alumno-sidebar{background:var(--sm-menu);color:var(--sm-tinta-oro);box-shadow:inset -1px 0 0 #a87a0f}
-.cni-unmsm .cni-alumno-marca,.cni-unmsm .cni-alumno-marca small{color:var(--sm-tinta-oro)!important}
+/* Azul y rojo institucionales, con el dorado reservado para los acentos. */
+.cni-alumno.cni-unmsm .cni-alumno-sidebar{background:linear-gradient(165deg,#163A67 0%,#203B61 58%,#742A3B 100%);color:#fff;box-shadow:inset -3px 0 0 #D4A017}
+.cni-unmsm .cni-alumno-marca,.cni-unmsm .cni-alumno-marca small{color:#fff!important}
 .cni-unmsm .cni-alumno-marca-icon{background:var(--sm-tarjeta);color:var(--sm-titulo)}
-.cni-unmsm .cni-alumno-area-chip{background:#ffffff40;color:var(--sm-tinta-oro)}
-.cni-unmsm .cni-alumno-area-chip>span{color:var(--sm-titulo)}
-.cni-alumno.cni-unmsm .cni-alumno-menu a{color:var(--sm-tinta-oro)}
-.cni-alumno.cni-unmsm .cni-alumno-menu a:hover{background:#ffffff38;color:var(--sm-tinta-oro)}
-.cni-alumno.cni-unmsm .cni-alumno-menu a.is-active{background:var(--sm-activo);color:#1d1302;box-shadow:0 3px 10px #5a3f0626}
-.cni-unmsm .cni-alumno-salir{color:var(--sm-tinta-oro)}
+.cni-unmsm .cni-alumno-area-chip{background:#ffffff18;color:#fff}
+.cni-alumno.cni-unmsm .cni-alumno-area-chip>span{color:#F5CE69}
+.cni-alumno.cni-unmsm .cni-alumno-menu a{color:#E8EFF8}
+.cni-alumno.cni-unmsm .cni-alumno-menu a:hover{background:#ffffff18;color:#fff}
+.cni-alumno.cni-unmsm .cni-alumno-menu a.is-active{background:linear-gradient(100deg,#9A2638,#7A2031);color:#fff;box-shadow:inset 3px 0 0 #F5CE69,0 3px 10px #06173725}
+.cni-unmsm .cni-alumno-salir{color:#fff}
 .cni-unmsm .cni-alumno-sidebar-toggle{background:var(--sm-tarjeta);color:var(--sm-titulo);border-color:var(--sm-borde)}
 .cni-unmsm .cni-alumno-topbar{background:var(--sm-tarjeta);border-bottom-color:var(--sm-borde)}
 .cni-unmsm .cni-alumno-top-title strong{color:var(--sm-titulo)}
@@ -35,33 +35,40 @@ body:has(.cni-unmsm)>main>.alert{display:none}
 .sm-alerta-error{background:#fbefef;border-color:#e7c3c3;color:var(--sm-mal)}
 .sm-alerta-error p+p{margin-top:4px}
 
-/* Contenido centrado: una sola columna cómoda de leer en cualquier pantalla. */
-.cni-unmsm .cni-alumno-content{max-width:1040px;margin:0 auto;padding-top:28px}
+/* Mismo ancho y ritmo del panel UNI, con la identidad dorada de San Marcos. */
+.cni-unmsm .cni-alumno-content{width:100%;max-width:1800px;margin:0 auto;padding-top:18px}
 .cni-unmsm .cni-alumno-vista>*+*{margin-top:20px}
 
-/* Portada centrada. */
-.sm-hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:30px 20px 26px;
-    background:var(--sm-tarjeta);border:1px solid var(--sm-borde);border-radius:20px;box-shadow:0 4px 16px #684a130d}
-.sm-hero-logo{width:96px;height:96px;object-fit:contain}
+/* Bienvenida horizontal y escudo completo, como el banner de UNI. */
+.cni-unmsm .sm-hero{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:285px;padding:30px clamp(24px,3.4vw,48px);overflow:hidden;
+    background:linear-gradient(110deg,#FFFFFF 0%,#F9F3E2 53%,#E0EBF8 100%);border:1px solid var(--sm-borde);border-radius:17px;color:var(--sm-texto)}
+.sm-hero-copy{position:relative;max-width:66%;min-width:0}
+.sm-hero-logo{display:block;align-self:stretch;width:28%;height:235px;object-fit:contain;object-position:center;flex-shrink:0}
 .sm-hero-overline{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sm-activo)}
-.sm-hero h1{margin:0;color:var(--sm-titulo);font-size:clamp(22px,3vw,32px);line-height:1.2;letter-spacing:-.01em}
+.sm-hero h1{margin:8px 0 4px;color:var(--sm-titulo);font-size:clamp(29px,3.3vw,44px);line-height:1.14;font-weight:900;letter-spacing:-.048em}
+.sm-hero h2{margin:0 0 8px;color:var(--sm-titulo);font-size:clamp(15px,1.55vw,19px);font-weight:850;line-height:1.4}
 .sm-hero-saludo{margin:0;max-width:560px;color:var(--muted);font-size:14px}
-.sm-pildoras{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
-.sm-pildoras li{background:#FFF3D3;border:1px solid var(--sm-borde);border-radius:99px;padding:6px 14px;font-size:13px;color:var(--sm-titulo)}
+.sm-pildoras{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.sm-pildoras li{background:#ffffffb3;border:1px solid var(--sm-borde);border-radius:9px;padding:8px 12px;font-size:12px;color:var(--sm-titulo)}
+.sm-areas-encabezado h2{margin:0;color:var(--sm-titulo);font-size:22px;font-weight:850}
+.sm-areas-encabezado p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.cni-unmsm .sm-areas{margin-top:14px}
+.sm-preparacion{padding:18px;background:var(--sm-tarjeta);border:1px solid var(--sm-borde);border-radius:14px}
+.sm-preparacion h2{margin:0 0 14px;font-size:17px;font-weight:850;color:var(--sm-titulo)}
 .sm-ficha{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0}
 @media(max-width:1100px){.sm-ficha{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.sm-ficha{grid-template-columns:1fr}}
-.sm-ficha div{background:var(--sm-tarjeta);border:1px solid var(--sm-borde);border-radius:14px;padding:14px 16px;text-align:center}
+.sm-ficha div{background:#FFF3D3;border-radius:11px;padding:12px;text-align:left}
 .sm-ficha dt{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 .sm-ficha dd{margin:4px 0 0;font-weight:750;color:var(--sm-texto)}
-.sm-info{margin:0;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6}
+.sm-info{margin:0;text-align:left;font-size:12.5px;color:var(--muted);line-height:1.6}
 .sm-info strong{color:var(--sm-titulo)}
 .sm-provisional{display:block;margin-top:4px;font-size:11.5px;color:#8a6a1d}
-.sm-aviso-eleccion{margin:0;padding:12px 16px;border-radius:12px;background:#FFF3D3;border:1px solid var(--sm-borde);color:var(--sm-titulo);font-size:13px;text-align:center}
+.sm-aviso-eleccion{margin:0;padding:12px 16px;border-radius:12px;background:#FFF3D3;border:1px solid var(--sm-borde);color:var(--sm-titulo);font-size:13px}
 
 /* Tarjetas de área A, C y E. */
 .sm-areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin:0}
-.sm-area{display:flex;flex-direction:column;gap:10px;background:var(--sm-tarjeta);border:1px solid var(--sm-borde);border-top:4px solid var(--sm-borde);border-radius:14px;padding:18px;box-shadow:0 2px 6px #684a130a}
+.sm-area{display:flex;flex-direction:column;gap:10px;background:var(--sm-tarjeta);border:1px solid var(--sm-borde);border-top:4px solid var(--sm-principal);border-radius:14px;padding:18px}
 .sm-area.is-autorizada{border-top-color:var(--sm-principal)}
 .sm-area.is-bloqueada{opacity:.72}
 /* app.css da estilo global a <header>; aquí se anula solo para la cabecera de la tarjeta. */
@@ -121,7 +128,9 @@ body:has(.cni-unmsm)>main>.alert{display:none}
 @media(max-width:680px){
     .sm-area-acciones form,.sm-area-acciones button{width:100%}
     .sm-barras li{grid-template-columns:1fr;gap:4px}
-    .sm-hero{padding:22px 14px}.sm-hero-logo{width:72px;height:72px}
+    .cni-unmsm .sm-hero{flex-direction:column;align-items:stretch;gap:20px;padding:22px 18px}
+    .sm-hero-copy{max-width:100%}
+    .sm-hero-logo{align-self:center;width:100%;max-width:230px;height:180px}
 }
 
 /* Títulos de tarjetas centrados y tablas con aire. */

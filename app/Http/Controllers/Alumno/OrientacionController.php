@@ -10,6 +10,7 @@ use App\Services\ResultadoService;
 use App\Services\SimulacroService;
 use App\Services\Alumno\DashboardEstudianteService;
 use App\Services\Alumno\PanelUniService;
+use App\Services\Alumno\ReferenciaIngresoService;
 use App\Services\Alumno\PanelUnmsmService;
 use App\Support\PerfilExamenUnmsm;
 use App\Services\Alumno\ProgresoAlumnoService;
@@ -256,23 +257,23 @@ class OrientacionController extends Controller
         ]);
     }
 
-    /** Área San Marcos (A, C o E): se elige una sola vez, solo en la modalidad San Marcos. */
+    /** Cambia el área de práctica dentro de San Marcos sin modificar intentos anteriores. */
     public function guardarAreaUnmsm(Request $request): RedirectResponse
     {
         $usuario = $this->estudiante($request);
         $area = $usuario->areaPostulacion()->first() ?? $usuario->carrera?->areaPostulacion;
         abort_unless($area && $area->activo && $area->codigo === PerfilExamenUnmsm::MODALIDAD, 403);
-        // Se lee el valor guardado, no el de la sesión: otra pestaña pudo haberlo elegido ya.
-        abort_if(Usuario::query()->whereKey($usuario->id)->value('area_unmsm') !== null, 403,
-            'Tu área de San Marcos ya fue seleccionada.');
 
         $datos = $request->validate([
             'area_unmsm' => ['required', 'string', Rule::in(array_keys(PerfilExamenUnmsm::AREAS))],
         ]);
 
-        $guardado = Usuario::query()->whereKey($usuario->id)->whereNull('area_unmsm')
-            ->update(['area_unmsm' => $datos['area_unmsm']]);
-        abort_unless($guardado === 1, 409, 'El área ya se seleccionó desde otra sesión.');
+        DB::transaction(function () use ($usuario, $datos, $area) {
+            $perfil = Usuario::query()->lockForUpdate()->findOrFail($usuario->id);
+            if ($perfil->area_unmsm !== $datos['area_unmsm']) {
+                $perfil->forceFill(['area_unmsm' => $datos['area_unmsm'], 'area_postulacion_id' => $area->id, 'carrera_id' => null])->save();
+            }
+        });
 
         return redirect()->route('alumno.panel')
             ->with('status', 'Área '.$datos['area_unmsm'].' de San Marcos seleccionada.');
@@ -338,6 +339,7 @@ class OrientacionController extends Controller
                     ->where('i.usuario_id', $usuario->id)->where('i.id', '<=', $intento)
                     ->where('s.nombre', 'like', PerfilExamenUnmsm::prefijo($areaUnmsm).'%')->count(),
                 'actitudinal' => (float) (app(PanelUnmsmService::class)->actitudinalPorIntento(collect([$intento]))[$intento] ?? 0),
+                'evaluacionIngreso' => app(ReferenciaIngresoService::class)->unmsm((float) $resultado['totales']['puntaje_total'], $areaUnmsm),
                 'preguntas' => $preguntas,
                 'alternativasPorPregunta' => $alternativas,
             ]);
@@ -351,6 +353,7 @@ class OrientacionController extends Controller
                 'usuario' => $usuario,
                 'resultado' => $resultado,
                 'intentoUni' => $intentoUni,
+                'evaluacionIngreso' => $intentoUni ? app(ReferenciaIngresoService::class)->uni(app(PanelUniService::class)->obtener($usuario)['resumen']) : null,
                 'simulacroNombre' => $intentoActual->simulacro_nombre,
                 'preguntas' => $preguntas,
                 'alternativasPorPregunta' => $alternativas,

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/unmsm-resultados.css') }}?v={{ filemtime(public_path('css/unmsm-resultados.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/referencia-ingreso.css') }}?v={{ filemtime(public_path('css/referencia-ingreso.css')) }}">
 @endpush
 @section('content')
 @use('App\Support\PerfilExamenUnmsm')
@@ -27,7 +28,7 @@
     $minimo = PerfilExamenUnmsm::minimoReferencial($areaUnmsm);
 @endphp
 <div class="sm-res" data-modalidad="unmsm">
-    <header class="sm-res-barra">
+    <header class="sm-res-topbar">
         <a href="{{ route('alumno.panel') }}" class="sm-res-marca">
             <img src="{{ asset('images/escudo-cni.png') }}" width="44" height="44" alt="">
             <span><strong>Simulador CNI</strong><small>Preparación San Marcos</small></span>
@@ -75,6 +76,8 @@
                     Es un valor referencial; no significa ingreso. El ingreso real depende de las vacantes y del orden de mérito.</p>
             @endif
         </section>
+
+        @include('alumno.partials.referencia-ingreso')
 
         <section class="sm-res-tarjeta" aria-labelledby="sm-asignaturas">
             <h2 id="sm-asignaturas">Resultados por asignatura</h2>
@@ -148,7 +151,10 @@
                             </span>
                         </div>
                         @if(trim($pregunta->enunciado) !== '')<h3>{!! nl2br(e($pregunta->enunciado)) !!}</h3>@endif
-                        @if($pregunta->imagen)<img class="sm-res-imagen" src="{{ asset($pregunta->imagen) }}" alt="Imagen de la pregunta {{ $pregunta->orden }}">@endif
+                        @if($pregunta->imagen)
+                            <img class="sm-res-imagen" src="{{ asset($pregunta->imagen) }}" alt="Imagen de la pregunta {{ $pregunta->orden }}">
+                            <p><a class="sm-res-ampliar" href="{{ asset($pregunta->imagen) }}" target="_blank" rel="noopener noreferrer">Ampliar figura de la pregunta {{ $pregunta->orden }} ↗</a></p>
+                        @endif
                         <p class="sm-res-respuestas">
                             <span>Tu respuesta: <strong>{{ $elegidaOpcion ? $elegidaOpcion->letra.') '.$elegidaOpcion->texto : 'En blanco' }}</strong></span>
                             @unless($esActitudinal)

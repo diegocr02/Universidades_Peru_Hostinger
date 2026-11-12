@@ -50,6 +50,7 @@
                 <a href="#intentos"><span aria-hidden="true">▶</span> Mis intentos</a>
                 <a href="#historial"><span aria-hidden="true">◷</span> Historial</a>
                 <a href="#perfil"><span aria-hidden="true">♙</span> Mi perfil</a>
+                <a href="{{ route('alumno.universidad.cambiar') }}"><span aria-hidden="true">&#8644;</span> Cambiar universidad</a>
             </nav>
         </div>
         <div class="cni-alumno-sidebar-bottom">
@@ -76,44 +77,44 @@
             {{-- Inicio --}}
             <section class="cni-alumno-vista" id="inicio" data-panel-view="inicio" aria-labelledby="sm-titulo">
                 <header class="sm-hero">
+                    <div class="sm-hero-copy">
+                        <span class="sm-hero-overline">Admisión {{ config('unmsm.proceso') }} · Formato San Marcos</span>
+                        <h1 id="sm-titulo">¡Hola, {{ explode(' ', trim($usuario->nombres))[0] }}!</h1>
+                        <h2>Simulador CNI — Preparación San Marcos</h2>
+                        <p class="sm-hero-saludo">{{ $temaArea['descripcion'] }}</p>
+                        <ul class="sm-pildoras" aria-label="Datos del examen">
+                            <li><strong>{{ PerfilExamenUnmsm::TOTAL_PREGUNTAS }}</strong> preguntas</li>
+                            <li><strong>{{ $duracion }}</strong></li>
+                            <li><strong>{{ number_format(PerfilExamenUnmsm::PUNTAJE_MAXIMO, 0, '.', ',') }}</strong> puntos máx.</li>
+                        </ul>
+                    </div>
                     <img class="sm-hero-logo" src="{{ asset($rutaLogo).'?v='.filemtime(public_path($rutaLogo)) }}"
                          width="96" height="96" alt="Escudo de la Universidad Nacional Mayor de San Marcos">
-                    <span class="sm-hero-overline">Admisión {{ config('unmsm.proceso') }} · Formato San Marcos</span>
-                    <h1 id="sm-titulo">Simulador CNI — Preparación San Marcos</h1>
-                    <p class="sm-hero-saludo">¡Hola, {{ explode(' ', trim($usuario->nombres))[0] }}! {{ $temaArea['descripcion'] }}</p>
-                    <ul class="sm-pildoras" aria-label="Datos del examen">
-                        <li><strong>{{ PerfilExamenUnmsm::TOTAL_PREGUNTAS }}</strong> preguntas</li>
-                        <li><strong>{{ $duracion }}</strong></li>
-                        <li><strong>{{ number_format(PerfilExamenUnmsm::PUNTAJE_MAXIMO, 0, '.', ',') }}</strong> puntos máx.</li>
-                    </ul>
                 </header>
-
-                <dl class="sm-ficha" aria-label="Tu preparación">
-                    <div><dt>Estudiante</dt><dd>{{ $nombreCompleto }}</dd></div>
-                    <div><dt>Área de postulación</dt><dd>{{ $miArea ? 'Área '.$areaAlumno.' · '.$miArea['nombre'] : 'Por elegir' }}</dd></div>
-                    <div><dt>Carrera</dt><dd>{{ $carrera?->nombre ?? 'No seleccionada' }}</dd></div>
-                    <div><dt>Estado de preparación</dt><dd>{{ $preparacion }}</dd></div>
-                </dl>
 
                 <p class="sm-info">Correcta <strong>+20</strong> · incorrecta <strong>−1.125</strong> · en blanco <strong>0</strong>.
                     Las 10 actitudinales valen hasta 20 puntos cada una y no descuentan.
-                    @if(config('unmsm.provisional')) <span class="sm-provisional">Distribución de preguntas provisional del simulador, no oficial.</span> @endif</p>
+                </p>
 
                 @unless($areaAlumno)
-                    <p class="sm-aviso-eleccion">Elige el área a la que postulas. <strong>La elección es definitiva</strong>: solo podrás rendir el examen de esa área.</p>
+                    <p class="sm-aviso-eleccion">Elige un área para empezar. Puedes cambiar entre A, C y E para practicar.</p>
                 @endunless
 
+                <div class="sm-areas-encabezado">
+                    <h2>Áreas de postulación</h2>
+                    <p>{{ $miArea ? 'Tu examen y los resultados de tu preparación.' : 'Elige el área para la que deseas prepararte.' }}</p>
+                </div>
                 <div class="sm-areas">
                     @foreach($unmsm['areas'] as $tarjeta)
                         @php $disp = $tarjeta['disponibilidad']; @endphp
-                        <article @class(['sm-area', 'is-autorizada' => $tarjeta['autorizada'], 'is-bloqueada' => $areaAlumno && ! $tarjeta['autorizada']])
+                        <article @class(['sm-area', 'is-autorizada' => $tarjeta['autorizada']])
                                  aria-labelledby="sm-area-{{ $tarjeta['codigo'] }}">
                             <header class="sm-area-cabecera">
                                 <span class="sm-area-codigo">Área {{ $tarjeta['codigo'] }}</span>
                                 @if($tarjeta['autorizada'])
                                     <span class="sm-etiqueta sm-etiqueta-ok">Tu área</span>
                                 @elseif($areaAlumno)
-                                    <span class="sm-etiqueta">No autorizada</span>
+                                    <span class="sm-etiqueta">Disponible para practicar</span>
                                 @endif
                             </header>
                             <h3 id="sm-area-{{ $tarjeta['codigo'] }}">{{ $tarjeta['nombre'] }}</h3>
@@ -132,9 +133,8 @@
                                 </details>
                             @endif
 
-                            @if(! $areaAlumno)
-                                <form method="POST" action="{{ route('alumno.unmsm.area') }}" class="sm-area-acciones"
-                                      onsubmit="return confirm('¿Confirmas que postulas al Área {{ $tarjeta['codigo'] }}? Esta elección es definitiva.')">@csrf
+                            @if(! $tarjeta['autorizada'])
+                                <form method="POST" action="{{ route('alumno.unmsm.area') }}" class="sm-area-acciones">@csrf
                                     <input type="hidden" name="area_unmsm" value="{{ $tarjeta['codigo'] }}">
                                     <button type="submit" class="cni-alumno-primary">Elegir Área {{ $tarjeta['codigo'] }}</button>
                                 </form>
@@ -171,6 +171,16 @@
                     @endforeach
                 </div>
 
+                <section class="sm-preparacion" aria-labelledby="sm-preparacion-titulo">
+                    <h2 id="sm-preparacion-titulo">Tu preparación</h2>
+                    <dl class="sm-ficha" aria-label="Tu preparación">
+                        <div><dt>Estudiante</dt><dd>{{ $nombreCompleto }}</dd></div>
+                        <div><dt>Área de postulación</dt><dd>{{ $miArea ? 'Área '.$areaAlumno.' · '.$miArea['nombre'] : 'Por elegir' }}</dd></div>
+                        <div><dt>Carrera</dt><dd>{{ $carrera?->nombre ?? 'No seleccionada' }}</dd></div>
+                        <div><dt>Estado de preparación</dt><dd>{{ $preparacion }}</dd></div>
+                    </dl>
+                </section>
+
                 @if($miArea && $miArea['minimo'] !== null)
                     <p class="sm-referencia">Puntaje mínimo referencial del Área {{ $areaAlumno }} en el proceso {{ config('unmsm.proceso') }}: <strong>{{ number_format($miArea['minimo'], 0, '.', ',') }} puntos</strong>.
                         Es solo una referencia: el ingreso real depende de las vacantes y del orden de mérito de cada carrera.</p>
@@ -200,8 +210,8 @@
                                         <td>{{ $intento->segundos_restantes !== null ? intdiv($intento->segundos_restantes, 60).' min' : '—' }}</td>
                                         <td class="cni-historial-puntaje">{{ $intento->calificado ? $puntos($intento->puntaje_total).' / 2,000' : '—' }}</td>
                                         <td class="sm-acciones-tabla">
-                                            @if($intento->en_curso && $intento->area_unmsm === $areaAlumno)
-                                                <form method="POST" action="{{ route('examen.unmsm') }}" data-sm-iniciar>@csrf<button type="submit" class="sm-boton-tabla">Continuar</button></form>
+                                            @if($intento->en_curso)
+                                                <a href="{{ route('examen', $intento->id) }}" class="sm-boton-tabla">Continuar</a>
                                             @elseif($intento->calificado)
                                                 <a class="cni-historial-resultado" href="{{ route('alumno.resultados', ['intento' => $intento->id]) }}">Ver resultado</a>
                                             @else
@@ -348,7 +358,7 @@
     const sidebar = panel.querySelector('#cni-alumno-sidebar');
     const toggle = panel.querySelector('[data-sidebar-toggle]');
     const backdrop = panel.querySelector('[data-sidebar-backdrop]');
-    const links = [...sidebar.querySelectorAll('.cni-alumno-menu a')];
+    const links = [...sidebar.querySelectorAll('.cni-alumno-menu a[href^="#"]')];
     const mobile = window.matchMedia('(max-width: 680px)');
     let abierto = !mobile.matches;
     const actualizar = () => {

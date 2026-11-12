@@ -125,7 +125,7 @@ class PanelesPorAreaTest extends TestCase
         $this->get(route('alumno.tema', ['tema' => 9999]))->assertNotFound();
     }
 
-    public function test_menu_lateral_tiene_exactamente_tres_opciones_y_un_boton_para_contraerlo(): void
+    public function test_menu_lateral_tiene_cuatro_opciones_y_un_boton_para_contraerlo(): void
     {
         $this->actingAs($this->estudiante('C'), 'web');
         $html = $this->get(route('alumno.panel'))->assertOk()->getContent();
@@ -135,10 +135,12 @@ class PanelesPorAreaTest extends TestCase
             $html,
             $navegacion
         ));
-        $this->assertSame(3, preg_match_all('/<a\\b/', $navegacion[1]));
+        $this->assertSame(4, preg_match_all('/<a\\b/', $navegacion[1]));
         $this->assertStringContainsString('Mi perfil', $navegacion[1]);
         $this->assertStringContainsString('Mi progreso', $navegacion[1]);
         $this->assertStringContainsString('Historial', $navegacion[1]);
+        $this->assertStringContainsString('Cambiar universidad', $navegacion[1]);
+        $this->assertStringContainsString('href="'.route('alumno.universidad.cambiar').'"', $navegacion[1]);
         $this->assertStringContainsString('aria-expanded="true"', $html);
         $this->assertStringContainsString('data-sidebar-backdrop', $html);
         $this->assertStringContainsString('id="progreso"', $html);

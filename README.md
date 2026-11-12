@@ -55,7 +55,7 @@ php artisan route:list
 php artisan serve
 ```
 
-Abre `http://127.0.0.1:8000/login`. No se necesita `npm run dev` para el login y el panel inicial: CSS local y recursos de Livewire se sirven desde Laravel.
+Abre `http://127.0.0.1:8000/login`. La aplicación no requiere Node, npm ni Vite: CSS y JavaScript se sirven directamente desde `public/`, y Livewire desde Laravel. También puedes iniciar el servidor con `composer dev`. En Hostinger despliega como sitio PHP, con la carpeta pública apuntando a `public/`.
 
 ## Uso de respuestas JSON desde el mismo navegador
 
@@ -80,6 +80,8 @@ Los cambios se proponen mediante Pull Request a `develop`; no se modifica `main`
 El cierre de intentos vencidos está definido cada minuto en Laravel Scheduler; al desplegar hay que activar el scheduler. En desarrollo puede mantenerse `php artisan schedule:work` en otra terminal. Las preguntas y configuraciones ya usadas no se editan; se crean nuevas versiones para proteger los intentos existentes.
 
 ## Banco de preguntas desde Excel
+
+El banco base UNI se edita en `database/data/uni_preguntas.json` y se carga con `php artisan db:seed --class=BancoUniSeeder --force`. Consulta [el formato JSON y las reglas de importación](docs/banco-uni-json.md).
 
 El banco del colegio (`Banco_preguntas_completo.xlsx`, hoja «Banco de preguntas») se carga con:
 

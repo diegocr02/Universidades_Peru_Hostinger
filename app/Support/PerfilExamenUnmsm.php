@@ -57,6 +57,7 @@ final class PerfilExamenUnmsm
     /** Nombre visible de una asignatura (p. ej. "Razonamiento Verbal" se muestra como "Habilidad Verbal"). */
     public static function etiqueta(string $asignatura): string
     {
+        $asignatura = preg_replace('/^San Marcos [CE] [a-f0-9]{10} · /u', '', $asignatura);
         return config('unmsm.fijas.'.$asignatura.'.etiqueta') ?? $asignatura;
     }
 

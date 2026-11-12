@@ -1,0 +1,2706 @@
+{
+    "version": 1,
+    "descripcion": "Banco base de práctica UNI para tres días; no es un examen oficial.",
+    "preguntas": [
+        {
+            "codigo": "UNI_AM_01",
+            "asignatura": "AM",
+            "enunciado": "¿Qué número continúa la serie 2; 6; 12; 20; 30; …?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "40",
+                "B": "44",
+                "C": "42",
+                "D": "36",
+                "E": "48"
+            },
+            "correcta": "C",
+            "solucion": "Diferencias 4, 6, 8, 10, 12: 30 + 12 = 42."
+        },
+        {
+            "codigo": "UNI_AM_02",
+            "asignatura": "AM",
+            "enunciado": "¿Qué número continúa la serie 3; 5; 9; 17; 33; …?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "65",
+                "B": "63",
+                "C": "64",
+                "D": "66",
+                "E": "67"
+            },
+            "correcta": "A",
+            "solucion": "Cada término es el doble del anterior menos 1: 2(33) − 1 = 65."
+        },
+        {
+            "codigo": "UNI_AM_03",
+            "asignatura": "AM",
+            "enunciado": "¿Qué número continúa la serie 1; 4; 9; 16; 25; …?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "30",
+                "B": "35",
+                "C": "49",
+                "D": "36",
+                "E": "34"
+            },
+            "correcta": "D",
+            "solucion": "Son los cuadrados perfectos: 6² = 36."
+        },
+        {
+            "codigo": "UNI_AM_04",
+            "asignatura": "AM",
+            "enunciado": "Si 5 obreros hacen 5 mesas en 5 días, ¿en cuántos días 10 obreros harán 10 mesas?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "10",
+                "B": "5",
+                "C": "20",
+                "D": "2",
+                "E": "1"
+            },
+            "correcta": "B",
+            "solucion": "Cada obrero hace una mesa en 5 días; el doble de obreros hace el doble de mesas en el mismo tiempo."
+        },
+        {
+            "codigo": "UNI_AM_05",
+            "asignatura": "AM",
+            "enunciado": "Un padre tiene 40 años y su hijo 10. ¿Dentro de cuántos años la edad del padre será el triple de la del hijo?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "2",
+                "B": "3",
+                "C": "4",
+                "D": "6",
+                "E": "5"
+            },
+            "correcta": "E",
+            "solucion": "40 + x = 3(10 + x) → x = 5."
+        },
+        {
+            "codigo": "UNI_AM_06",
+            "asignatura": "AM",
+            "enunciado": "¿Qué ángulo forman las agujas de un reloj a las 3:00?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "60°",
+                "B": "75°",
+                "C": "90°",
+                "D": "80°",
+                "E": "100°"
+            },
+            "correcta": "C",
+            "solucion": "Cada hora equivale a 30°: 3 × 30° = 90°."
+        },
+        {
+            "codigo": "UNI_AM_07",
+            "asignatura": "AM",
+            "enunciado": "¿Qué número continúa la serie 7; 10; 8; 11; 9; 12; …?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "10",
+                "B": "13",
+                "C": "11",
+                "D": "14",
+                "E": "9"
+            },
+            "correcta": "A",
+            "solucion": "Se alterna +3 y −2: 12 − 2 = 10."
+        },
+        {
+            "codigo": "UNI_AM_08",
+            "asignatura": "AM",
+            "enunciado": "Si a ∗ b = 2a + b, halla 3 ∗ 4.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "11",
+                "B": "14",
+                "C": "7",
+                "D": "10",
+                "E": "12"
+            },
+            "correcta": "D",
+            "solucion": "2(3) + 4 = 10."
+        },
+        {
+            "codigo": "UNI_AM_09",
+            "asignatura": "AM",
+            "enunciado": "Si a # b = a² − b, halla (2 # 1) # 3.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "4",
+                "B": "6",
+                "C": "5",
+                "D": "7",
+                "E": "8"
+            },
+            "correcta": "B",
+            "solucion": "2 # 1 = 4 − 1 = 3; luego 3 # 3 = 9 − 3 = 6."
+        },
+        {
+            "codigo": "UNI_AM_10",
+            "asignatura": "AM",
+            "enunciado": "¿Cuánto es el 20 % del 30 % de 500?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "15",
+                "B": "20",
+                "C": "25",
+                "D": "35",
+                "E": "30"
+            },
+            "correcta": "E",
+            "solucion": "0,30 × 500 = 150; 0,20 × 150 = 30."
+        },
+        {
+            "codigo": "UNI_AM_11",
+            "asignatura": "AM",
+            "enunciado": "Un precio sube 20 % y luego baja 20 %. ¿Cuál es la variación final?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "No varía",
+                "B": "Aumenta 4 %",
+                "C": "Disminuye 4 %",
+                "D": "Disminuye 2 %",
+                "E": "Aumenta 2 %"
+            },
+            "correcta": "C",
+            "solucion": "1,2 × 0,8 = 0,96: baja 4 %."
+        },
+        {
+            "codigo": "UNI_AM_12",
+            "asignatura": "AM",
+            "enunciado": "Seis personas se saludan con un apretón de manos, una sola vez cada par. ¿Cuántos saludos hay?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "15",
+                "B": "12",
+                "C": "30",
+                "D": "36",
+                "E": "18"
+            },
+            "correcta": "A",
+            "solucion": "C(6,2) = 6 × 5 / 2 = 15."
+        },
+        {
+            "codigo": "UNI_AM_13",
+            "asignatura": "AM",
+            "enunciado": "¿De cuántas maneras distintas se pueden ordenar las letras de la palabra CASA?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "24",
+                "B": "6",
+                "C": "8",
+                "D": "12",
+                "E": "16"
+            },
+            "correcta": "D",
+            "solucion": "4! / 2! = 12, porque la A se repite."
+        },
+        {
+            "codigo": "UNI_AM_14",
+            "asignatura": "AM",
+            "enunciado": "Se lanzan dos dados. ¿Cuál es la probabilidad de que la suma sea 7?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1/12",
+                "B": "1/6",
+                "C": "5/36",
+                "D": "7/36",
+                "E": "1/9"
+            },
+            "correcta": "B",
+            "solucion": "Hay 6 casos favorables de 36: 6/36 = 1/6."
+        },
+        {
+            "codigo": "UNI_AM_15",
+            "asignatura": "AM",
+            "enunciado": "El promedio de 5 números es 12. Al agregar un sexto número, el promedio sube a 13. ¿Cuál es el sexto número?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "13",
+                "B": "15",
+                "C": "20",
+                "D": "16",
+                "E": "18"
+            },
+            "correcta": "E",
+            "solucion": "6 × 13 − 5 × 12 = 78 − 60 = 18."
+        },
+        {
+            "codigo": "UNI_AM_16",
+            "asignatura": "AM",
+            "enunciado": "A hace una obra en 6 horas y B en 3 horas. ¿En cuántas horas la hacen juntos?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "4,5",
+                "B": "3",
+                "C": "2",
+                "D": "2,5",
+                "E": "1,5"
+            },
+            "correcta": "C",
+            "solucion": "1/6 + 1/3 = 1/2 de obra por hora → 2 horas."
+        },
+        {
+            "codigo": "UNI_AM_17",
+            "asignatura": "AM",
+            "enunciado": "Un auto viaja a 60 km/h. ¿Cuántas horas tarda en recorrer 150 km?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "2,5",
+                "B": "2",
+                "C": "3",
+                "D": "1,5",
+                "E": "3,5"
+            },
+            "correcta": "A",
+            "solucion": "150 / 60 = 2,5 h."
+        },
+        {
+            "codigo": "UNI_AM_18",
+            "asignatura": "AM",
+            "enunciado": "¿Qué número continúa la serie 1; 1; 2; 3; 5; 8; 13; …?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "18",
+                "B": "20",
+                "C": "24",
+                "D": "21",
+                "E": "26"
+            },
+            "correcta": "D",
+            "solucion": "Cada término es la suma de los dos anteriores: 8 + 13 = 21."
+        },
+        {
+            "codigo": "UNI_AM_19",
+            "asignatura": "AM",
+            "enunciado": "Si hoy es lunes, ¿qué día de la semana será dentro de 100 días?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Martes",
+                "B": "Miércoles",
+                "C": "Jueves",
+                "D": "Viernes",
+                "E": "Domingo"
+            },
+            "correcta": "B",
+            "solucion": "100 = 7 × 14 + 2: dos días después del lunes."
+        },
+        {
+            "codigo": "UNI_AM_20",
+            "asignatura": "AM",
+            "enunciado": "¿Cuánto es 1 + 2 + 3 + … + 50?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1250",
+                "B": "1300",
+                "C": "2550",
+                "D": "1225",
+                "E": "1275"
+            },
+            "correcta": "E",
+            "solucion": "n(n + 1)/2 = 50 × 51 / 2 = 1275."
+        },
+        {
+            "codigo": "UNI_AM_21",
+            "asignatura": "AM",
+            "enunciado": "Pedro es más alto que Juan, Juan es más alto que Luis y Luis es más alto que Ana. ¿Quién es el más bajo?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Pedro",
+                "B": "Juan",
+                "C": "Ana",
+                "D": "Luis",
+                "E": "No se puede determinar"
+            },
+            "correcta": "C",
+            "solucion": "El orden es Pedro > Juan > Luis > Ana."
+        },
+        {
+            "codigo": "UNI_AM_22",
+            "asignatura": "AM",
+            "enunciado": "¿Cuánto es 2¹⁰?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1024",
+                "B": "512",
+                "C": "1000",
+                "D": "2048",
+                "E": "1048"
+            },
+            "correcta": "A",
+            "solucion": "2¹⁰ = 1024."
+        },
+        {
+            "codigo": "UNI_AM_23",
+            "asignatura": "AM",
+            "enunciado": "¿Qué fracción de 3/4 es 1/2?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "3/8",
+                "B": "3/2",
+                "C": "1/4",
+                "D": "2/3",
+                "E": "1/3"
+            },
+            "correcta": "D",
+            "solucion": "(1/2) ÷ (3/4) = 2/3."
+        },
+        {
+            "codigo": "UNI_AM_24",
+            "asignatura": "AM",
+            "enunciado": "¿Qué número continúa la serie 2; 3; 5; 7; 11; 13; …?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "15",
+                "B": "17",
+                "C": "19",
+                "D": "16",
+                "E": "14"
+            },
+            "correcta": "B",
+            "solucion": "Son números primos consecutivos."
+        },
+        {
+            "codigo": "UNI_AM_25",
+            "asignatura": "AM",
+            "enunciado": "El perímetro de un rectángulo es 30 m y su largo es el doble de su ancho. ¿Cuál es su área?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "45 m²",
+                "B": "40 m²",
+                "C": "60 m²",
+                "D": "56 m²",
+                "E": "50 m²"
+            },
+            "correcta": "E",
+            "solucion": "2(2a + a) = 30 → a = 5, largo 10; área 50 m²."
+        },
+        {
+            "codigo": "UNI_AM_26",
+            "asignatura": "AM",
+            "enunciado": "¿Cuántos números de dos cifras existen?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "89",
+                "B": "99",
+                "C": "90",
+                "D": "100",
+                "E": "91"
+            },
+            "correcta": "C",
+            "solucion": "Del 10 al 99: 99 − 10 + 1 = 90."
+        },
+        {
+            "codigo": "UNI_AM_27",
+            "asignatura": "AM",
+            "enunciado": "Una soga de 36 m se corta en trozos de 4 m. ¿Cuántos cortes se hacen?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "8",
+                "B": "9",
+                "C": "10",
+                "D": "7",
+                "E": "6"
+            },
+            "correcta": "A",
+            "solucion": "Salen 9 trozos, por lo que se necesitan 9 − 1 = 8 cortes."
+        },
+        {
+            "codigo": "UNI_AM_28",
+            "asignatura": "AM",
+            "enunciado": "En un aula, hombres y mujeres están en la razón 3 : 5. Si hay 40 alumnos, ¿cuántas son mujeres?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "15",
+                "B": "20",
+                "C": "24",
+                "D": "25",
+                "E": "30"
+            },
+            "correcta": "D",
+            "solucion": "40 × 5/8 = 25."
+        },
+        {
+            "codigo": "UNI_AM_29",
+            "asignatura": "AM",
+            "enunciado": "Si 3x + 5 = 20, ¿cuánto vale x²?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "5",
+                "B": "25",
+                "C": "15",
+                "D": "10",
+                "E": "20"
+            },
+            "correcta": "B",
+            "solucion": "x = 5, entonces x² = 25."
+        },
+        {
+            "codigo": "UNI_AM_30",
+            "asignatura": "AM",
+            "enunciado": "Una tienda vende un artículo en S/ 120 ganando el 20 % del costo. ¿Cuál fue el costo?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "S/ 96",
+                "B": "S/ 104",
+                "C": "S/ 90",
+                "D": "S/ 110",
+                "E": "S/ 100"
+            },
+            "correcta": "E",
+            "solucion": "1,2 × costo = 120 → costo = 100."
+        },
+        {
+            "codigo": "UNI_AV_01",
+            "asignatura": "AV",
+            "enunciado": "Sinónimo de EFÍMERO:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Duradero",
+                "B": "Eterno",
+                "C": "Pasajero",
+                "D": "Lento",
+                "E": "Firme"
+            },
+            "correcta": "C",
+            "solucion": "Efímero es lo que dura poco."
+        },
+        {
+            "codigo": "UNI_AV_02",
+            "asignatura": "AV",
+            "enunciado": "Sinónimo de PERSPICAZ:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Sagaz",
+                "B": "Torpe",
+                "C": "Ingenuo",
+                "D": "Lento",
+                "E": "Distraído"
+            },
+            "correcta": "A",
+            "solucion": "Perspicaz es quien percibe con agudeza."
+        },
+        {
+            "codigo": "UNI_AV_03",
+            "asignatura": "AV",
+            "enunciado": "Sinónimo de ACERVO:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Acero",
+                "B": "Amargura",
+                "C": "Rechazo",
+                "D": "Patrimonio",
+                "E": "Vacío"
+            },
+            "correcta": "D",
+            "solucion": "Acervo es el conjunto de bienes o valores de una colectividad."
+        },
+        {
+            "codigo": "UNI_AV_04",
+            "asignatura": "AV",
+            "enunciado": "Sinónimo de LACÓNICO:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Extenso",
+                "B": "Conciso",
+                "C": "Prolijo",
+                "D": "Verboso",
+                "E": "Ruidoso"
+            },
+            "correcta": "B",
+            "solucion": "Lacónico es breve al hablar o escribir."
+        },
+        {
+            "codigo": "UNI_AV_05",
+            "asignatura": "AV",
+            "enunciado": "Sinónimo de INOCUO:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Dañino",
+                "B": "Letal",
+                "C": "Tóxico",
+                "D": "Nocivo",
+                "E": "Inofensivo"
+            },
+            "correcta": "E",
+            "solucion": "Inocuo es lo que no hace daño."
+        },
+        {
+            "codigo": "UNI_AV_06",
+            "asignatura": "AV",
+            "enunciado": "Antónimo de PRÓDIGO:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Generoso",
+                "B": "Derrochador",
+                "C": "Tacaño",
+                "D": "Dadivoso",
+                "E": "Espléndido"
+            },
+            "correcta": "C",
+            "solucion": "Pródigo es quien gasta o da sin medida."
+        },
+        {
+            "codigo": "UNI_AV_07",
+            "asignatura": "AV",
+            "enunciado": "Antónimo de DILIGENTE:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Negligente",
+                "B": "Activo",
+                "C": "Cuidadoso",
+                "D": "Rápido",
+                "E": "Esmerado"
+            },
+            "correcta": "A",
+            "solucion": "Diligente es cuidadoso y activo; lo opuesto es negligente."
+        },
+        {
+            "codigo": "UNI_AV_08",
+            "asignatura": "AV",
+            "enunciado": "Antónimo de ESCASEZ:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Carencia",
+                "B": "Falta",
+                "C": "Penuria",
+                "D": "Abundancia",
+                "E": "Pobreza"
+            },
+            "correcta": "D",
+            "solucion": "Escasez es falta; su opuesto es abundancia."
+        },
+        {
+            "codigo": "UNI_AV_09",
+            "asignatura": "AV",
+            "enunciado": "Antónimo de LOCUAZ:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Hablador",
+                "B": "Taciturno",
+                "C": "Parlanchín",
+                "D": "Elocuente",
+                "E": "Verboso"
+            },
+            "correcta": "B",
+            "solucion": "Locuaz es quien habla mucho; taciturno, quien calla."
+        },
+        {
+            "codigo": "UNI_AV_10",
+            "asignatura": "AV",
+            "enunciado": "Antónimo de EFÍMERO:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Fugaz",
+                "B": "Breve",
+                "C": "Pasajero",
+                "D": "Transitorio",
+                "E": "Perenne"
+            },
+            "correcta": "E",
+            "solucion": "Lo opuesto a lo que dura poco es lo que permanece."
+        },
+        {
+            "codigo": "UNI_AV_11",
+            "asignatura": "AV",
+            "enunciado": "MÉDICO : HOSPITAL ::",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Juez : ley",
+                "B": "Pintor : cuadro",
+                "C": "Docente : colegio",
+                "D": "Escritor : libro",
+                "E": "Cocinero : receta"
+            },
+            "correcta": "C",
+            "solucion": "Relación profesional : lugar de trabajo."
+        },
+        {
+            "codigo": "UNI_AV_12",
+            "asignatura": "AV",
+            "enunciado": "ZAPATO : PIE ::",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Guante : mano",
+                "B": "Anillo : joya",
+                "C": "Bufanda : invierno",
+                "D": "Lente : luz",
+                "E": "Collar : oro"
+            },
+            "correcta": "A",
+            "solucion": "Prenda : parte del cuerpo que cubre."
+        },
+        {
+            "codigo": "UNI_AV_13",
+            "asignatura": "AV",
+            "enunciado": "CARDUMEN : PEZ ::",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Perro : jauría",
+                "B": "Pez : agua",
+                "C": "Lobo : oveja",
+                "D": "Jauría : perro",
+                "E": "Ave : nido"
+            },
+            "correcta": "D",
+            "solucion": "Sustantivo colectivo : individuo."
+        },
+        {
+            "codigo": "UNI_AV_14",
+            "asignatura": "AV",
+            "enunciado": "FRÍO : CALOR ::",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Lluvia : agua",
+                "B": "Luz : oscuridad",
+                "C": "Sol : día",
+                "D": "Nieve : hielo",
+                "E": "Viento : aire"
+            },
+            "correcta": "B",
+            "solucion": "Relación de opuestos."
+        },
+        {
+            "codigo": "UNI_AV_15",
+            "asignatura": "AV",
+            "enunciado": "PINTOR : PINCEL ::",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Escritor : novela",
+                "B": "Actor : teatro",
+                "C": "Cantante : canción",
+                "D": "Juez : tribunal",
+                "E": "Cirujano : bisturí"
+            },
+            "correcta": "E",
+            "solucion": "Agente : instrumento con el que trabaja."
+        },
+        {
+            "codigo": "UNI_AV_16",
+            "asignatura": "AV",
+            "enunciado": "El testigo fue tan ______ en su declaración que nadie dudó de su ______.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "ambiguo – sinceridad",
+                "B": "confuso – palabra",
+                "C": "veraz – honestidad",
+                "D": "tímido – valor",
+                "E": "rápido – lentitud"
+            },
+            "correcta": "C",
+            "solucion": "Solo la veracidad explica que nadie dude de él."
+        },
+        {
+            "codigo": "UNI_AV_17",
+            "asignatura": "AV",
+            "enunciado": "A pesar de su ______, el atleta logró terminar la carrera.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "lesión",
+                "B": "entrenamiento",
+                "C": "victoria",
+                "D": "velocidad",
+                "E": "preparación"
+            },
+            "correcta": "A",
+            "solucion": "“A pesar de” exige un obstáculo."
+        },
+        {
+            "codigo": "UNI_AV_18",
+            "asignatura": "AV",
+            "enunciado": "Las medidas fueron ______ porque no resolvieron el problema.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "acertadas",
+                "B": "útiles",
+                "C": "precisas",
+                "D": "ineficaces",
+                "E": "oportunas"
+            },
+            "correcta": "D",
+            "solucion": "No resolver el problema implica ineficacia."
+        },
+        {
+            "codigo": "UNI_AV_19",
+            "asignatura": "AV",
+            "enunciado": "Señala el término excluido: manzana, pera, uva, zanahoria, durazno.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Manzana",
+                "B": "Zanahoria",
+                "C": "Pera",
+                "D": "Uva",
+                "E": "Durazno"
+            },
+            "correcta": "B",
+            "solucion": "La zanahoria es una hortaliza; las demás son frutas."
+        },
+        {
+            "codigo": "UNI_AV_20",
+            "asignatura": "AV",
+            "enunciado": "Señala el término excluido: valiente, osado, intrépido, audaz, cobarde.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Valiente",
+                "B": "Osado",
+                "C": "Intrépido",
+                "D": "Audaz",
+                "E": "Cobarde"
+            },
+            "correcta": "E",
+            "solucion": "Los demás son sinónimos de valentía."
+        },
+        {
+            "codigo": "UNI_AV_21",
+            "asignatura": "AV",
+            "enunciado": "Señala el término excluido: Lima, Quito, Bogotá, Cusco, Santiago.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Lima",
+                "B": "Quito",
+                "C": "Cusco",
+                "D": "Bogotá",
+                "E": "Santiago"
+            },
+            "correcta": "C",
+            "solucion": "Cusco no es capital de un país."
+        },
+        {
+            "codigo": "UNI_AV_22",
+            "asignatura": "AV",
+            "enunciado": "Señala el término excluido: violín, guitarra, trompeta, arpa, viola.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Trompeta",
+                "B": "Violín",
+                "C": "Guitarra",
+                "D": "Arpa",
+                "E": "Viola"
+            },
+            "correcta": "A",
+            "solucion": "La trompeta es de viento; los demás, de cuerda."
+        },
+        {
+            "codigo": "UNI_AV_23",
+            "asignatura": "AV",
+            "enunciado": "“La lectura no solo informa: también forma el pensamiento crítico, porque obliga al lector a comparar ideas y a evaluar argumentos.” ¿Cuál es la idea principal?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "La lectura solo sirve para informarse.",
+                "B": "Comparar ideas es difícil.",
+                "C": "Los argumentos siempre son falsos.",
+                "D": "La lectura desarrolla el pensamiento crítico.",
+                "E": "Leer reemplaza al estudio."
+            },
+            "correcta": "D",
+            "solucion": "El texto destaca que la lectura forma el pensamiento crítico."
+        },
+        {
+            "codigo": "UNI_AV_24",
+            "asignatura": "AV",
+            "enunciado": "“Las abejas polinizan cerca del 75 % de los cultivos alimentarios. Su disminución, causada por pesticidas y pérdida de hábitat, amenaza la seguridad alimentaria.” Se infiere que:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Los pesticidas favorecen a las abejas.",
+                "B": "Proteger a las abejas ayuda a asegurar alimentos.",
+                "C": "Las abejas no influyen en la agricultura.",
+                "D": "Todos los cultivos dependen de las abejas.",
+                "E": "La pérdida de hábitat beneficia los cultivos."
+            },
+            "correcta": "B",
+            "solucion": "Si su disminución amenaza los alimentos, protegerlas los asegura."
+        },
+        {
+            "codigo": "UNI_AV_25",
+            "asignatura": "AV",
+            "enunciado": "Según el texto anterior sobre las abejas, es incompatible afirmar que:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Los pesticidas las perjudican.",
+                "B": "Polinizan muchos cultivos.",
+                "C": "Su disminución es preocupante.",
+                "D": "Necesitan un hábitat adecuado.",
+                "E": "Su desaparición no afectaría a la agricultura."
+            },
+            "correcta": "E",
+            "solucion": "El texto afirma justamente lo contrario."
+        },
+        {
+            "codigo": "UNI_AV_26",
+            "asignatura": "AV",
+            "enunciado": "Sinónimo de ÁVIDO:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Harto",
+                "B": "Indiferente",
+                "C": "Ansioso",
+                "D": "Saciado",
+                "E": "Tranquilo"
+            },
+            "correcta": "C",
+            "solucion": "Ávido es quien desea algo con intensidad."
+        },
+        {
+            "codigo": "UNI_AV_27",
+            "asignatura": "AV",
+            "enunciado": "Antónimo de SOSIEGO:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Inquietud",
+                "B": "Calma",
+                "C": "Paz",
+                "D": "Quietud",
+                "E": "Serenidad"
+            },
+            "correcta": "A",
+            "solucion": "Sosiego es tranquilidad."
+        },
+        {
+            "codigo": "UNI_AV_28",
+            "asignatura": "AV",
+            "enunciado": "El juez decidió ______ al acusado por falta de pruebas.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "absorber",
+                "B": "observar",
+                "C": "resolver",
+                "D": "absolver",
+                "E": "disolver"
+            },
+            "correcta": "D",
+            "solucion": "Absolver es declarar libre de culpa; absorber es otra palabra (parónimo)."
+        },
+        {
+            "codigo": "UNI_AV_29",
+            "asignatura": "AV",
+            "enunciado": "Estudió mucho; ______, no aprobó el examen.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "por lo tanto",
+                "B": "sin embargo",
+                "C": "además",
+                "D": "es decir",
+                "E": "por ejemplo"
+            },
+            "correcta": "B",
+            "solucion": "Se necesita un conector adversativo."
+        },
+        {
+            "codigo": "UNI_AV_30",
+            "asignatura": "AV",
+            "enunciado": "Llovía intensamente; ______ suspendieron el partido.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "aunque",
+                "B": "sin embargo",
+                "C": "a pesar de que",
+                "D": "no obstante",
+                "E": "por eso"
+            },
+            "correcta": "E",
+            "solucion": "Se necesita un conector de consecuencia."
+        },
+        {
+            "codigo": "UNI_IN_01",
+            "asignatura": "IN",
+            "enunciado": "She ___ to school every day.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "goes",
+                "B": "go",
+                "C": "going",
+                "D": "gone",
+                "E": "is go"
+            },
+            "correcta": "A",
+            "solucion": "Simple present, third person singular: goes."
+        },
+        {
+            "codigo": "UNI_IN_02",
+            "asignatura": "IN",
+            "enunciado": "I ___ in Lima since 2015.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "live",
+                "B": "lived",
+                "C": "am living",
+                "D": "have lived",
+                "E": "will live"
+            },
+            "correcta": "D",
+            "solucion": "“Since” with an action that continues: present perfect."
+        },
+        {
+            "codigo": "UNI_IN_03",
+            "asignatura": "IN",
+            "enunciado": "What is the past tense of “buy”?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "buyed",
+                "B": "bought",
+                "C": "brought",
+                "D": "buys",
+                "E": "buying"
+            },
+            "correcta": "B",
+            "solucion": "Irregular verb: buy – bought – bought."
+        },
+        {
+            "codigo": "UNI_IN_04",
+            "asignatura": "IN",
+            "enunciado": "There aren't ___ apples left.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "some",
+                "B": "much",
+                "C": "a",
+                "D": "an",
+                "E": "any"
+            },
+            "correcta": "E",
+            "solucion": "Negative sentences with plural nouns use “any”."
+        },
+        {
+            "codigo": "UNI_IN_05",
+            "asignatura": "IN",
+            "enunciado": "If it rains tomorrow, we ___ at home.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "stay",
+                "B": "stayed",
+                "C": "will stay",
+                "D": "would stay",
+                "E": "staying"
+            },
+            "correcta": "C",
+            "solucion": "First conditional: if + present, will + verb."
+        },
+        {
+            "codigo": "UNI_LE_01",
+            "asignatura": "LE",
+            "enunciado": "¿Cuál es una palabra aguda con tilde?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "árbol",
+                "B": "lápiz",
+                "C": "cárcel",
+                "D": "canción",
+                "E": "fácil"
+            },
+            "correcta": "D",
+            "solucion": "Aguda terminada en n: lleva tilde."
+        },
+        {
+            "codigo": "UNI_LE_02",
+            "asignatura": "LE",
+            "enunciado": "¿Cuál es una palabra esdrújula?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "canción",
+                "B": "música",
+                "C": "árbol",
+                "D": "reloj",
+                "E": "papel"
+            },
+            "correcta": "B",
+            "solucion": "Mú-si-ca: acento en la antepenúltima sílaba."
+        },
+        {
+            "codigo": "UNI_LE_03",
+            "asignatura": "LE",
+            "enunciado": "¿Qué oración está escrita correctamente?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "El dijo que si vendría.",
+                "B": "Él dijo qué sí vendría.",
+                "C": "Él dijó que sí vendría.",
+                "D": "El díjo que si vendria.",
+                "E": "Él dijo que sí vendría."
+            },
+            "correcta": "E",
+            "solucion": "Tilde diacrítica en “él” (pronombre) y “sí” (afirmación)."
+        },
+        {
+            "codigo": "UNI_LE_04",
+            "asignatura": "LE",
+            "enunciado": "En “Los alumnos del quinto año ganaron el concurso”, el núcleo del sujeto es:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Los",
+                "B": "quinto",
+                "C": "alumnos",
+                "D": "año",
+                "E": "concurso"
+            },
+            "correcta": "C",
+            "solucion": "El sustantivo principal del sujeto es “alumnos”."
+        },
+        {
+            "codigo": "UNI_LE_05",
+            "asignatura": "LE",
+            "enunciado": "En “Mañana viajaremos a Arequipa”, el verbo está en:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "futuro simple",
+                "B": "presente",
+                "C": "pretérito",
+                "D": "condicional",
+                "E": "copretérito"
+            },
+            "correcta": "A",
+            "solucion": "“Viajaremos” expresa una acción venidera."
+        },
+        {
+            "codigo": "UNI_LE_06",
+            "asignatura": "LE",
+            "enunciado": "¿Qué oración tiene la ortografía correcta?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Él estava muy contento.",
+                "B": "Él eztaba muy contento.",
+                "C": "Él estaba muy contemto.",
+                "D": "Él estaba muy contento.",
+                "E": "Él estava muy contemto."
+            },
+            "correcta": "D",
+            "solucion": "Las terminaciones del copretérito -aba se escriben con b."
+        },
+        {
+            "codigo": "UNI_LE_07",
+            "asignatura": "LE",
+            "enunciado": "¿Qué palabra contiene un hiato?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "cuidado",
+                "B": "poeta",
+                "C": "aire",
+                "D": "causa",
+                "E": "peine"
+            },
+            "correcta": "B",
+            "solucion": "po-e-ta: dos vocales abiertas en sílabas distintas."
+        },
+        {
+            "codigo": "UNI_LE_08",
+            "asignatura": "LE",
+            "enunciado": "La palabra “rápidamente” es un:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "sustantivo",
+                "B": "adjetivo",
+                "C": "verbo",
+                "D": "preposición",
+                "E": "adverbio"
+            },
+            "correcta": "E",
+            "solucion": "Las palabras terminadas en -mente son adverbios de modo."
+        },
+        {
+            "codigo": "UNI_LI_01",
+            "asignatura": "LI",
+            "enunciado": "¿Quién escribió “Los ríos profundos”?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Ciro Alegría",
+                "B": "César Vallejo",
+                "C": "Ricardo Palma",
+                "D": "José María Arguedas",
+                "E": "Abraham Valdelomar"
+            },
+            "correcta": "D",
+            "solucion": "Novela de 1958 de José María Arguedas."
+        },
+        {
+            "codigo": "UNI_LI_02",
+            "asignatura": "LI",
+            "enunciado": "¿Quién escribió “Cien años de soledad”?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Julio Cortázar",
+                "B": "Gabriel García Márquez",
+                "C": "Mario Vargas Llosa",
+                "D": "Jorge Luis Borges",
+                "E": "Pablo Neruda"
+            },
+            "correcta": "B",
+            "solucion": "Novela de 1967 del escritor colombiano."
+        },
+        {
+            "codigo": "UNI_LI_03",
+            "asignatura": "LI",
+            "enunciado": "“Trilce” es una obra de:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "José Santos Chocano",
+                "B": "Manuel González Prada",
+                "C": "José María Eguren",
+                "D": "Blanca Varela",
+                "E": "César Vallejo"
+            },
+            "correcta": "E",
+            "solucion": "Poemario vanguardista publicado en 1922."
+        },
+        {
+            "codigo": "UNI_LI_04",
+            "asignatura": "LI",
+            "enunciado": "¿Quién escribió “La ciudad y los perros”?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Julio Ramón Ribeyro",
+                "B": "Alfredo Bryce Echenique",
+                "C": "Mario Vargas Llosa",
+                "D": "Ciro Alegría",
+                "E": "Manuel Scorza"
+            },
+            "correcta": "C",
+            "solucion": "Novela de 1963 ambientada en el Colegio Leoncio Prado."
+        },
+        {
+            "codigo": "UNI_LI_05",
+            "asignatura": "LI",
+            "enunciado": "¿Quién escribió “Don Quijote de la Mancha”?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Miguel de Cervantes",
+                "B": "Lope de Vega",
+                "C": "Francisco de Quevedo",
+                "D": "Garcilaso de la Vega",
+                "E": "Calderón de la Barca"
+            },
+            "correcta": "A",
+            "solucion": "Obra publicada en 1605 y 1615."
+        },
+        {
+            "codigo": "UNI_HP_01",
+            "asignatura": "HP",
+            "enunciado": "¿En qué fecha José de San Martín proclamó la independencia del Perú?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "9 de diciembre de 1824",
+                "B": "28 de julio de 1824",
+                "C": "6 de agosto de 1821",
+                "D": "15 de julio de 1821",
+                "E": "28 de julio de 1821"
+            },
+            "correcta": "E",
+            "solucion": "La proclamó en Lima el 28 de julio de 1821."
+        },
+        {
+            "codigo": "UNI_HP_02",
+            "asignatura": "HP",
+            "enunciado": "¿En qué año se libró la batalla de Ayacucho?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1821",
+                "B": "1822",
+                "C": "1824",
+                "D": "1826",
+                "E": "1820"
+            },
+            "correcta": "C",
+            "solucion": "Fue el 9 de diciembre de 1824."
+        },
+        {
+            "codigo": "UNI_HP_03",
+            "asignatura": "HP",
+            "enunciado": "El Señor de Sipán pertenece a la cultura:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Mochica",
+                "B": "Nasca",
+                "C": "Chavín",
+                "D": "Paracas",
+                "E": "Tiahuanaco"
+            },
+            "correcta": "A",
+            "solucion": "Su tumba fue hallada en Lambayeque en 1987."
+        },
+        {
+            "codigo": "UNI_HP_04",
+            "asignatura": "HP",
+            "enunciado": "¿Qué inca inició la gran expansión del Tahuantinsuyo?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Manco Cápac",
+                "B": "Huáscar",
+                "C": "Atahualpa",
+                "D": "Pachacútec",
+                "E": "Sinchi Roca"
+            },
+            "correcta": "D",
+            "solucion": "Tras vencer a los chancas, Pachacútec expandió el imperio."
+        },
+        {
+            "codigo": "UNI_HU_01",
+            "asignatura": "HU",
+            "enunciado": "¿En qué año comenzó la Revolución francesa?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1776",
+                "B": "1815",
+                "C": "1848",
+                "D": "1799",
+                "E": "1789"
+            },
+            "correcta": "E",
+            "solucion": "Con la toma de la Bastilla, el 14 de julio de 1789."
+        },
+        {
+            "codigo": "UNI_HU_02",
+            "asignatura": "HU",
+            "enunciado": "La caída de Constantinopla, con la que suele cerrarse la Edad Media, ocurrió en:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1492",
+                "B": "1517",
+                "C": "1453",
+                "D": "1066",
+                "E": "1347"
+            },
+            "correcta": "C",
+            "solucion": "Los otomanos tomaron la ciudad en 1453."
+        },
+        {
+            "codigo": "UNI_HU_03",
+            "asignatura": "HU",
+            "enunciado": "¿En qué año empezó la Primera Guerra Mundial?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1914",
+                "B": "1918",
+                "C": "1939",
+                "D": "1905",
+                "E": "1912"
+            },
+            "correcta": "A",
+            "solucion": "Estalló en 1914 tras el asesinato de Francisco Fernando."
+        },
+        {
+            "codigo": "UNI_HU_04",
+            "asignatura": "HU",
+            "enunciado": "¿Quién fue el primer ser humano en pisar la Luna?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Yuri Gagarin",
+                "B": "Buzz Aldrin",
+                "C": "John Glenn",
+                "D": "Neil Armstrong",
+                "E": "Michael Collins"
+            },
+            "correcta": "D",
+            "solucion": "Misión Apolo 11, en 1969."
+        },
+        {
+            "codigo": "UNI_GG_01",
+            "asignatura": "GG",
+            "enunciado": "¿Cuál es el río de mayor caudal del mundo, que nace en el Perú?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Nilo",
+                "B": "Ucayali",
+                "C": "Mississippi",
+                "D": "Amazonas",
+                "E": "Paraná"
+            },
+            "correcta": "D",
+            "solucion": "El Amazonas tiene el mayor caudal del planeta."
+        },
+        {
+            "codigo": "UNI_GG_02",
+            "asignatura": "GG",
+            "enunciado": "¿Cuál es el lago navegable más alto del mundo?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Junín",
+                "B": "Titicaca",
+                "C": "Poopó",
+                "D": "Victoria",
+                "E": "Parinacochas"
+            },
+            "correcta": "B",
+            "solucion": "Está a unos 3812 m s. n. m., entre Perú y Bolivia."
+        },
+        {
+            "codigo": "UNI_GG_03",
+            "asignatura": "GG",
+            "enunciado": "¿Qué corriente marina fría recorre la costa peruana?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Corriente del Niño",
+                "B": "Corriente del Golfo",
+                "C": "Corriente de Brasil",
+                "D": "Corriente de Kuroshio",
+                "E": "Corriente de Humboldt"
+            },
+            "correcta": "E",
+            "solucion": "También se llama Corriente Peruana."
+        },
+        {
+            "codigo": "UNI_GG_04",
+            "asignatura": "GG",
+            "enunciado": "¿Cuál es el nevado más alto del Perú?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Misti",
+                "B": "Coropuna",
+                "C": "Huascarán",
+                "D": "Salcantay",
+                "E": "Ausangate"
+            },
+            "correcta": "C",
+            "solucion": "Su cumbre sur alcanza unos 6768 m s. n. m."
+        },
+        {
+            "codigo": "UNI_EC_01",
+            "asignatura": "EC",
+            "enunciado": "La inflación es:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "La caída de todos los precios.",
+                "B": "El aumento generalizado y sostenido de los precios.",
+                "C": "El aumento del empleo.",
+                "D": "La reducción de impuestos.",
+                "E": "El aumento de las exportaciones."
+            },
+            "correcta": "B",
+            "solucion": "Definición de inflación."
+        },
+        {
+            "codigo": "UNI_EC_02",
+            "asignatura": "EC",
+            "enunciado": "Según la ley de la demanda, si el precio de un bien sube (lo demás constante):",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Aumenta la cantidad demandada.",
+                "B": "La cantidad demandada no cambia.",
+                "C": "Aumenta la oferta.",
+                "D": "Disminuye la oferta.",
+                "E": "Disminuye la cantidad demandada."
+            },
+            "correcta": "E",
+            "solucion": "Precio y cantidad demandada tienen relación inversa."
+        },
+        {
+            "codigo": "UNI_EC_03",
+            "asignatura": "EC",
+            "enunciado": "La finalidad principal del Banco Central de Reserva del Perú es:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Cobrar los tributos.",
+                "B": "Aprobar el presupuesto.",
+                "C": "Preservar la estabilidad monetaria.",
+                "D": "Otorgar créditos a las familias.",
+                "E": "Fijar los sueldos."
+            },
+            "correcta": "C",
+            "solucion": "Así lo establece la Constitución (art. 84)."
+        },
+        {
+            "codigo": "UNI_FL_01",
+            "asignatura": "FL",
+            "enunciado": "¿Quién afirmó “Pienso, luego existo”?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Platón",
+                "B": "Immanuel Kant",
+                "C": "René Descartes",
+                "D": "Aristóteles",
+                "E": "Friedrich Nietzsche"
+            },
+            "correcta": "C",
+            "solucion": "Cogito, ergo sum: Discurso del método (1637)."
+        },
+        {
+            "codigo": "UNI_FL_02",
+            "asignatura": "FL",
+            "enunciado": "La negación de “Todos los hombres son mortales” es:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Algunos hombres no son mortales.",
+                "B": "Ningún hombre es mortal.",
+                "C": "Todos los hombres son inmortales.",
+                "D": "Algunos hombres son mortales.",
+                "E": "Ningún mortal es hombre."
+            },
+            "correcta": "A",
+            "solucion": "La negación de un universal afirmativo es un particular negativo."
+        },
+        {
+            "codigo": "UNI_FL_03",
+            "asignatura": "FL",
+            "enunciado": "La condicional p → q es falsa solo cuando:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "p y q son verdaderas.",
+                "B": "p y q son falsas.",
+                "C": "p es falsa y q es verdadera.",
+                "D": "p es verdadera y q es falsa.",
+                "E": "q es verdadera."
+            },
+            "correcta": "D",
+            "solucion": "Es el único caso falso en su tabla de verdad."
+        },
+        {
+            "codigo": "UNI_PS_01",
+            "asignatura": "PS",
+            "enunciado": "¿A quién se considera el padre del psicoanálisis?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Carl Jung",
+                "B": "Iván Pávlov",
+                "C": "Sigmund Freud",
+                "D": "Jean Piaget",
+                "E": "B. F. Skinner"
+            },
+            "correcta": "C",
+            "solucion": "Freud desarrolló el psicoanálisis a fines del siglo XIX."
+        },
+        {
+            "codigo": "UNI_PS_02",
+            "asignatura": "PS",
+            "enunciado": "El proceso que selecciona y concentra la mente en ciertos estímulos se llama:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Atención",
+                "B": "Memoria",
+                "C": "Sensación",
+                "D": "Emoción",
+                "E": "Imaginación"
+            },
+            "correcta": "A",
+            "solucion": "La atención filtra y focaliza los estímulos."
+        },
+        {
+            "codigo": "UNI_CV_01",
+            "asignatura": "CV",
+            "enunciado": "¿De qué año es la Constitución Política vigente del Perú?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1979",
+                "B": "1933",
+                "C": "2001",
+                "D": "1980",
+                "E": "1993"
+            },
+            "correcta": "E",
+            "solucion": "Fue aprobada por referéndum en 1993."
+        },
+        {
+            "codigo": "UNI_CV_02",
+            "asignatura": "CV",
+            "enunciado": "¿Cuáles son los tres poderes del Estado peruano?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Ejecutivo, Electoral y Judicial",
+                "B": "Legislativo, Municipal y Judicial",
+                "C": "Ejecutivo, Legislativo y Judicial",
+                "D": "Ejecutivo, Legislativo y Electoral",
+                "E": "Judicial, Fiscal y Legislativo"
+            },
+            "correcta": "C",
+            "solucion": "Es la clásica separación de poderes."
+        },
+        {
+            "codigo": "UNI_AR_01",
+            "asignatura": "AR",
+            "enunciado": "Halla el MCD de 48 y 36.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "6",
+                "B": "18",
+                "C": "12",
+                "D": "24",
+                "E": "4"
+            },
+            "correcta": "C",
+            "solucion": "48 = 2⁴·3 y 36 = 2²·3²: MCD = 2²·3 = 12."
+        },
+        {
+            "codigo": "UNI_AR_02",
+            "asignatura": "AR",
+            "enunciado": "Halla el MCM de 4, 6 y 10.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "60",
+                "B": "30",
+                "C": "120",
+                "D": "240",
+                "E": "20"
+            },
+            "correcta": "A",
+            "solucion": "MCM = 2²·3·5 = 60."
+        },
+        {
+            "codigo": "UNI_AR_03",
+            "asignatura": "AR",
+            "enunciado": "¿Cuántos divisores positivos tiene 36?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "6",
+                "B": "8",
+                "C": "10",
+                "D": "9",
+                "E": "12"
+            },
+            "correcta": "D",
+            "solucion": "36 = 2²·3²: (2 + 1)(2 + 1) = 9."
+        },
+        {
+            "codigo": "UNI_AR_04",
+            "asignatura": "AR",
+            "enunciado": "¿Cuánto es 3/4 + 5/6?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "8/10",
+                "B": "19/12",
+                "C": "15/24",
+                "D": "2",
+                "E": "17/12"
+            },
+            "correcta": "B",
+            "solucion": "9/12 + 10/12 = 19/12."
+        },
+        {
+            "codigo": "UNI_AR_05",
+            "asignatura": "AR",
+            "enunciado": "8 obreros hacen una obra en 12 días. ¿En cuántos días la harán 6 obreros?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "9",
+                "B": "14",
+                "C": "18",
+                "D": "10",
+                "E": "16"
+            },
+            "correcta": "E",
+            "solucion": "Proporción inversa: 8 × 12 / 6 = 16."
+        },
+        {
+            "codigo": "UNI_AR_06",
+            "asignatura": "AR",
+            "enunciado": "¿Qué interés simple produce S/ 2000 al 5 % anual en 3 años?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "S/ 100",
+                "B": "S/ 150",
+                "C": "S/ 300",
+                "D": "S/ 250",
+                "E": "S/ 350"
+            },
+            "correcta": "C",
+            "solucion": "I = 2000 × 0,05 × 3 = 300."
+        },
+        {
+            "codigo": "UNI_AR_07",
+            "asignatura": "AR",
+            "enunciado": "¿Cuántos números primos hay menores que 20?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "8",
+                "B": "7",
+                "C": "9",
+                "D": "10",
+                "E": "6"
+            },
+            "correcta": "A",
+            "solucion": "2, 3, 5, 7, 11, 13, 17 y 19."
+        },
+        {
+            "codigo": "UNI_AR_08",
+            "asignatura": "AR",
+            "enunciado": "¿Cuál es el residuo de dividir 2²⁰ entre 7?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1",
+                "B": "2",
+                "C": "3",
+                "D": "4",
+                "E": "5"
+            },
+            "correcta": "D",
+            "solucion": "2³ ≡ 1 (mód 7); 2²⁰ = (2³)⁶·2² ≡ 4."
+        },
+        {
+            "codigo": "UNI_AR_09",
+            "asignatura": "AR",
+            "enunciado": "¿Cuánto es 0,333… + 0,5?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "8/10",
+                "B": "5/6",
+                "C": "4/5",
+                "D": "7/9",
+                "E": "3/4"
+            },
+            "correcta": "B",
+            "solucion": "1/3 + 1/2 = 5/6."
+        },
+        {
+            "codigo": "UNI_AR_10",
+            "asignatura": "AR",
+            "enunciado": "Un auto va a 60 km/h y regresa por el mismo camino a 40 km/h. ¿Cuál es su rapidez media?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "50 km/h",
+                "B": "45 km/h",
+                "C": "52 km/h",
+                "D": "44 km/h",
+                "E": "48 km/h"
+            },
+            "correcta": "E",
+            "solucion": "Media armónica: 2·60·40 / (60 + 40) = 48."
+        },
+        {
+            "codigo": "UNI_AL_01",
+            "asignatura": "AL",
+            "enunciado": "Resuelve 2x − 7 = 3x + 2.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "x = 9",
+                "B": "x = −5",
+                "C": "x = −9",
+                "D": "x = 5",
+                "E": "x = −1"
+            },
+            "correcta": "C",
+            "solucion": "−7 − 2 = 3x − 2x → x = −9."
+        },
+        {
+            "codigo": "UNI_AL_02",
+            "asignatura": "AL",
+            "enunciado": "Desarrolla (x + 3)².",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "x² + 6x + 9",
+                "B": "x² + 9",
+                "C": "x² + 3x + 9",
+                "D": "x² + 6x + 6",
+                "E": "2x + 6"
+            },
+            "correcta": "A",
+            "solucion": "Binomio al cuadrado: a² + 2ab + b²."
+        },
+        {
+            "codigo": "UNI_AL_03",
+            "asignatura": "AL",
+            "enunciado": "¿Cuál es la suma de las raíces de x² − 5x + 6 = 0?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "−5",
+                "B": "6",
+                "C": "−6",
+                "D": "5",
+                "E": "1"
+            },
+            "correcta": "D",
+            "solucion": "Las raíces son 2 y 3; también −b/a = 5."
+        },
+        {
+            "codigo": "UNI_AL_04",
+            "asignatura": "AL",
+            "enunciado": "Si x + 1/x = 3, halla x² + 1/x².",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "9",
+                "B": "7",
+                "C": "11",
+                "D": "5",
+                "E": "8"
+            },
+            "correcta": "B",
+            "solucion": "(x + 1/x)² = x² + 2 + 1/x² → 9 − 2 = 7."
+        },
+        {
+            "codigo": "UNI_AL_05",
+            "asignatura": "AL",
+            "enunciado": "Factoriza x² − 9.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "(x − 3)²",
+                "B": "(x + 9)(x − 1)",
+                "C": "(x + 3)²",
+                "D": "x(x − 9)",
+                "E": "(x + 3)(x − 3)"
+            },
+            "correcta": "E",
+            "solucion": "Diferencia de cuadrados."
+        },
+        {
+            "codigo": "UNI_AL_06",
+            "asignatura": "AL",
+            "enunciado": "Si x + y = 10 y x − y = 4, halla xy.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "24",
+                "B": "16",
+                "C": "21",
+                "D": "20",
+                "E": "18"
+            },
+            "correcta": "C",
+            "solucion": "x = 7 e y = 3: xy = 21."
+        },
+        {
+            "codigo": "UNI_AL_07",
+            "asignatura": "AL",
+            "enunciado": "¿Cuánto es log₂ 32?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "5",
+                "B": "4",
+                "C": "6",
+                "D": "16",
+                "E": "8"
+            },
+            "correcta": "A",
+            "solucion": "2⁵ = 32."
+        },
+        {
+            "codigo": "UNI_AL_08",
+            "asignatura": "AL",
+            "enunciado": "Simplifica (2⁵ · 2³) / 2⁶.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "2",
+                "B": "8",
+                "C": "16",
+                "D": "4",
+                "E": "32"
+            },
+            "correcta": "D",
+            "solucion": "2⁵⁺³⁻⁶ = 2² = 4."
+        },
+        {
+            "codigo": "UNI_AL_09",
+            "asignatura": "AL",
+            "enunciado": "Resuelve 3x − 2 > 7.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "x < 3",
+                "B": "x > 3",
+                "C": "x > −3",
+                "D": "x < −3",
+                "E": "x > 5/3"
+            },
+            "correcta": "B",
+            "solucion": "3x > 9 → x > 3."
+        },
+        {
+            "codigo": "UNI_AL_10",
+            "asignatura": "AL",
+            "enunciado": "Si f(x) = 2x² − 3, halla f(−2).",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "−11",
+                "B": "11",
+                "C": "−5",
+                "D": "1",
+                "E": "5"
+            },
+            "correcta": "E",
+            "solucion": "2(4) − 3 = 5."
+        },
+        {
+            "codigo": "UNI_GE_01",
+            "asignatura": "GE",
+            "enunciado": "¿Cuánto suman los ángulos interiores de un hexágono?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "540°",
+                "B": "900°",
+                "C": "360°",
+                "D": "720°",
+                "E": "1080°"
+            },
+            "correcta": "D",
+            "solucion": "180°(6 − 2) = 720°."
+        },
+        {
+            "codigo": "UNI_GE_02",
+            "asignatura": "GE",
+            "enunciado": "Los catetos de un triángulo rectángulo miden 6 y 8. ¿Cuánto mide la hipotenusa?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "12",
+                "B": "10",
+                "C": "14",
+                "D": "9",
+                "E": "11"
+            },
+            "correcta": "B",
+            "solucion": "√(36 + 64) = 10."
+        },
+        {
+            "codigo": "UNI_GE_03",
+            "asignatura": "GE",
+            "enunciado": "¿Cuál es el área de un círculo de radio 3?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "6π",
+                "B": "3π",
+                "C": "12π",
+                "D": "18π",
+                "E": "9π"
+            },
+            "correcta": "E",
+            "solucion": "A = πr² = 9π."
+        },
+        {
+            "codigo": "UNI_GE_04",
+            "asignatura": "GE",
+            "enunciado": "¿Cuál es el suplemento de 35°?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "55°",
+                "B": "155°",
+                "C": "145°",
+                "D": "135°",
+                "E": "125°"
+            },
+            "correcta": "C",
+            "solucion": "180° − 35° = 145°."
+        },
+        {
+            "codigo": "UNI_GE_05",
+            "asignatura": "GE",
+            "enunciado": "¿Cuál es el área de un triángulo equilátero de lado 4?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "4√3",
+                "B": "8√3",
+                "C": "2√3",
+                "D": "16",
+                "E": "6√3"
+            },
+            "correcta": "A",
+            "solucion": "A = (l²√3)/4 = 16√3/4 = 4√3."
+        },
+        {
+            "codigo": "UNI_GE_06",
+            "asignatura": "GE",
+            "enunciado": "¿Cuántas diagonales tiene un octágono?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "16",
+                "B": "24",
+                "C": "28",
+                "D": "20",
+                "E": "40"
+            },
+            "correcta": "D",
+            "solucion": "n(n − 3)/2 = 8·5/2 = 20."
+        },
+        {
+            "codigo": "UNI_GE_07",
+            "asignatura": "GE",
+            "enunciado": "¿Cuál es el volumen de un cubo de arista 3?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "9",
+                "B": "27",
+                "C": "18",
+                "D": "36",
+                "E": "54"
+            },
+            "correcta": "B",
+            "solucion": "V = a³ = 27."
+        },
+        {
+            "codigo": "UNI_GE_08",
+            "asignatura": "GE",
+            "enunciado": "Un ángulo inscrito subtiende un arco de 100°. ¿Cuánto mide?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "100°",
+                "B": "25°",
+                "C": "200°",
+                "D": "80°",
+                "E": "50°"
+            },
+            "correcta": "E",
+            "solucion": "El ángulo inscrito mide la mitad del arco."
+        },
+        {
+            "codigo": "UNI_GE_09",
+            "asignatura": "GE",
+            "enunciado": "¿Cuánto mide cada ángulo exterior de un pentágono regular?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "108°",
+                "B": "60°",
+                "C": "72°",
+                "D": "36°",
+                "E": "90°"
+            },
+            "correcta": "C",
+            "solucion": "360° / 5 = 72°."
+        },
+        {
+            "codigo": "UNI_GE_10",
+            "asignatura": "GE",
+            "enunciado": "¿Cuánto mide la diagonal de un rectángulo de lados 5 y 12?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "13",
+                "B": "17",
+                "C": "15",
+                "D": "11",
+                "E": "14"
+            },
+            "correcta": "A",
+            "solucion": "√(25 + 144) = 13."
+        },
+        {
+            "codigo": "UNI_TR_01",
+            "asignatura": "TR",
+            "enunciado": "¿Cuánto es sen 30°?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "√3/2",
+                "B": "1/2",
+                "C": "√2/2",
+                "D": "1",
+                "E": "√3"
+            },
+            "correcta": "B",
+            "solucion": "Valor notable: sen 30° = 1/2."
+        },
+        {
+            "codigo": "UNI_TR_02",
+            "asignatura": "TR",
+            "enunciado": "¿Cuánto es tan 45°?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "0",
+                "B": "√3",
+                "C": "√3/3",
+                "D": "2",
+                "E": "1"
+            },
+            "correcta": "E",
+            "solucion": "En 45° el cateto opuesto y el adyacente son iguales."
+        },
+        {
+            "codigo": "UNI_TR_03",
+            "asignatura": "TR",
+            "enunciado": "¿A cuántos radianes equivalen 180°?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "π/2",
+                "B": "2π",
+                "C": "π",
+                "D": "3π/2",
+                "E": "π/4"
+            },
+            "correcta": "C",
+            "solucion": "180° = π rad."
+        },
+        {
+            "codigo": "UNI_TR_04",
+            "asignatura": "TR",
+            "enunciado": "¿Cuánto vale sen²x + cos²x?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1",
+                "B": "0",
+                "C": "2",
+                "D": "tan x",
+                "E": "sen 2x"
+            },
+            "correcta": "A",
+            "solucion": "Identidad pitagórica."
+        },
+        {
+            "codigo": "UNI_TR_05",
+            "asignatura": "TR",
+            "enunciado": "¿A cuántos grados equivalen π/3 rad?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "30°",
+                "B": "45°",
+                "C": "90°",
+                "D": "60°",
+                "E": "120°"
+            },
+            "correcta": "D",
+            "solucion": "π/3 × 180°/π = 60°."
+        },
+        {
+            "codigo": "UNI_TR_06",
+            "asignatura": "TR",
+            "enunciado": "En un triángulo rectángulo, el cateto opuesto a θ mide 3 y la hipotenusa 5. ¿Cuánto es cos θ?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "3/5",
+                "B": "4/5",
+                "C": "3/4",
+                "D": "4/3",
+                "E": "5/4"
+            },
+            "correcta": "B",
+            "solucion": "El cateto adyacente mide 4: cos θ = 4/5."
+        },
+        {
+            "codigo": "UNI_TR_07",
+            "asignatura": "TR",
+            "enunciado": "¿Cuánto es sec 60°?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1/2",
+                "B": "√3",
+                "C": "2√3/3",
+                "D": "1",
+                "E": "2"
+            },
+            "correcta": "E",
+            "solucion": "sec 60° = 1 / cos 60° = 2."
+        },
+        {
+            "codigo": "UNI_TR_08",
+            "asignatura": "TR",
+            "enunciado": "¿Cuál es el periodo de y = sen(2x)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "2π",
+                "B": "π/2",
+                "C": "π",
+                "D": "4π",
+                "E": "3π"
+            },
+            "correcta": "C",
+            "solucion": "T = 2π / 2 = π."
+        },
+        {
+            "codigo": "UNI_TR_09",
+            "asignatura": "TR",
+            "enunciado": "Simplifica tan x · cos x.",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "sen x",
+                "B": "cos x",
+                "C": "1",
+                "D": "sec x",
+                "E": "cot x"
+            },
+            "correcta": "A",
+            "solucion": "(sen x / cos x) · cos x = sen x."
+        },
+        {
+            "codigo": "UNI_TR_10",
+            "asignatura": "TR",
+            "enunciado": "¿Cuánto es cos 120°?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1/2",
+                "B": "√3/2",
+                "C": "−√3/2",
+                "D": "−1/2",
+                "E": "0"
+            },
+            "correcta": "D",
+            "solucion": "cos 120° = −cos 60° = −1/2."
+        },
+        {
+            "codigo": "UNI_FI_01",
+            "asignatura": "FI",
+            "enunciado": "¿Cuál es la unidad de fuerza en el Sistema Internacional?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Joule",
+                "B": "Watt",
+                "C": "Newton",
+                "D": "Pascal",
+                "E": "Kilogramo"
+            },
+            "correcta": "C",
+            "solucion": "1 N = 1 kg·m/s²."
+        },
+        {
+            "codigo": "UNI_FI_02",
+            "asignatura": "FI",
+            "enunciado": "¿A cuántos m/s equivalen 72 km/h?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "20 m/s",
+                "B": "10 m/s",
+                "C": "25 m/s",
+                "D": "72 m/s",
+                "E": "36 m/s"
+            },
+            "correcta": "A",
+            "solucion": "72 × 1000 / 3600 = 20."
+        },
+        {
+            "codigo": "UNI_FI_03",
+            "asignatura": "FI",
+            "enunciado": "Un cuerpo cae desde el reposo durante 2 s (g = 10 m/s²). ¿Qué rapidez alcanza?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "10 m/s",
+                "B": "40 m/s",
+                "C": "5 m/s",
+                "D": "20 m/s",
+                "E": "30 m/s"
+            },
+            "correcta": "D",
+            "solucion": "v = g·t = 20 m/s."
+        },
+        {
+            "codigo": "UNI_FI_04",
+            "asignatura": "FI",
+            "enunciado": "¿Qué distancia recorre un cuerpo en caída libre desde el reposo en 3 s (g = 10 m/s²)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "30 m",
+                "B": "45 m",
+                "C": "90 m",
+                "D": "15 m",
+                "E": "60 m"
+            },
+            "correcta": "B",
+            "solucion": "h = g·t²/2 = 10·9/2 = 45 m."
+        },
+        {
+            "codigo": "UNI_FI_05",
+            "asignatura": "FI",
+            "enunciado": "Sobre una masa de 5 kg actúa una aceleración de 2 m/s². ¿Cuál es la fuerza resultante?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "2,5 N",
+                "B": "7 N",
+                "C": "3 N",
+                "D": "25 N",
+                "E": "10 N"
+            },
+            "correcta": "E",
+            "solucion": "F = m·a = 10 N."
+        },
+        {
+            "codigo": "UNI_FI_06",
+            "asignatura": "FI",
+            "enunciado": "¿Cuánto pesa una masa de 3 kg (g = 10 m/s²)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "3 N",
+                "B": "0,3 N",
+                "C": "30 N",
+                "D": "300 N",
+                "E": "13 N"
+            },
+            "correcta": "C",
+            "solucion": "P = m·g = 30 N."
+        },
+        {
+            "codigo": "UNI_FI_07",
+            "asignatura": "FI",
+            "enunciado": "Una fuerza de 20 N desplaza un cuerpo 5 m en su misma dirección. ¿Qué trabajo realiza?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "100 J",
+                "B": "4 J",
+                "C": "25 J",
+                "D": "15 J",
+                "E": "200 J"
+            },
+            "correcta": "A",
+            "solucion": "W = F·d = 100 J."
+        },
+        {
+            "codigo": "UNI_FI_08",
+            "asignatura": "FI",
+            "enunciado": "¿Qué energía cinética tiene una masa de 2 kg que se mueve a 3 m/s?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "6 J",
+                "B": "18 J",
+                "C": "3 J",
+                "D": "9 J",
+                "E": "12 J"
+            },
+            "correcta": "D",
+            "solucion": "Ec = m·v²/2 = 2·9/2 = 9 J."
+        },
+        {
+            "codigo": "UNI_FI_09",
+            "asignatura": "FI",
+            "enunciado": "¿Qué energía potencial tiene una masa de 4 kg a 5 m de altura (g = 10 m/s²)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "20 J",
+                "B": "200 J",
+                "C": "100 J",
+                "D": "40 J",
+                "E": "400 J"
+            },
+            "correcta": "B",
+            "solucion": "Ep = m·g·h = 200 J."
+        },
+        {
+            "codigo": "UNI_FI_10",
+            "asignatura": "FI",
+            "enunciado": "Una máquina realiza 600 J de trabajo en 30 s. ¿Cuál es su potencia?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "18 000 W",
+                "B": "0,05 W",
+                "C": "30 W",
+                "D": "60 W",
+                "E": "20 W"
+            },
+            "correcta": "E",
+            "solucion": "P = W/t = 20 W."
+        },
+        {
+            "codigo": "UNI_FI_11",
+            "asignatura": "FI",
+            "enunciado": "Una resistencia de 4 Ω se conecta a 12 V. ¿Qué corriente circula?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "48 A",
+                "B": "8 A",
+                "C": "3 A",
+                "D": "16 A",
+                "E": "0,33 A"
+            },
+            "correcta": "C",
+            "solucion": "I = V/R = 3 A."
+        },
+        {
+            "codigo": "UNI_FI_12",
+            "asignatura": "FI",
+            "enunciado": "¿Cuál es la resistencia equivalente de 6 Ω y 3 Ω en paralelo?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "2 Ω",
+                "B": "9 Ω",
+                "C": "4,5 Ω",
+                "D": "18 Ω",
+                "E": "1 Ω"
+            },
+            "correcta": "A",
+            "solucion": "R = 6·3 / (6 + 3) = 2 Ω."
+        },
+        {
+            "codigo": "UNI_FI_13",
+            "asignatura": "FI",
+            "enunciado": "Un cuerpo de 200 g ocupa 50 cm³. ¿Cuál es su densidad?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "0,25 g/cm³",
+                "B": "250 g/cm³",
+                "C": "10 000 g/cm³",
+                "D": "4 g/cm³",
+                "E": "150 g/cm³"
+            },
+            "correcta": "D",
+            "solucion": "ρ = m/V = 4 g/cm³."
+        },
+        {
+            "codigo": "UNI_FI_14",
+            "asignatura": "FI",
+            "enunciado": "Una fuerza de 100 N actúa sobre 0,5 m². ¿Qué presión ejerce?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "50 Pa",
+                "B": "200 Pa",
+                "C": "100 Pa",
+                "D": "150 Pa",
+                "E": "500 Pa"
+            },
+            "correcta": "B",
+            "solucion": "P = F/A = 200 Pa."
+        },
+        {
+            "codigo": "UNI_FI_15",
+            "asignatura": "FI",
+            "enunciado": "Una onda tiene frecuencia de 5 Hz y longitud de onda de 2 m. ¿Cuál es su rapidez?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "2,5 m/s",
+                "B": "7 m/s",
+                "C": "0,4 m/s",
+                "D": "3 m/s",
+                "E": "10 m/s"
+            },
+            "correcta": "E",
+            "solucion": "v = λ·f = 10 m/s."
+        },
+        {
+            "codigo": "UNI_FI_16",
+            "asignatura": "FI",
+            "enunciado": "Un móvil con movimiento circular uniforme tiene un periodo de 2 s. ¿Cuál es su frecuencia?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "2 Hz",
+                "B": "1 Hz",
+                "C": "0,5 Hz",
+                "D": "4 Hz",
+                "E": "π Hz"
+            },
+            "correcta": "C",
+            "solucion": "f = 1/T = 0,5 Hz."
+        },
+        {
+            "codigo": "UNI_FI_17",
+            "asignatura": "FI",
+            "enunciado": "¿Cuál es la cantidad de movimiento de una masa de 3 kg a 4 m/s?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "12 kg·m/s",
+                "B": "7 kg·m/s",
+                "C": "1,33 kg·m/s",
+                "D": "24 kg·m/s",
+                "E": "0,75 kg·m/s"
+            },
+            "correcta": "A",
+            "solucion": "p = m·v = 12 kg·m/s."
+        },
+        {
+            "codigo": "UNI_FI_18",
+            "asignatura": "FI",
+            "enunciado": "¿Cuánto calor se necesita para elevar en 20 °C la temperatura de 100 g de agua (c = 1 cal/g·°C)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "200 cal",
+                "B": "20 cal",
+                "C": "5 cal",
+                "D": "2000 cal",
+                "E": "120 cal"
+            },
+            "correcta": "D",
+            "solucion": "Q = m·c·ΔT = 100·1·20 = 2000 cal."
+        },
+        {
+            "codigo": "UNI_FI_19",
+            "asignatura": "FI",
+            "enunciado": "Se lanza un cuerpo verticalmente hacia arriba a 30 m/s (g = 10 m/s²). ¿En cuánto tiempo alcanza su altura máxima?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "6 s",
+                "B": "3 s",
+                "C": "1,5 s",
+                "D": "30 s",
+                "E": "0,33 s"
+            },
+            "correcta": "B",
+            "solucion": "t = v₀/g = 3 s."
+        },
+        {
+            "codigo": "UNI_FI_20",
+            "asignatura": "FI",
+            "enunciado": "Un resorte de constante 200 N/m se estira 0,1 m. ¿Qué fuerza ejerce?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "2000 N",
+                "B": "2 N",
+                "C": "200 N",
+                "D": "0,0005 N",
+                "E": "20 N"
+            },
+            "correcta": "E",
+            "solucion": "Ley de Hooke: F = k·x = 20 N."
+        },
+        {
+            "codigo": "UNI_QU_01",
+            "asignatura": "QU",
+            "enunciado": "¿Cuál es el número atómico del oxígeno?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "6",
+                "B": "7",
+                "C": "16",
+                "D": "8",
+                "E": "9"
+            },
+            "correcta": "D",
+            "solucion": "El oxígeno tiene 8 protones."
+        },
+        {
+            "codigo": "UNI_QU_02",
+            "asignatura": "QU",
+            "enunciado": "¿Cuál es el símbolo químico del sodio?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "S",
+                "B": "Na",
+                "C": "So",
+                "D": "N",
+                "E": "Sd"
+            },
+            "correcta": "B",
+            "solucion": "Proviene del latín natrium."
+        },
+        {
+            "codigo": "UNI_QU_03",
+            "asignatura": "QU",
+            "enunciado": "¿Cuál es la masa molar del agua (H = 1, O = 16)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "16 g/mol",
+                "B": "20 g/mol",
+                "C": "10 g/mol",
+                "D": "17 g/mol",
+                "E": "18 g/mol"
+            },
+            "correcta": "E",
+            "solucion": "2(1) + 16 = 18."
+        },
+        {
+            "codigo": "UNI_QU_04",
+            "asignatura": "QU",
+            "enunciado": "A 25 °C, una solución de pH 7 es:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Ácida",
+                "B": "Básica",
+                "C": "Neutra",
+                "D": "Oxidante",
+                "E": "Salina"
+            },
+            "correcta": "C",
+            "solucion": "pH 7 corresponde a [H⁺] = [OH⁻]."
+        },
+        {
+            "codigo": "UNI_QU_05",
+            "asignatura": "QU",
+            "enunciado": "¿Cuál de estos elementos es un gas noble?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Argón",
+                "B": "Nitrógeno",
+                "C": "Oxígeno",
+                "D": "Cloro",
+                "E": "Hidrógeno"
+            },
+            "correcta": "A",
+            "solucion": "El argón pertenece al grupo 18."
+        },
+        {
+            "codigo": "UNI_QU_06",
+            "asignatura": "QU",
+            "enunciado": "¿Qué tipo de enlace tiene el cloruro de sodio (NaCl)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Covalente polar",
+                "B": "Metálico",
+                "C": "Covalente apolar",
+                "D": "Iónico",
+                "E": "Puente de hidrógeno"
+            },
+            "correcta": "D",
+            "solucion": "Hay transferencia de electrones entre un metal y un no metal."
+        },
+        {
+            "codigo": "UNI_QU_07",
+            "asignatura": "QU",
+            "enunciado": "¿Cuántos moles hay en 44 g de CO₂ (C = 12, O = 16)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "0,5",
+                "B": "1",
+                "C": "2",
+                "D": "44",
+                "E": "22"
+            },
+            "correcta": "B",
+            "solucion": "M(CO₂) = 44 g/mol: 44/44 = 1 mol."
+        },
+        {
+            "codigo": "UNI_QU_08",
+            "asignatura": "QU",
+            "enunciado": "¿Cuántos neutrones tiene el átomo ²³Na (Z = 11)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "11",
+                "B": "23",
+                "C": "34",
+                "D": "10",
+                "E": "12"
+            },
+            "correcta": "E",
+            "solucion": "n = A − Z = 23 − 11 = 12."
+        },
+        {
+            "codigo": "UNI_QU_09",
+            "asignatura": "QU",
+            "enunciado": "¿Cuál es la fórmula del ácido sulfúrico?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "H₂SO₃",
+                "B": "H₂S",
+                "C": "H₂SO₄",
+                "D": "HSO₄",
+                "E": "SO₃"
+            },
+            "correcta": "C",
+            "solucion": "Ácido oxácido del azufre con estado +6."
+        },
+        {
+            "codigo": "UNI_QU_10",
+            "asignatura": "QU",
+            "enunciado": "Al balancear H₂ + O₂ → H₂O con los menores enteros, ¿cuál es el coeficiente del agua?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "2",
+                "B": "1",
+                "C": "3",
+                "D": "4",
+                "E": "5"
+            },
+            "correcta": "A",
+            "solucion": "2H₂ + O₂ → 2H₂O."
+        },
+        {
+            "codigo": "UNI_QU_11",
+            "asignatura": "QU",
+            "enunciado": "¿Cuál es el estado de oxidación del manganeso en KMnO₄?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "+2",
+                "B": "+4",
+                "C": "+6",
+                "D": "+7",
+                "E": "+5"
+            },
+            "correcta": "D",
+            "solucion": "+1 + x + 4(−2) = 0 → x = +7."
+        },
+        {
+            "codigo": "UNI_QU_12",
+            "asignatura": "QU",
+            "enunciado": "¿Qué volumen ocupa 1 mol de gas ideal en condiciones normales (0 °C y 1 atm)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1 L",
+                "B": "22,4 L",
+                "C": "11,2 L",
+                "D": "24,5 L",
+                "E": "44,8 L"
+            },
+            "correcta": "B",
+            "solucion": "Volumen molar en condiciones normales."
+        },
+        {
+            "codigo": "UNI_QU_13",
+            "asignatura": "QU",
+            "enunciado": "Un gas ocupa 6 L a 2 atm. A temperatura constante, ¿qué volumen ocupa a 3 atm?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "9 L",
+                "B": "3 L",
+                "C": "6 L",
+                "D": "12 L",
+                "E": "4 L"
+            },
+            "correcta": "E",
+            "solucion": "Ley de Boyle: 2·6 = 3·V → V = 4 L."
+        },
+        {
+            "codigo": "UNI_QU_14",
+            "asignatura": "QU",
+            "enunciado": "Se disuelven 2 mol de soluto en 500 mL de solución. ¿Cuál es la molaridad?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "1 M",
+                "B": "2 M",
+                "C": "4 M",
+                "D": "0,25 M",
+                "E": "8 M"
+            },
+            "correcta": "C",
+            "solucion": "M = 2 mol / 0,5 L = 4 M."
+        },
+        {
+            "codigo": "UNI_QU_15",
+            "asignatura": "QU",
+            "enunciado": "¿Cuál de estas sustancias es una forma alotrópica del carbono?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Diamante",
+                "B": "Ozono",
+                "C": "Cuarzo",
+                "D": "Sílice",
+                "E": "Fósforo rojo"
+            },
+            "correcta": "A",
+            "solucion": "El diamante y el grafito son alótropos del carbono."
+        },
+        {
+            "codigo": "UNI_QU_16",
+            "asignatura": "QU",
+            "enunciado": "¿En qué subnivel termina la configuración electrónica del sodio (Z = 11)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "2p⁶",
+                "B": "3s²",
+                "C": "3p¹",
+                "D": "3s¹",
+                "E": "2s¹"
+            },
+            "correcta": "D",
+            "solucion": "1s² 2s² 2p⁶ 3s¹."
+        },
+        {
+            "codigo": "UNI_QU_17",
+            "asignatura": "QU",
+            "enunciado": "El grupo funcional –OH unido a un carbono saturado caracteriza a los:",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Aldehídos",
+                "B": "Alcoholes",
+                "C": "Cetonas",
+                "D": "Ácidos carboxílicos",
+                "E": "Éteres"
+            },
+            "correcta": "B",
+            "solucion": "El grupo hidroxilo define a los alcoholes."
+        },
+        {
+            "codigo": "UNI_QU_18",
+            "asignatura": "QU",
+            "enunciado": "¿Cuál de estos procesos es un cambio físico?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "La combustión del papel",
+                "B": "La oxidación del hierro",
+                "C": "La fermentación",
+                "D": "La digestión",
+                "E": "La fusión del hielo"
+            },
+            "correcta": "E",
+            "solucion": "El agua solo cambia de estado; no cambia su composición."
+        },
+        {
+            "codigo": "UNI_QU_19",
+            "asignatura": "QU",
+            "enunciado": "¿Cuál de estos elementos es un metal alcalino?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "Calcio",
+                "B": "Magnesio",
+                "C": "Potasio",
+                "D": "Aluminio",
+                "E": "Hierro"
+            },
+            "correcta": "C",
+            "solucion": "El potasio pertenece al grupo 1."
+        },
+        {
+            "codigo": "UNI_QU_20",
+            "asignatura": "QU",
+            "enunciado": "¿Qué porcentaje en masa de hidrógeno tiene el agua (H = 1, O = 16)?",
+            "nivel": "intermedio",
+            "alternativas": {
+                "A": "11,1 %",
+                "B": "5,6 %",
+                "C": "88,9 %",
+                "D": "33,3 %",
+                "E": "2 %"
+            },
+            "correcta": "A",
+            "solucion": "2/18 × 100 ≈ 11,1 %."
+        }
+    ]
+}

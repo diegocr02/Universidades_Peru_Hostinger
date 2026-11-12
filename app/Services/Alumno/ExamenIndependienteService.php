@@ -6,6 +6,7 @@ use App\Models\Usuario;
 use App\Services\IntentoService;
 use App\Support\PerfilExamenCni;
 use App\Support\BancoPracticaUnfv;
+use App\Support\BancoUnmsmJson;
 use App\Support\PerfilExamenUnmsm;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -89,6 +90,7 @@ class ExamenIndependienteService
                 ]);
             }
             $minutos = PerfilExamenUnmsm::minutos();
+            $cuotas = BancoUnmsmJson::mapearCuotas($areaUnmsm, $cuotas);
             $puntajes = [PerfilExamenUnmsm::PUNTAJE_CORRECTA, PerfilExamenUnmsm::PUNTAJE_INCORRECTA, PerfilExamenUnmsm::PUNTAJE_BLANCO];
             $version = substr(hash('sha256', json_encode([$areaUnmsm, $cuotas, $minutos, $puntajes, 5])), 0, 10);
 

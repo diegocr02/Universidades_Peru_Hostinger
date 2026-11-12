@@ -2,7 +2,7 @@
 
 /*
  * Configuración visual del portal del alumno (variante "derecho" del layout).
- * Aquí solo va lo que NO viene de la base de datos: menú, colores, íconos y citas.
+ * Aquí solo va lo que NO viene de la base de datos: menú, colores e íconos.
  */
 return [
 
@@ -19,9 +19,6 @@ return [
         ['texto' => 'Historial', 'icono' => 'historial', 'ruta' => 'alumno.historial'],
         ['texto' => 'Mi perfil', 'icono' => 'perfil', 'ruta' => 'alumno.perfil'],
     ],
-
-    // Cuántas tarjetas de temas se muestran en el inicio (el resto, en "Ver todos").
-    'temas_en_inicio' => 6,
 
     /*
      * Colores de las tarjetas de temas: se asignan en orden y se repiten
@@ -50,10 +47,4 @@ return [
     ],
     'icono_tema_por_defecto' => 'libro',
 
-    // Citas del banner de bienvenida: se muestra una distinta cada día.
-    'citas' => [
-        ['texto' => 'La justicia es la constante y perpetua voluntad de dar a cada uno su derecho.', 'autor' => 'Ulpiano'],
-        ['texto' => 'El derecho es el arte de lo bueno y de lo equitativo.', 'autor' => 'Celso'],
-        ['texto' => 'Donde hay sociedad, hay derecho.', 'autor' => 'Aforismo latino'],
-    ],
 ];

@@ -26,6 +26,9 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/resultados.css').'?v='.filemtime(public_path('css/resultados.css')) }}">
+    @if($evaluacionIngreso ?? null)
+        <link rel="stylesheet" href="{{ asset('css/referencia-ingreso.css').'?v='.filemtime(public_path('css/referencia-ingreso.css')) }}">
+    @endif
 @endpush
 
 @section('content')
@@ -94,6 +97,10 @@
             @endif
             <p class="resultados-uni__nota">Escala referencial de entrenamiento; no es el puntaje oficial de la UNI.</p>
         </section>
+    @endif
+
+    @if($evaluacionIngreso ?? null)
+        @include('alumno.partials.referencia-ingreso')
     @endif
 
     <section class="resultados-asignaturas" aria-labelledby="titulo-asignaturas">

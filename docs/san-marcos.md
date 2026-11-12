@@ -1,8 +1,9 @@
 # Modalidad San Marcos (UNMSM)
 
 El área de postulación **E** del simulador corresponde a San Marcos. Dentro de ella, cada alumno
-elige una sola vez su área San Marcos (**A** Ciencias de la Salud, **C** Ingeniería o
-**E** Humanidades y Ciencias Jurídicas y Sociales) y solo puede rendir ese examen.
+elige su área de práctica San Marcos (**A** Ciencias de la Salud, **C** Ingeniería o
+**E** Humanidades y Ciencias Jurídicas y Sociales). Puede cambiar entre ellas desde
+las tarjetas del panel. Los intentos anteriores conservan sus preguntas y resultados.
 
 | Dato | Valor |
 |---|---|

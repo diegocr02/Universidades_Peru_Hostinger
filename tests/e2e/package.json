@@ -1,0 +1,11 @@
+{
+    "name": "cni-browser-tests",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "install:browsers": "playwright install --with-deps chromium"
+    },
+    "devDependencies": {
+        "playwright": "1.56.1"
+    }
+}

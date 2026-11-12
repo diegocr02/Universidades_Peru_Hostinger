@@ -2,6 +2,7 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/panel-alumno.css') }}?v={{ filemtime(public_path('css/panel-alumno.css')) }}">
 <link rel="stylesheet" href="{{ asset('css/panel-uni.css') }}?v={{ filemtime(public_path('css/panel-uni.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/referencia-ingreso.css').'?v='.filemtime(public_path('css/referencia-ingreso.css')) }}">
 @endpush
 @section('content')
 @php
@@ -121,6 +122,8 @@
                     @endforeach
                 </div>
 
+                @include('alumno.partials.referencia-ingreso', ['evaluacionIngreso' => app(\App\Services\Alumno\ReferenciaIngresoService::class)->uni($uni['resumen'])])
+
                 <section class="cni-uni-resumen" aria-labelledby="resumen-titulo">
                     @php $r = $uni['resumen']; @endphp
                     <h2 id="resumen-titulo">Resumen de los tres días
@@ -134,12 +137,7 @@
                                 <div><dt>Día {{ $dia['numero'] }} · {{ $dia['titulo'] }}</dt>
                                     <dd>{{ $dia['calificacion'] ? $puntos($dia['calificacion']['puntaje']) : '—' }} <small>/ {{ $puntos($dia['escala']['maximo']) }}</small></dd></div>
                             @endforeach
-                            <div><dt>{{ $r['completo'] ? 'Puntaje total' : 'Puntaje parcial' }}</dt><dd>{{ $puntos($r['puntaje']) }} <small>/ {{ $puntos($r['maximo']) }}</small></dd></div>
                             <div><dt>Nota referencial</dt><dd>{{ $r['nota_vigesimal'] !== null ? $puntos($r['nota_vigesimal']) : '—' }} <small>/ {{ $r['escala_vigesimal'] }}</small></dd></div>
-                            <div><dt>Correctas</dt><dd>{{ $r['correctas'] }}</dd></div>
-                            <div><dt>Incorrectas</dt><dd>{{ $r['incorrectas'] }}</dd></div>
-                            <div><dt>En blanco</dt><dd>{{ $r['en_blanco'] }}</dd></div>
-                            <div><dt>Respondidas</dt><dd>{{ $r['respondidas'] }} <small>/ {{ $r['preguntas'] }}</small></dd></div>
                         </dl>
                         @unless($r['completo'])
                             <p class="cni-uni-aviso"><strong>Resultado parcial:</strong> faltan {{ $uni['dias']->count() - $r['dias_rendidos'] }} día(s). La nota referencial aparece al completar los tres.</p>
@@ -147,8 +145,7 @@
                         @if($r['incorrectas'] > 0)
                             <p class="cni-uni-aviso">Tu puntaje incluye penalizaciones por respuestas incorrectas. Las preguntas en blanco no generan descuento.</p>
                         @endif
-                        <p class="cni-uni-aviso">Suma el último intento calificado de cada día. Escala referencial de entrenamiento: no es el puntaje oficial de la UNI ni indica ingreso.
-                            La nota sobre {{ $r['escala_vigesimal'] }} usa 0 como mínimo visual cuando el total es negativo. Puntaje de referencia de ingreso: no disponible.</p>
+                        <p class="cni-uni-aviso">Se toma el último intento calificado de cada día.</p>
                     @endif
                 </section>
             </section>

@@ -93,6 +93,7 @@ class CalificacionUniService
 
         return [
             'completo' => $completo,
+            'escala_compatible' => count(array_filter($rendidos, fn ($d) => ! isset($d['maximo']) || (float) $d['maximo'] !== 600.0)) === 0,
             'dias_rendidos' => count($rendidos),
             'puntaje' => $this->decimal($total),
             'maximo' => $maximoTotal,

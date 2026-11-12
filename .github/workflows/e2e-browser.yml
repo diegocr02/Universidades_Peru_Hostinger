@@ -104,8 +104,8 @@ jobs:
         run: php tests/e2e/fixture.php prepare
       - name: Instalar navegador de pruebas
         run: |
-          npm install --no-save --package-lock=false playwright@1.56.1
-          npx playwright install --with-deps chromium
+          npm install --prefix tests/e2e --no-package-lock
+          npm --prefix tests/e2e run install:browsers
       - name: Iniciar servidor Laravel en localhost
         run: |
           php artisan serve --host=127.0.0.1 --port=8000 > /tmp/cni-e2e-laravel.log 2>&1 &

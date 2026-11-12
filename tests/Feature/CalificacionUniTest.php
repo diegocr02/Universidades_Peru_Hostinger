@@ -103,6 +103,8 @@ class CalificacionUniTest extends TestCase
         $this->assertSame(120.0, $dia['descontados']);
         $this->actingAs($alumno, 'web')->get(route('alumno.resultados', $intento))->assertOk()
             ->assertSee('-120.00 / 600.00')
+            ->assertSee('Completa los tres días para evaluar tu resultado')
+            ->assertSee('800.700')
             ->assertSee('Tu puntaje incluye penalizaciones por respuestas incorrectas.');
     }
 
@@ -123,7 +125,8 @@ class CalificacionUniTest extends TestCase
         $this->assertSame($r['preguntas'], $r['correctas'] + $r['incorrectas'] + $r['en_blanco']);
 
         $this->actingAs($alumno, 'web')->get(route('alumno.panel'))->assertOk()
-            ->assertSee('1.101,00')->assertSee('12,23')->assertDontSee('Resultado parcial')
+            ->assertSee('1,101.000')->assertSee('12,23')->assertDontSee('Resultado parcial')
+            ->assertSee('En el rango de ingreso referencial')->assertDontSee('Trome')
             ->assertDontSee('Ingresó');
     }
 

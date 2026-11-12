@@ -106,7 +106,7 @@ try {
   const intento = page.url().match(/\/intentos\/(\d+)\/examen/);
   assert.ok(intento, 'El navegador debe recibir la ruta real del intento creado');
   await page.getByRole('heading', { name: /Simulador de examen/ }).waitFor();
-  await verificarCss('/css/alumno.css');
+  await verificarCss('/css/examen-simple.css');
   assert.equal(await page.locator('.examen-mapa__preguntas button').count(), 20);
   await captura('10-examen-livewire');
 
