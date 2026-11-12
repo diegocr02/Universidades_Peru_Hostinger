@@ -57,8 +57,8 @@
                 <td>{{ \Illuminate\Support\Carbon::parse($r['fecha'])->timezone('America/Lima')->format('d/m/Y H:i') }}</td>
                 <td><strong>{{ $r['archivo'] }}</strong><br><span class="muted">{{ number_format(($r['bytes'] ?? 0)/1024, 1) }} KB · {{ $r['disponible'] ? 'Archivo disponible' : 'Archivo eliminado' }}</span></td>
                 <td>{{ $r['tablas'] }} tablas<br><span class="muted">{{ $r['filas'] }} filas</span></td>
-                <td><span class="badge {{ ($r['destinos']['destino_a']['estado'] ?? '') === 'enviado' ? '' : 'neutral' }}">{{ $r['destinos']['destino_a']['estado'] ?? 'pendiente' }}</span></td>
-                <td><span class="badge {{ ($r['destinos']['destino_b']['estado'] ?? '') === 'enviado' ? '' : 'neutral' }}">{{ $r['destinos']['destino_b']['estado'] ?? 'pendiente' }}</span></td>
+                <td><span class="badge {{ ($r['destinos']['destino_a']['estado'] ?? '') === 'enviado' ? '' : 'neutral' }}">{{ $destinos['destino_a'] ? ($r['destinos']['destino_a']['estado'] ?? 'pendiente') : 'Solo en este servidor' }}</span></td>
+                <td><span class="badge {{ ($r['destinos']['destino_b']['estado'] ?? '') === 'enviado' ? '' : 'neutral' }}">{{ $destinos['destino_b'] ? ($r['destinos']['destino_b']['estado'] ?? 'pendiente') : 'Solo en este servidor' }}</span></td>
                 <td><div class="actions">
                     @if($r['disponible'])
                     <form method="POST" action="{{ route('admin.contingencia.verificar', $r['id']) }}">@csrf <button class="secondary" type="submit">Verificar</button></form>
