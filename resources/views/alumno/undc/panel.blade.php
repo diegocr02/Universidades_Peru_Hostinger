@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/undc-panel.css') }}?v=3">
+<link rel="stylesheet" href="{{ asset('css/undc-panel.css') }}?v=4">
 @endpush
 
 @section('content')
@@ -149,10 +149,29 @@
 
             <section id="resultados" class="ud-section ud-screen" data-ud-screen="resultados" hidden aria-labelledby="ud-resultados-title">
                 <div class="ud-section-heading"><div><span class="ud-eyebrow">SEGUIMIENTO</span><h2 id="ud-resultados-title">Mis resultados</h2></div></div>
+                <p class="ud-admision-note">Los resultados son de práctica. El ingreso oficial a la UNDC depende del proceso de admisión, del orden de mérito y de las vacantes disponibles.</p>
                 <div class="ud-history">
                     @forelse($historialUndc as $intento)
+                        @php
+                            $orientacionUndc = $intento->puntaje_total !== null
+                                ? app(\App\Services\Alumno\IndicadorAdmisionUndcService::class)->evaluar(
+                                    (float) $intento->puntaje_total,
+                                    (int) $intento->total_preguntas,
+                                    (float) ($intento->puntaje_correcta ?? 0)
+                                ) : null;
+                        @endphp
                         <div class="ud-history-item">
-                            <span><strong>Intento #{{ $intento->id }}</strong><small>{{ $intento->fecha_inicio }}</small></span>
+                            <span>
+                                <strong>Intento #{{ $intento->id }}</strong><small>{{ $intento->fecha_inicio }}</small>
+                                @if($orientacionUndc)
+                                    <small class="ud-admision-result">
+                                        {{ number_format($orientacionUndc['porcentaje'], 1) }}% de rendimiento ·
+                                        {{ $orientacionUndc['comparacion_valida']
+                                            ? ($orientacionUndc['cumple_minimo'] ? 'Mínimo configurado alcanzado' : 'Por debajo del mínimo configurado')
+                                            : 'Ingreso oficial por determinar' }}
+                                    </small>
+                                @endif
+                            </span>
                             <span class="ud-history-score">{{ $intento->puntaje_total === null ? 'En curso' : number_format((float) $intento->puntaje_total, 2).' pts' }}</span>
                             @if($intento->estado === 'en_curso')
                                 <a href="{{ route('examen', ['intento' => $intento->id]) }}">Continuar →</a>

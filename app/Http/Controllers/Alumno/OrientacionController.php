@@ -315,7 +315,8 @@ class OrientacionController extends Controller
             ->leftJoin('simulacros as s', 's.id', '=', 'i.simulacro_id')
             ->where('i.id', $intento)
             ->where('i.usuario_id', $usuario->id)
-            ->select('i.id', 'i.fecha_inicio', 'i.fecha_fin', 'i.carrera_id', 's.nombre as simulacro_nombre')
+            ->select('i.id', 'i.fecha_inicio', 'i.fecha_fin', 'i.carrera_id', 'i.total_preguntas',
+                's.nombre as simulacro_nombre', 's.puntaje_correcta')
             ->firstOrFail();
 
         // El servicio rechaza los intentos sin finalizar o todavía sin calificación.
@@ -359,6 +360,11 @@ class OrientacionController extends Controller
         return view('alumno.undc.resultados', [
             'usuario' => $usuario,
             'resultado' => $resultado,
+            'indicadorAdmision' => app(\App\Services\Alumno\IndicadorAdmisionUndcService::class)->evaluar(
+                (float) $resultado['totales']['puntaje_total'],
+                (int) $intentoActual->total_preguntas,
+                (float) ($intentoActual->puntaje_correcta ?? 0)
+            ),
             'simulacroNombre' => $intentoActual->simulacro_nombre,
             'preguntas' => $preguntas,
             'alternativasPorPregunta' => $alternativas,

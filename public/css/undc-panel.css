@@ -120,3 +120,7 @@ body:has(.ud-shell){background:#f3f6fb}
 .ud-shell .ud-page-heading h2{font-size:27px;font-weight:900;color:#143859}
 @media(max-width:930px){.ud-type-grid{grid-template-columns:1fr}.ud-type-start{position:static}.ud-campus-photo{object-position:center}}
 @media(max-width:650px){.ud-shell .ud-hero{min-height:320px}.ud-shell .ud-hero-emblem{display:none}.ud-hero-text{max-width:100%}.ud-type-summary strong{font-size:22px}.ud-welcome-note{padding:14px}}
+
+/* Indicador de resultados educativos UNDC */
+.ud-admision-note{background:#eef5ff;border:1px solid #d6e5f6;border-radius:12px;padding:12px 15px;color:#355774;font-size:12px;margin-bottom:14px}
+.ud-admision-result{display:block;color:#24689b;font-size:11px;margin-top:5px;line-height:1.4}

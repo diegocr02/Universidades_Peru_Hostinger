@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/undc-resultados.css') }}?v=1">
+<link rel="stylesheet" href="{{ asset('css/undc-resultados.css') }}?v=2">
 @endpush
 
 @section('content')
@@ -31,6 +31,37 @@
             <div><span>Respuestas incorrectas</span><strong>{{ $totales['incorrectas'] }}</strong><small class="ur-wrong">✕ Errores</small></div>
             <div><span>En blanco o doble marca</span><strong>{{ $totales['en_blanco'] + $totales['doble_marca'] }}</strong><small>Sin puntaje</small></div>
         </div>
+
+        <section class="ur-admision" aria-labelledby="ur-admision-title">
+            <span class="ur-eyebrow">ORIENTACIÓN DE ADMISIÓN · UNDC {{ $indicadorAdmision['proceso'] }}</span>
+            <h2 id="ur-admision-title">¿Cómo te fue en tu preparación?</h2>
+            <div class="ur-admision-summary">
+                <div>
+                    <span>Puntaje de tu simulacro</span>
+                    <strong>{{ number_format($indicadorAdmision['puntaje'], 2) }}
+                        <small>/ {{ number_format($indicadorAdmision['maximo'], 2) }}</small>
+                    </strong>
+                </div>
+                <div>
+                    <span>Rendimiento en esta práctica</span>
+                    <strong>{{ number_format($indicadorAdmision['porcentaje'], 1) }}%</strong>
+                </div>
+            </div>
+            <div class="ur-admision-track" role="img" aria-label="Rendimiento {{ number_format($indicadorAdmision['porcentaje'], 1) }} por ciento">
+                <span style="width: {{ $indicadorAdmision['porcentaje'] }}%"></span>
+            </div>
+            @if($indicadorAdmision['comparacion_valida'])
+                <p class="ur-admision-message">
+                    {{ $indicadorAdmision['cumple_minimo']
+                        ? '✓ Alcanzaste el puntaje mínimo configurado para esta convocatoria.'
+                        : 'Aún no alcanzaste el puntaje mínimo configurado para esta convocatoria.' }}
+                </p>
+                <p>Mínimo registrado: {{ number_format($indicadorAdmision['minimo'], 2) }} puntos.</p>
+            @else
+                <p class="ur-admision-message">Tu resultado ya está registrado. El puntaje mínimo oficial del examen ordinario 2026-II aún está pendiente de verificación en este simulador.</p>
+            @endif
+            <p class="ur-admision-note">Este es un examen de práctica, no la lista oficial de ingresantes. Para ingresar se deben cumplir las reglas vigentes y obtener una vacante según el orden de mérito por carrera. Los valores históricos de 118,5 (CEPRE) y 120 (2018) no se aplican automáticamente a 2026-II.</p>
+        </section>
 
         <section class="ur-section" aria-labelledby="ur-subjects">
             <h2 id="ur-subjects">Resultados por asignatura</h2>
