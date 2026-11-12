@@ -152,7 +152,7 @@ Evidencia: `docs/evidencias-calidad/playwright-salida.txt`, reporte HTML local e
 | Integridad | Transacciones y bloqueos en el motor real | PHPUnit en MariaDB | ✅ 234/234 |
 | Confiabilidad funcional | Recorrido login → examen → envío → resultado | Playwright y PHPUnit | ✅ |
 | Rendimiento | 15 estudiantes simultáneos → p95 < 2 s, < 1 % de errores | k6 | ❌ p95 3,09 s · ✅ 0 % de errores (servidor local) |
-| Mantenibilidad | Un cambio no rompe funciones → la batería lo detecta | PHPUnit (234) y CI | ✅ local · 🟡 CI activado en `deploy/hostinger`, pendiente de su primera ejecución en GitHub |
+| Mantenibilidad | Un cambio no rompe funciones → la batería lo detecta | PHPUnit (234) y CI | ✅ local y ✅ CI de GitHub en `deploy/hostinger` (SQLite y MariaDB en verde) |
 | Disponibilidad | Caída del servidor o de la base → recuperación | — | 🟡 Contingencia implementada pero desactivada; **no comprobada** |
 
 ### 9.2 Puntos sensibles
@@ -186,7 +186,7 @@ Control de propietario en resultados; validación de alternativas y de estado de
 ## 10. Recomendaciones
 
 1. **Rendimiento:** medir en un **entorno de staging** igual a producción (PHP-FPM con varios workers, `APP_DEBUG=false`, `php artisan optimize`). Se usa el mismo script: `$env:BASE_URL="https://staging…"; $env:K6_ENTORNO_AUTORIZADO="1"; k6 run tests/performance/cni-load.js`.
-2. **CI:** ya aplicado: `tests.yml` corre en `deploy/hostinger`. Falta confirmar en GitHub Actions que la primera ejecución termine en verde.
+2. **CI:** ya aplicado y comprobado: `tests.yml` corre en `deploy/hostinger` y su primera ejecución (run 43175141851) terminó en verde.
 3. **E2E:** retirar o actualizar `tests/e2e/browser.mjs` y llevar `tests/quality` al CI.
 4. **Disponibilidad:** monitorear `/up` (incluido en Laravel) con un servicio externo y probar periódicamente la restauración del módulo de contingencia.
 5. **Prefijos de exámenes:** guardar la universidad como columna del simulacro en lugar de deducirla del nombre (requiere migración; se propone, no se aplicó).
@@ -216,7 +216,7 @@ Control de propietario en resultados; validación de alternativas y de estado de
 | Playwright | Escenario 3: resultados | Aprobado | ídem | ✅ Implementado y comprobado |
 | Playwright | Escenarios 4 y 4b: resultado ajeno y sin sesión | 404 y redirección al login | ídem | ✅ Implementado y comprobado |
 | Playwright | E2E existente `tests/e2e/browser.mjs` | Selectores y rutas obsoletos | Análisis estático | ❌ Error detectado |
-| CI/CD | `tests.yml` en `deploy/hostinger` | Activado en esta entrega | `.github/workflows/tests.yml` | 🟡 Implementado, no comprobado (pendiente de la primera ejecución) |
+| CI/CD | `tests.yml` en `deploy/hostinger` | Ejecución 43175141851 en verde: SQLite (39 s) y MariaDB 11.4 (1 min 42 s) | GitHub Actions, run 43175141851 | ✅ Implementado y comprobado |
 | — | Disponibilidad (contingencia y monitoreo) | Sin pruebas | `config/cni.php` | 🟡 Implementado, no comprobado |
 
 ## Cómo reproducir
