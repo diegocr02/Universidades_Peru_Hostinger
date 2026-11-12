@@ -7,7 +7,9 @@ El repositorio `JIMMY1012102/rsu-simulador-cni` no se auditó directamente.
 > Convención de estados usada en todo el informe:
 > **✅ Implementado y comprobado** · **🟡 Implementado, no comprobado** · **⏳ Pendiente de implementación** · **❌ Error detectado**
 
-**Resultado en una línea:** el sistema es **seguro, íntegro y funcional** (PHPUnit 234/234 en SQLite y en MariaDB; Playwright 5/5). Con 15 estudiantes a la vez **no tuvo errores**, pero **no alcanzó la meta de rapidez** en el servidor local de desarrollo (p95 de 3,09 s frente a una meta de 2 s).
+**Resultado en una línea:** el sistema es **seguro, íntegro y funcional** (PHPUnit 242/242 en SQLite y en MariaDB; Playwright 8/8). Con 15 estudiantes a la vez **no tuvo errores y cumplió la meta de rapidez** (p95 de 0,18 s frente a una meta de 2 s) una vez activado OPcache en el servidor local, como lo tiene el hosting.
+
+> **Actualización 12/11/2026 (tarde):** se volvieron a ejecutar las tres herramientas. Cambios: OPcache en el servidor QA (k6 pasó de p95 3,09 s a 0,18 s), 8 pruebas PHPUnit nuevas (diagnóstico y Centro de contingencia) y 3 escenarios Playwright nuevos del Centro de contingencia. Las cifras anteriores se conservan como referencia en la sección 7.
 
 ---
 
@@ -77,8 +79,8 @@ La base de trabajo `simulador_cni_oficial` no se modificó. No se cambió ningun
 
 | Ejecución | Pruebas | Aprobadas | Fallidas | Aserciones | Tiempo | Evidencia |
 |---|---|---|---|---|---|---|
-| SQLite en memoria (`php artisan test`) | **234** | **234** | **0** | 10.589 | 22,5–40,8 s según la carga del equipo | `docs/evidencias-calidad/phpunit-salida.txt` |
-| **MariaDB real** (base desechable `simulador_cni_phpunit`) | **234** | **234** | **0** | 10.589 | 44,4 s | `docs/evidencias-calidad/phpunit-mariadb-salida.txt` |
+| SQLite en memoria (`php artisan test`) | **242** | **242** | **0** | 10.631 | 28,5 s | `docs/evidencias-calidad/phpunit-salida.txt` |
+| **MariaDB real** (base desechable `simulador_cni_phpunit`, creada y borrada para la prueba) | **242** | **242** | **0** | 10.631 | 60,2 s | `docs/evidencias-calidad/phpunit-mariadb-salida.txt` |
 
 Con la ejecución en MariaDB, los bloqueos de fila (`lockForUpdate`) y las transacciones se ejercitan en el motor real, no solo en SQLite.
 
@@ -86,34 +88,40 @@ Las pruebas nuevas no detectaron defectos en las reglas existentes: las validaci
 
 ## 7. Resultados reales de k6
 
-Comando: `k6 run tests/performance/cni-load.js` contra `http://127.0.0.1:8001/alumno/panel` (servidor QA local, `php artisan serve`).
+Comando: `k6 run tests/performance/cni-load.js` contra `http://127.0.0.1:8001/alumno/panel` (servidor QA local, `php artisan serve` **con OPcache**, cargado desde `tests/quality/php-qa/opcache.ini`).
 
 Etapas: 15 s → 5 usuarios, 15 s → 15, 30 s sostenidos con 15 y 10 s de bajada (unos 70 s).
 
 | Métrica | **15 usuarios concurrentes** | Referencia: 1 usuario (20 s) |
 |---|---|---|
-| Solicitudes atendidas | 258 (228 paneles más 30 de login) | 18 |
-| Solicitudes por segundo | **3,64** | 0,88 |
-| Tiempo promedio | **1,92 s** | 0,24 s |
-| Más rápida / más lenta | 0,18 s / **3,28 s** | 0,19 s / 0,44 s |
-| **p95** | **3,09 s** | **0,32 s** |
+| Solicitudes atendidas | 693 (663 paneles más 30 de login) | 21 |
+| Solicitudes por segundo | **9,89** | 1,04 |
+| Tiempo promedio | **0,06 s** | 0,06 s |
+| Más rápida / más lenta | 0,02 s / **0,32 s** | 0,03 s / 0,22 s |
+| **p95** | **0,18 s** | **0,09 s** |
 | Solicitudes con error | **0,0 %** | 0,0 % |
 | Verificaciones funcionales (login y panel correcto) | **100 %** | 100 % |
 
 Evidencia: `docs/evidencias-calidad/k6-15-usuarios.txt` y `k6-1-usuario-referencia.txt`.
 
-**Repetibilidad:** en tres ejecuciones con 15 usuarios, el p95 estuvo entre **3,04 y 3,25 s**, siempre con 0 % de errores. El resultado es estable.
-
 | Meta propuesta | Resultado |
 |---|---|
-| 95 % de solicitudes en menos de 2 s | ❌ **No cumple** (p95 = 3,09 s) |
+| 95 % de solicitudes en menos de 2 s | ✅ **Cumple** (p95 = 0,18 s) |
 | Menos del 1 % de solicitudes fallidas | ✅ **Cumple** (0 %) |
 
-**Interpretación** (k6 la imprime en su "CONCLUSIÓN"):
-- **Una petición sola es rápida** (0,32 s de p95 con 1 usuario). Con 15 usuarios, el tiempo sube unas 10 veces y la capacidad se estanca en unas 3,6 peticiones por segundo.
-- **La demora es espera en cola:** `php artisan serve`, el servidor de desarrollo, en Windows **atiende una petición a la vez**.
-- **Es un límite del modo de ejecución local, no un error:** no falló ninguna petición.
-- **No se midió el hosting de producción** y estos números **no lo representan**. Un servidor real (Apache, LiteSpeed o Nginx con PHP-FPM) atiende varias peticiones en paralelo, pero eso debe medirse en un entorno de pruebas (staging).
+**Antes y después de OPcache** (mismo equipo, mismo script, mismo servidor de desarrollo):
+
+| | Sin OPcache (primera medición) | Con OPcache |
+|---|---|---|
+| Tiempo de una petición sola | ~0,25 s | ~0,02 s |
+| p95 con 15 usuarios | **3,09 s** ❌ (entre 3,04 y 3,25 s en tres ejecuciones) | **0,18 s** ✅ |
+| Solicitudes por segundo | 3,64 | 9,89 |
+| Errores | 0 % | 0 % |
+
+**Interpretación:**
+- **Causa del primer resultado:** sin OPcache, PHP recompilaba Laravel en cada petición (~0,25 s). Como `php artisan serve` en Windows **atiende una petición a la vez**, los 15 estudiantes hacían cola y el p95 subía a ~3 s.
+- **Corrección:** se activó OPcache **solo para el servidor QA** (sin tocar el `php.ini` global). El hosting de producción ya lo tiene activo (`opcache.enable=On`), así que la prueba local ahora se parece más a producción.
+- **Sigue siendo una medición local:** el hosting de producción **no se midió con k6** (no está autorizado). Un servidor real (LiteSpeed con varios procesos PHP) atiende peticiones en paralelo; la medición formal debe hacerse en staging.
 
 **Nota:** cuando una meta no se cumple, k6 termina con la línea `ERRO … thresholds … crossed`. No es un fallo del script, sino el aviso de k6 de que la meta no se alcanzó.
 
@@ -121,7 +129,7 @@ Evidencia: `docs/evidencias-calidad/k6-15-usuarios.txt` y `k6-1-usuario-referenc
 
 ## 8. Resultados reales de Playwright
 
-Comando: `npx playwright test` en `tests/quality` (Chrome local, contra QA :8001). **Pasó 5 de 5 en las cinco ejecuciones finales** (unos 15 s cada una).
+Comando: `npx playwright test` en `tests/quality` (Chrome local, contra QA :8001). **Pasó 8 de 8** (5 del estudiante y 3 del Centro de contingencia, unos 14 s en total).
 
 Evidencia: `docs/evidencias-calidad/playwright-salida.txt`, reporte HTML local en `tests/quality/playwright-report/index.html` y capturas en `tests/quality/test-results/`.
 
@@ -132,6 +140,11 @@ Evidencia: `docs/evidencias-calidad/playwright-salida.txt`, reporte HTML local e
 | 3 · Resultados | "Resultados de tu examen" con **Puntaje total** → el mismo intento aparece en su historial con sus respondidas y el enlace correcto | ✅ |
 | 4 · Seguridad | Abrir el resultado de otro estudiante → **HTTP 404** y ninguna calificación visible | ✅ |
 | 4b · Seguridad | Abrir `/alumno/panel` sin sesión → redirige a `/login` | ✅ |
+| C1 · Contingencia | `Super_Admin` inicia sesión → ve "Centro de contingencia" en el menú → el panel dice "Listo para pruebas" con el botón habilitado | ✅ |
+| C2 · Contingencia | "Generar respaldo" → confirmar → aparece la fila con el archivo `.cni` → "Verificar" confirma **SHA-256 y autenticidad** | ✅ |
+| C3 · Seguridad | Un estudiante no ve el enlace y, si escribe `/administracion/contingencia`, recibe **HTTP 403** | ✅ |
+
+Los escenarios C1–C3 están en `tests/quality/e2e/contingencia.spec.js`. El panel permite 2 respaldos cada 10 minutos; la prueba limpia ese contador en la base QA antes de empezar para poder repetirse.
 
 **Verificación en la base QA tras la E2E:** un intento con 1 respuesta incorrecta y 49 en blanco quedó `finalizado` con puntaje **−1,125**, que coincide con la escala (incorrecta = −1,125, en blanco = 0).
 
@@ -149,15 +162,16 @@ Evidencia: `docs/evidencias-calidad/playwright-salida.txt`, reporte HTML local e
 | Integridad | Alternativa de otra pregunta → 422 sin persistir | PHPUnit (nuevo) | ✅ |
 | Integridad | Responder un intento finalizado → 422; la nota no cambia | PHPUnit (nuevo) | ✅ |
 | Integridad | Fallo al calificar → sin resultados parciales | PHPUnit | ✅ |
-| Integridad | Transacciones y bloqueos en el motor real | PHPUnit en MariaDB | ✅ 234/234 |
+| Integridad | Transacciones y bloqueos en el motor real | PHPUnit en MariaDB | ✅ 242/242 |
 | Confiabilidad funcional | Recorrido login → examen → envío → resultado | Playwright y PHPUnit | ✅ |
-| Rendimiento | 15 estudiantes simultáneos → p95 < 2 s, < 1 % de errores | k6 | ❌ p95 3,09 s · ✅ 0 % de errores (servidor local) |
-| Mantenibilidad | Un cambio no rompe funciones → la batería lo detecta | PHPUnit (234) y CI | ✅ local y ✅ CI de GitHub en `deploy/hostinger` (SQLite y MariaDB en verde) |
-| Disponibilidad | Caída del servidor o de la base → recuperación | — | 🟡 Contingencia implementada pero desactivada; **no comprobada** |
+| Rendimiento | 15 estudiantes simultáneos → p95 < 2 s, < 1 % de errores | k6 | ✅ p95 0,18 s · ✅ 0 % de errores (servidor local con OPcache) |
+| Mantenibilidad | Un cambio no rompe funciones → la batería lo detecta | PHPUnit (242) y CI | ✅ local y ✅ CI de GitHub en `deploy/hostinger` (SQLite y MariaDB en verde) |
+| Disponibilidad | Pérdida de la base → existe un respaldo cifrado y verificable | Playwright (C2) y PHPUnit (`ContingenciaPanelTest`) | ✅ Respaldos cifrados **activos en producción**; generar y verificar comprobado en QA · 🟡 restauración y destinos externos no probados |
+| Disponibilidad | Revisar el estado del servidor en producción | `php artisan cni:diagnostico` | ✅ Disponible en el hosting (solo lectura) |
 
 ### 9.2 Puntos sensibles
 
-- **Modelo de concurrencia del servidor PHP** (número de workers): determina directamente el p95 bajo carga, como demuestra la comparación de 1 usuario (0,32 s) con 15 usuarios (3,09 s).
+- **Modelo de concurrencia y OPcache del servidor PHP:** determinan directamente el p95 bajo carga. En el servidor local de un solo proceso, activar OPcache bajó el p95 con 15 usuarios de 3,09 s a 0,18 s.
 - **Bloqueos de base de datos** (`lockForUpdate`): garantizan la integridad, pero serializan las operaciones del mismo alumno o de la misma plantilla.
 - **Sesión y caché en archivos:** E/S de disco en cada petición; con muchos usuarios conviene base de datos o Redis.
 - **Clasificación de exámenes por prefijo de nombre** (`App\Support\UniversidadExamen`): separa los historiales por universidad. Renombrar una plantilla sin actualizar los prefijos ocultaría intentos.
@@ -172,11 +186,11 @@ Evidencia: `docs/evidencias-calidad/playwright-salida.txt`, reporte HTML local e
 
 | # | Riesgo | Evidencia | Estado |
 |---|---|---|---|
-| R1 | El p95 supera 2 s con 15 usuarios en un servidor de un solo proceso; no se midió producción | k6 (sección 7) | Abierto: medir en staging |
+| R1 | El p95 superaba 2 s con 15 usuarios en el servidor local sin OPcache; no se midió producción | k6 (sección 7) | **Mitigado en local** (p95 0,18 s con OPcache) · producción pendiente de medir en staging |
 | R2 | La E2E antigua está desactualizada y falla en CI de `develop` | Sección 8 | Abierto (cubierta por `tests/quality`) |
 | R3 | La rama de despliegue no ejecutaba CI | `.github/workflows/tests.yml` | **Mitigado:** ahora se ejecuta al hacer push a `deploy/hostinger` |
-| R4 | Concurrencia no probada en MariaDB | `phpunit.xml` | **Mitigado:** 234/234 en MariaDB real |
-| R5 | La disponibilidad no tiene pruebas ni monitoreo; la contingencia está desactivada | `config/cni.php` | Abierto |
+| R4 | Concurrencia no probada en MariaDB | `phpunit.xml` | **Mitigado:** 242/242 en MariaDB real |
+| R5 | La disponibilidad no tenía pruebas ni respaldos activos | `config/contingencia.php` | **Mitigado en parte:** respaldos cifrados activos en producción y probados en QA; falta un destino externo (otro servidor) y una prueba de restauración |
 | R6 | `APP_DEBUG=true` en el `.env` local | `.env` | Verificar `APP_DEBUG=false` en el hosting (ver `docs/DESPLIEGUE-HOSTINGER.md`) |
 
 ### 9.5 No riesgos (decisiones comprobadas como adecuadas)
@@ -193,28 +207,31 @@ Control de propietario en resultados; validación de alternativas y de estado de
 
 ## 11. Conclusiones de la evaluación arquitectónica
 
-- **Seguridad, integridad y confiabilidad funcional:** se cumplen con evidencia reproducible: PHPUnit 234/234 en SQLite y en MariaDB, y Playwright 5/5.
-- **Rendimiento:** **no se alcanzó la meta de p95 < 2 s** con 15 usuarios en el servidor local (3,09 s), aunque **sin ningún error**. La referencia con 1 usuario (0,32 s) muestra que el cuello de botella es el modelo de un solo proceso del servidor de desarrollo: un **punto sensible de despliegue y no de diseño**. La conclusión sobre producción **queda pendiente** de medir en staging.
-- **Disponibilidad:** analizada como atributo adicional; **no está comprobada**.
+- **Seguridad, integridad y confiabilidad funcional:** se cumplen con evidencia reproducible: PHPUnit 242/242 en SQLite y en MariaDB, y Playwright 8/8.
+- **Rendimiento:** **se cumple la meta de p95 < 2 s** con 15 usuarios en el servidor local (0,18 s) y **sin ningún error**. La primera medición (3,09 s) se debía a que faltaba OPcache en el servidor de desarrollo: era un **punto sensible de despliegue y no de diseño**, y se corrigió sin cambiar el código de la aplicación. La conclusión sobre producción **queda pendiente** de medir en staging.
+- **Disponibilidad:** mejoró: los respaldos cifrados están activos en producción y su generación y verificación están comprobadas en QA. Falta probar la restauración y configurar un destino externo.
 
 ## Tabla resumen
 
 | Herramienta | Prueba realizada | Resultado | Evidencia | Estado |
 |---|---|---|---|---|
-| PHPUnit | Batería completa en SQLite | 234/234 aprobadas | `evidencias-calidad/phpunit-salida.txt` | ✅ Implementado y comprobado |
-| PHPUnit | Batería completa en MariaDB real | 234/234 aprobadas, 44,4 s | `evidencias-calidad/phpunit-mariadb-salida.txt` | ✅ Implementado y comprobado |
+| PHPUnit | Batería completa en SQLite | 242/242 aprobadas | `evidencias-calidad/phpunit-salida.txt` | ✅ Implementado y comprobado |
+| PHPUnit | Batería completa en MariaDB real | 242/242 aprobadas, 60,2 s | `evidencias-calidad/phpunit-mariadb-salida.txt` | ✅ Implementado y comprobado |
 | PHPUnit | Login, logout, CSRF, roles | Aprobadas | `AuthModuleTest`, `AccesoPanelOficialTest` | ✅ Implementado y comprobado |
 | PHPUnit | Resultados ajenos | Aprobadas | `ResultadoServiceTest`, `ExamenPantallaTest` | ✅ Implementado y comprobado |
 | PHPUnit | Alternativa de otra pregunta (nueva) | 422 sin persistir | `IntegridadRespuestasTest` | ✅ Implementado y comprobado |
 | PHPUnit | Intento finalizado inmutable (nueva) | 422; nota sin cambios | `IntegridadRespuestasTest` | ✅ Implementado y comprobado |
 | PHPUnit | Control de tiempo | Aprobadas | `ExamenPantallaTest`, `ExamenServiceTest` | ✅ Implementado y comprobado |
-| k6 | 15 usuarios, 4 fases, panel autenticado | p95 3,09 s; 0 % de errores; 3,64 peticiones/s | `evidencias-calidad/k6-15-usuarios.txt` | ❌ Meta p95 no cumplida · ✅ meta de errores cumplida |
-| k6 | Referencia con 1 usuario | p95 0,32 s | `evidencias-calidad/k6-1-usuario-referencia.txt` | ✅ Implementado y comprobado |
+| k6 | 15 usuarios, 4 fases, panel autenticado | p95 0,18 s; 0 % de errores; 9,89 peticiones/s | `evidencias-calidad/k6-15-usuarios.txt` | ✅ Implementado y comprobado (antes sin OPcache: p95 3,09 s ❌) |
+| k6 | Referencia con 1 usuario | p95 0,09 s | `evidencias-calidad/k6-1-usuario-referencia.txt` | ✅ Implementado y comprobado |
 | k6 | Carga en producción o staging | No ejecutada (no autorizada) | — | ⏳ Pendiente |
 | Playwright | Escenario 1: autenticación | Aprobado | `evidencias-calidad/playwright-salida.txt` | ✅ Implementado y comprobado |
 | Playwright | Escenario 2: simulacro completo | Aprobado | ídem | ✅ Implementado y comprobado |
 | Playwright | Escenario 3: resultados | Aprobado | ídem | ✅ Implementado y comprobado |
 | Playwright | Escenarios 4 y 4b: resultado ajeno y sin sesión | 404 y redirección al login | ídem | ✅ Implementado y comprobado |
+| Playwright | C1–C3: Centro de contingencia (panel listo, respaldo cifrado verificado, estudiante bloqueado con 403) | Aprobados | ídem | ✅ Implementado y comprobado |
+| PHPUnit | Avisos del Centro de contingencia (falta sodium o clave) | Aprobadas | `ContingenciaPanelTest` | ✅ Implementado y comprobado |
+| Diagnóstico | `php artisan cni:diagnostico` en el hosting | Funcionando (solo lectura) | `DiagnosticoCniTest` | ✅ Implementado y comprobado |
 | Playwright | E2E existente `tests/e2e/browser.mjs` | Selectores y rutas obsoletos | Análisis estático | ❌ Error detectado |
 | CI/CD | `tests.yml` en `deploy/hostinger` | Ejecución 43175141851 en verde: SQLite (39 s) y MariaDB 11.4 (1 min 42 s) | GitHub Actions, run 43175141851 | ✅ Implementado y comprobado |
 | — | Disponibilidad (contingencia y monitoreo) | Sin pruebas | `config/cni.php` | 🟡 Implementado, no comprobado |

@@ -7,28 +7,22 @@
   Servidor     : LOCAL (servidor de desarrollo, no es producción)
 
   CIFRAS
-  - Solicitudes atendidas ....... 258 (3.64 por segundo)
-  - Paneles cargados ............ 228
-  - Tiempo promedio ............. 1.92 s
-  - Más rápida / más lenta ...... 0.18 s / 3.28 s
-  - p95 (el 95 % tardó menos de)  3.09 s
+  - Solicitudes atendidas ....... 693 (9.89 por segundo)
+  - Paneles cargados ............ 663
+  - Tiempo promedio ............. 0.06 s
+  - Más rápida / más lenta ...... 0.02 s / 0.32 s
+  - p95 (el 95 % tardó menos de)  0.18 s
   - Solicitudes con error ....... 0.0 %
   - Logins fallidos ............. 0
 
   METAS
-  [NO CUMPLE]  Rapidez     : 95 % de respuestas en menos de 2 s  -> obtenido 3.09 s
+  [ CUMPLE ]   Rapidez     : 95 % de respuestas en menos de 2 s  -> obtenido 0.18 s
   [ CUMPLE ]   Errores     : menos de 1 % de fallos             -> obtenido 0.0 %
   [ CUMPLE ]   Funcionamiento: login correcto y panel correcto  -> 100.0 % de verificaciones OK
 
   CONCLUSIÓN
-  El sistema FUNCIONA bien (0 errores, todas las páginas correctas), pero responde LENTO con
-  15 usuarios a la vez: el 95 % de las respuestas tardó hasta 3.09 s (meta: menos de 2 s).
-  La respuesta más rápida fue 0.18 s: una sola petición es rápida; la demora es la ESPERA en cola.
-  ¿Por qué? Se probó contra "php artisan serve", el servidor de desarrollo, que en Windows
-  atiende UNA petición a la vez (capacidad medida: 3.6 por segundo). Los demás estudiantes esperan.
-  Un hosting real (Apache/LiteSpeed/Nginx + PHP-FPM) atiende varias en paralelo; para saberlo
-  hay que medirlo en un entorno de pruebas (staging) con la misma configuración que producción.
+  El sistema soportó la carga: respondió rápido, sin errores y mostrando el panel correcto.
 
-  Nota: si una meta no se cumple, k6 termina con la línea "ERRO ... thresholds ... crossed".
-  Eso NO es un fallo del programa de prueba: es k6 avisando que la meta no se alcanzó.
+  Todas las metas se cumplen.
+
 ==================================================================
