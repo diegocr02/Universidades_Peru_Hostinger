@@ -34,3 +34,9 @@ Homestead.json
 /database/*.sqlite
 /.idea/
 /.vscode/
+
+# Contingencia CNI: nunca publicar datos personales ni claves
+/storage/app/private/contingencia/
+*.cni
+*.sql.gz
+*.sql.gz.tmp

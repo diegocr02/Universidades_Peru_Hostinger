@@ -132,3 +132,6 @@ if (app()->environment('local')) {
         ]);
     });
 }
+
+// Panel administrativo de respaldo cifrado (desactivado por defecto).
+require __DIR__.'/contingencia.php';
