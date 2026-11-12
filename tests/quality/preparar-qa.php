@@ -63,6 +63,11 @@ foreach (range(1, 15) as $n) {
 $alumno = $crear('e2e_alumno', 'Alumno E2E');
 $otro = $crear('e2e_otro', 'Otro E2E');
 
+// Administrador del Centro de contingencia (solo en la base QA local, misma clave aleatoria).
+$adminQa = Usuario::query()->where('usuario', 'Super_Admin')->first() ?? new Usuario(['usuario' => 'Super_Admin']);
+$adminQa->forceFill(['usuario' => 'Super_Admin', 'nombres' => 'Super', 'apellidos' => 'Admin QA', 'password' => $hash,
+    'rol' => 'admin', 'activo' => true, 'area_postulacion_id' => null, 'carrera_id' => null])->save();
+
 // Intento ajeno finalizado: el escenario de seguridad intenta abrir su resultado.
 $intentoOtro = DB::table('intentos')->where('usuario_id', $otro->id)
     ->whereIn('estado', ['finalizado', 'enviado_auto'])->whereNotNull('puntaje_total')->value('id');
@@ -78,9 +83,10 @@ file_put_contents($ruta, json_encode([
     'k6_usuarios' => $k6,
     'e2e_alumno' => 'e2e_alumno',
     'e2e_otro' => 'e2e_otro',
+    'e2e_admin' => 'Super_Admin',
     'intento_ajeno' => (int) $intentoOtro,
     'generado' => now()->toIso8601String(),
 ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
-echo 'Base QA lista: '.count($k6).' cuentas k6, 2 cuentas E2E, intento ajeno #'.$intentoOtro.".\n";
+echo 'Base QA lista: '.count($k6).' cuentas k6, 2 cuentas E2E, Super_Admin QA, intento ajeno #'.$intentoOtro.".\n";
 echo "Credenciales en tests/quality/.credenciales-qa.json (ignorado por git).\n";

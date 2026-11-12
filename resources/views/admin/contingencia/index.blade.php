@@ -38,8 +38,8 @@
     <div class="grid">
         <section class="card"><div class="muted">Sistema de respaldo</div><div class="big">{{ $activo ? 'Activado' : 'Desactivado' }}</div><span class="badge {{ $activo && !$problema ? '' : 'bad' }}">{{ !$activo ? 'Configura .env' : ($problema ? 'Falta configuración' : 'Listo para pruebas') }}</span></section>
         <section class="card"><div class="muted">Copias locales registradas</div><div class="big">{{ count($respaldos) }}</div><div class="muted">Hasta 50 recientes</div></section>
-        <section class="card"><div class="muted">Destino externo A</div><div class="big">{{ $destinos['destino_a'] ? 'Configurado' : 'Pendiente' }}</div><span class="badge {{ $destinos['destino_a'] ? '' : 'neutral' }}">{{ $destinos['destino_a'] ? 'HTTPS habilitado' : 'Sin conexión externa' }}</span></section>
-        <section class="card"><div class="muted">Destino externo B</div><div class="big">{{ $destinos['destino_b'] ? 'Configurado' : 'Pendiente' }}</div><span class="badge {{ $destinos['destino_b'] ? '' : 'neutral' }}">{{ $destinos['destino_b'] ? 'HTTPS habilitado' : 'Sin conexión externa' }}</span></section>
+        <section class="card"><div class="muted">Destino externo A</div><div class="big">{{ $destinos['destino_a'] ? 'Configurado' : 'Opcional' }}</div><span class="badge {{ $destinos['destino_a'] ? '' : 'neutral' }}">{{ $destinos['destino_a'] ? 'HTTPS habilitado' : 'Copias guardadas en este servidor' }}</span></section>
+        <section class="card"><div class="muted">Destino externo B</div><div class="big">{{ $destinos['destino_b'] ? 'Configurado' : 'Opcional' }}</div><span class="badge {{ $destinos['destino_b'] ? '' : 'neutral' }}">{{ $destinos['destino_b'] ? 'HTTPS habilitado' : 'Copias guardadas en este servidor' }}</span></section>
     </div>
     <section class="card" style="margin-bottom:18px">
         <div class="top"><div><h2 style="margin-top:0">Crear un respaldo ahora</h2><p class="muted">Exporta las tablas InnoDB, comprime, cifra y verifica la copia. Si configuraste destinos HTTPS, intenta enviarla.</p></div>
