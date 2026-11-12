@@ -81,7 +81,8 @@
                                 <span class="cni-uni-estado">{{ $estados[$dia['estado']] }}</span>
                             </header>
                             <h3 id="dia-{{ $dia['numero'] }}-titulo">{{ $dia['titulo'] }}</h3>
-                            <p class="cni-uni-dia-meta">{{ $dia['total'] }} preguntas · {{ $dia['minutos'] }} minutos</p>
+                            <p class="cni-uni-dia-meta">{{ $dia['total'] }} preguntas · {{ $dia['minutos'] }} minutos · máx. {{ $puntos($dia['escala']['maximo']) }} pts</p>
+                            <p class="cni-uni-dia-meta">Correcta +{{ $puntos($dia['escala']['correcta']) }} · Incorrecta −{{ $puntos($dia['escala']['incorrecta']) }} · En blanco 0</p>
                             <ul class="cni-uni-cuotas">
                                 @foreach($dia['cuotas'] as $cuota)
                                     <li><span>{{ $cuota['curso'] }}</span><strong>{{ $cuota['cantidad'] }}</strong></li>
@@ -98,8 +99,8 @@
                             @elseif($dia['ultimo'])
                                 <p class="cni-uni-dia-nota">
                                     Último intento: {{ $fecha($dia['ultimo']->fecha_fin ?? $dia['ultimo']->fecha_inicio) }}
-                                    @if($dia['ultimo']->calificado)
-                                        · {{ $puntos($dia['ultimo']->puntaje_total) }} / {{ $puntos($dia['ultimo']->maximo) }} pts
+                                    @if($dia['calificacion'])
+                                        · {{ $puntos($dia['calificacion']['puntaje']) }} / {{ $puntos($dia['calificacion']['maximo']) }} pts
                                     @endif
                                 </p>
                             @endif
@@ -120,18 +121,33 @@
                 </div>
 
                 <section class="cni-uni-resumen" aria-labelledby="resumen-titulo">
-                    <h2 id="resumen-titulo">Resumen de los tres días</h2>
-                    @if($uni['resumen'])
-                        @php $r = $uni['resumen']; @endphp
+                    @php $r = $uni['resumen']; @endphp
+                    <h2 id="resumen-titulo">Resumen de los tres días
+                        @unless($r['completo'])<span class="cni-uni-estado">Resultado parcial</span>@endunless
+                    </h2>
+                    @if($r['dias_rendidos'] === 0)
+                        <p class="cni-alumno-empty">Aún no tienes días calificados. El resumen se completa al rendir los tres días.</p>
+                    @else
                         <dl class="cni-uni-resumen-grid">
-                            <div><dt>Puntaje acumulado</dt><dd>{{ $puntos($r['puntaje']) }} <small>/ {{ $puntos($r['maximo']) }}</small></dd></div>
+                            @foreach($uni['dias'] as $dia)
+                                <div><dt>Día {{ $dia['numero'] }} · {{ $dia['titulo'] }}</dt>
+                                    <dd>{{ $dia['calificacion'] ? $puntos($dia['calificacion']['puntaje']) : '—' }} <small>/ {{ $puntos($dia['escala']['maximo']) }}</small></dd></div>
+                            @endforeach
+                            <div><dt>{{ $r['completo'] ? 'Puntaje total' : 'Puntaje parcial' }}</dt><dd>{{ $puntos($r['puntaje']) }} <small>/ {{ $puntos($r['maximo']) }}</small></dd></div>
+                            <div><dt>Nota referencial</dt><dd>{{ $r['nota_vigesimal'] !== null ? $puntos($r['nota_vigesimal']) : '—' }} <small>/ {{ $r['escala_vigesimal'] }}</small></dd></div>
                             <div><dt>Correctas</dt><dd>{{ $r['correctas'] }}</dd></div>
                             <div><dt>Incorrectas</dt><dd>{{ $r['incorrectas'] }}</dd></div>
+                            <div><dt>En blanco</dt><dd>{{ $r['en_blanco'] }}</dd></div>
                             <div><dt>Respondidas</dt><dd>{{ $r['respondidas'] }} <small>/ {{ $r['preguntas'] }}</small></dd></div>
                         </dl>
-                        <p class="cni-uni-aviso">Suma el último intento calificado de cada día. Es el puntaje del simulador, no el puntaje oficial de la UNI.</p>
-                    @else
-                        <p class="cni-alumno-empty">El resumen aparece cuando tengas un intento calificado en cada uno de los tres días.</p>
+                        @unless($r['completo'])
+                            <p class="cni-uni-aviso"><strong>Resultado parcial:</strong> faltan {{ $uni['dias']->count() - $r['dias_rendidos'] }} día(s). La nota referencial aparece al completar los tres.</p>
+                        @endunless
+                        @if($r['incorrectas'] > 0)
+                            <p class="cni-uni-aviso">Tu puntaje incluye penalizaciones por respuestas incorrectas. Las preguntas en blanco no generan descuento.</p>
+                        @endif
+                        <p class="cni-uni-aviso">Suma el último intento calificado de cada día. Escala referencial de entrenamiento: no es el puntaje oficial de la UNI ni indica ingreso.
+                            La nota sobre {{ $r['escala_vigesimal'] }} usa 0 como mínimo visual cuando el total es negativo. Puntaje de referencia de ingreso: no disponible.</p>
                     @endif
                 </section>
             </section>

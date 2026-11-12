@@ -73,6 +73,29 @@
         </li>
     </ul>
 
+    @php $uniDia = ($intentoUni ?? null)?->calificacion; @endphp
+    @if ($uniDia)
+        <section class="resultados-uni" aria-labelledby="titulo-uni">
+            <header>
+                <h2 id="titulo-uni">DÍA {{ $intentoUni->dia }} — {{ mb_strtoupper(\App\Support\PerfilExamenCni::UNI_DIAS[$intentoUni->dia]['titulo']) }}</h2>
+                <span>{{ \Illuminate\Support\Carbon::parse($intentoUni->fecha_inicio)->format('d/m/Y H:i') }}</span>
+            </header>
+            <dl class="resultados-uni__grid">
+                <div><dt>Preguntas</dt><dd>{{ $uniDia['total_preguntas'] }}</dd></div>
+                <div><dt>Correctas</dt><dd>{{ $uniDia['correctas'] }}</dd></div>
+                <div><dt>Incorrectas</dt><dd>{{ $uniDia['incorrectas'] }}</dd></div>
+                <div><dt>En blanco</dt><dd>{{ $uniDia['en_blanco'] }}</dd></div>
+                <div><dt>Puntos ganados</dt><dd class="is-mas">+{{ number_format($uniDia['ganados'], 2) }}</dd></div>
+                <div><dt>Puntos descontados</dt><dd class="is-menos">−{{ number_format($uniDia['descontados'], 2) }}</dd></div>
+            </dl>
+            <p class="resultados-uni__final">Puntaje final: <strong>{{ number_format($uniDia['puntaje'], 2) }} / {{ number_format($uniDia['maximo'], 2) }}</strong></p>
+            @if ($uniDia['con_penalizacion'])
+                <p class="resultados-uni__nota">Tu puntaje incluye penalizaciones por respuestas incorrectas. Las preguntas en blanco no generan descuento.</p>
+            @endif
+            <p class="resultados-uni__nota">Escala referencial de entrenamiento; no es el puntaje oficial de la UNI.</p>
+        </section>
+    @endif
+
     <section class="resultados-asignaturas" aria-labelledby="titulo-asignaturas">
         <header>
             <h2 id="titulo-asignaturas">
@@ -106,5 +129,98 @@
             </div>
         @endif
     </section>
+
+    @php
+        $preguntas = $preguntas ?? collect();
+        $alternativasPorPregunta = $alternativasPorPregunta ?? collect();
+        // Doble marca cuenta como "en blanco" en el filtro: no suma ni resta como respuesta elegida.
+        $estadoDe = fn ($p) => match ($p->estado_respuesta) {
+            'correcta' => 'correctas', 'incorrecta' => 'incorrectas', default => 'blanco',
+        };
+        $conteo = $preguntas->countBy($estadoDe);
+    @endphp
+    @if ($calificado && $preguntas->isNotEmpty())
+        <section class="revision" aria-labelledby="titulo-revision">
+            <div class="revision-cabecera">
+                <div>
+                    <p class="revision-kicker">RETROALIMENTACIÓN</p>
+                    <h2 id="titulo-revision">Revisión de preguntas y respuestas</h2>
+                    <p class="revision-ayuda">La alternativa correcta está en verde; si marcaste otra, tu respuesta aparece en rojo.</p>
+                </div>
+                <label class="revision-filtro">Mostrar
+                    <select data-revision-filtro>
+                        <option value="todas">Todas ({{ $preguntas->count() }})</option>
+                        <option value="incorrectas">Incorrectas ({{ $conteo['incorrectas'] ?? 0 }})</option>
+                        <option value="correctas">Correctas ({{ $conteo['correctas'] ?? 0 }})</option>
+                        <option value="blanco">En blanco ({{ $conteo['blanco'] ?? 0 }})</option>
+                    </select>
+                </label>
+            </div>
+
+            @foreach ($preguntas as $pregunta)
+                @php
+                    $opciones = $alternativasPorPregunta->get($pregunta->pregunta_id, collect());
+                    $marcada = $pregunta->alternativa_id === null ? null : (int) $pregunta->alternativa_id;
+                    $estado = $estadoDe($pregunta);
+                    $etiquetas = ['correctas' => '✓ Correcta', 'incorrectas' => '✕ Incorrecta',
+                        'blanco' => $pregunta->estado_respuesta === 'doble_marca' ? '— Doble marca' : '— Sin responder'];
+                @endphp
+                <article class="revision-pregunta" data-revision-estado="{{ $estado }}">
+                    <div class="revision-pregunta__top">
+                        <span>PREGUNTA {{ $pregunta->orden }} DE {{ $preguntas->count() }} · {{ mb_strtoupper($pregunta->asignatura) }}</span>
+                        <em class="is-{{ $estado }}">{{ $etiquetas[$estado] }}</em>
+                    </div>
+                    <h3>{{ $pregunta->enunciado }}</h3>
+                    @if ($pregunta->imagen)
+                        <img class="revision-imagen" src="{{ asset($pregunta->imagen) }}" alt="Imagen de la pregunta {{ $pregunta->orden }}">
+                    @endif
+                    <div class="revision-opciones">
+                        @foreach ($opciones as $opcion)
+                            @php
+                                $esCorrecta = (bool) $opcion->es_correcta;
+                                $esMarcada = $marcada === (int) $opcion->id;
+                            @endphp
+                            <div @class(['revision-opcion', 'is-correcta' => $esCorrecta, 'is-error' => $esMarcada && ! $esCorrecta])>
+                                <span class="revision-letra">{{ $opcion->letra }}</span>
+                                <span class="revision-texto">{{ $opcion->texto }}
+                                    @if ($opcion->imagen)
+                                        <img class="revision-imagen" src="{{ asset($opcion->imagen) }}" alt="Imagen de la alternativa {{ $opcion->letra }}">
+                                    @endif
+                                </span>
+                                @if ($esCorrecta && $esMarcada)
+                                    <strong>✓ Tu respuesta · correcta</strong>
+                                @elseif ($esCorrecta)
+                                    <strong>✓ Respuesta correcta</strong>
+                                @elseif ($esMarcada)
+                                    <strong>✕ Tu respuesta</strong>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="revision-explicacion">
+                        <strong>Explicación</strong>
+                        <p>{{ $pregunta->solucion ?: 'Esta pregunta aún no tiene explicación registrada.' }}</p>
+                    </div>
+                </article>
+            @endforeach
+            <p class="revision-vacio" data-revision-vacio hidden>No hay preguntas en esta categoría.</p>
+        </section>
+        <script>
+        (() => {
+            const filtro = document.querySelector('[data-revision-filtro]');
+            if (!filtro) return;
+            const preguntas = [...document.querySelectorAll('[data-revision-estado]')];
+            const vacio = document.querySelector('[data-revision-vacio]');
+            filtro.addEventListener('change', () => {
+                let visibles = 0;
+                preguntas.forEach((p) => {
+                    p.hidden = filtro.value !== 'todas' && filtro.value !== p.dataset.revisionEstado;
+                    if (!p.hidden) visibles++;
+                });
+                vacio.hidden = visibles > 0;
+            });
+        })();
+        </script>
+    @endif
 </div>
 @endsection

@@ -11,6 +11,9 @@ use Illuminate\Validation\ValidationException;
 /** Configura una plantilla por área y reutiliza el motor de intentos y calificación. */
 class ExamenIndependienteService
 {
+    /** Escala del examen independiente CNI (A–E); la UNI usa config/examen_uni.php. */
+    private const VALORES_CNI = ['puntaje_correcta' => 20, 'puntaje_incorrecta' => -1.125, 'puntaje_blanco' => 0];
+
     public function __construct(private readonly IntentoService $intentos) {}
 
     public function iniciar(Usuario $usuario): object
@@ -39,10 +42,10 @@ class ExamenIndependienteService
 
             $cuotas = PerfilExamenCni::UNI_DIAS[$dia]['cuotas'];
             $minutos = PerfilExamenCni::UNI_MINUTOS;
-            $version = substr(hash('sha256', json_encode([$dia, $cuotas, PerfilExamenCni::ORDEN, $minutos, 5])), 0, 10);
-            $nombre = PerfilExamenCni::prefijoDiaUni($dia).$version;
+            $valores = app(CalificacionUniService::class)->valoresPlantilla($dia);
+            $nombre = PerfilExamenCni::nombreDiaUni($dia, $valores);
 
-            return $this->abrirIntento($perfil, $area, $nombre, $cuotas, $minutos);
+            return $this->abrirIntento($perfil, $area, $nombre, $cuotas, $minutos, $valores);
         }, 3);
     }
 
@@ -66,7 +69,7 @@ class ExamenIndependienteService
     }
 
     /** Reanuda el intento abierto de la plantilla o crea la plantilla (si falta) y un intento nuevo. */
-    private function abrirIntento(Usuario $perfil, object $area, string $nombre, array $cuotas, int $minutos): object
+    private function abrirIntento(Usuario $perfil, object $area, string $nombre, array $cuotas, int $minutos, array $valores = self::VALORES_CNI): object
     {
         $simulacro = DB::table('simulacros')->where('nombre', $nombre)->first();
         if ($simulacro) {
@@ -89,7 +92,9 @@ class ExamenIndependienteService
             $simulacroId = DB::table('simulacros')->insertGetId([
                 'nombre' => $nombre, 'tiempo_limite' => $minutos,
                 'total_preguntas' => array_sum($cuotas), 'cantidad_alternativas' => 5,
-                'puntaje_correcta' => 20, 'puntaje_incorrecta' => -1.125, 'puntaje_blanco' => 0,
+                'puntaje_correcta' => $valores['puntaje_correcta'],
+                'puntaje_incorrecta' => $valores['puntaje_incorrecta'],
+                'puntaje_blanco' => $valores['puntaje_blanco'],
                 // Disponibilidad permanente; cada intento conserva su propio límite de tiempo.
                 'fecha_inicio' => '2000-01-01 00:00:00', 'fecha_fin' => '2099-12-31 23:59:59',
                 'activo' => true, 'carrera_id' => null, 'creado_por' => null,

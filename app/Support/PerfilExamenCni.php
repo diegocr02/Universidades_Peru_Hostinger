@@ -75,6 +75,18 @@ final class PerfilExamenCni
         return 'Examen UNI · Día '.$dia.' · ';
     }
 
+    /**
+     * Nombre de la plantilla vigente de un día. La versión incluye cuotas, tiempo y escala,
+     * así un cambio de escala crea otra plantilla y los intentos anteriores no se recalifican.
+     */
+    public static function nombreDiaUni(int $dia, array $valores): string
+    {
+        $firma = [$dia, self::UNI_DIAS[$dia]['cuotas'], self::ORDEN, self::UNI_MINUTOS, 5,
+            array_map(fn ($v) => round((float) $v, 3), $valores)];
+
+        return self::prefijoDiaUni($dia).substr(hash('sha256', json_encode($firma)), 0, 10);
+    }
+
     /** Día UNI (1–3) a partir del nombre del simulacro, o null si no es una jornada UNI. */
     public static function diaUniDeNombre(?string $nombre): ?int
     {

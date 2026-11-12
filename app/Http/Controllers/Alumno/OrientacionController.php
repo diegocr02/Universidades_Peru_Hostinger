@@ -257,15 +257,40 @@ class OrientacionController extends Controller
         // El servicio rechaza los intentos sin finalizar o todavía sin calificación.
         $resultado = $resultados->mostrar($intento);
 
+        // Las soluciones sólo se consultan después de validar propietario y finalización.
+        [$preguntas, $alternativas] = $this->revisionDelIntento($intento);
+
         if (! str_starts_with((string) ($intentoActual->simulacro_nombre ?? ''), 'UNDC - Admisión Ordinaria Tipo ')) {
+            // Día UNI: desglose con la escala de su propia plantilla (CalificacionUniService).
+            $intentoUni = app(PanelUniService::class)->intentoDelAlumno($usuario, $intento);
+
             return view('alumno.resultados', [
                 'usuario' => $usuario,
                 'resultado' => $resultado,
+                'intentoUni' => $intentoUni,
+                'simulacroNombre' => $intentoActual->simulacro_nombre,
+                'preguntas' => $preguntas,
+                'alternativasPorPregunta' => $alternativas,
             ]);
         }
 
-        // Las soluciones sólo se consultan después de la validación de finalización.
-        // Se incluyen también las preguntas que el postulante dejó en blanco.
+        return view('alumno.undc.resultados', [
+            'usuario' => $usuario,
+            'resultado' => $resultado,
+            'simulacroNombre' => $intentoActual->simulacro_nombre,
+            'preguntas' => $preguntas,
+            'alternativasPorPregunta' => $alternativas,
+        ]);
+    }
+
+    /**
+     * Preguntas del intento con la respuesta del alumno, la clave y la solución.
+     * Incluye las que dejó en blanco. Llamar solo con un intento propio y ya calificado.
+     *
+     * @return array{0: \Illuminate\Support\Collection, 1: \Illuminate\Support\Collection}
+     */
+    private function revisionDelIntento(int $intento): array
+    {
         $preguntas = DB::table('respuestas_estudiante as re')
             ->join('preguntas as p', 'p.id', '=', 're.pregunta_id')
             ->join('temas as t', 't.id', '=', 'p.tema_id')
@@ -285,12 +310,6 @@ class OrientacionController extends Controller
             ->get(['id', 'pregunta_id', 'letra', 'texto', 'imagen', 'es_correcta'])
             ->groupBy('pregunta_id');
 
-        return view('alumno.undc.resultados', [
-            'usuario' => $usuario,
-            'resultado' => $resultado,
-            'simulacroNombre' => $intentoActual->simulacro_nombre,
-            'preguntas' => $preguntas,
-            'alternativasPorPregunta' => $alternativas,
-        ]);
+        return [$preguntas, $alternativas];
     }
 }

@@ -205,7 +205,8 @@ class ResultadoService
                 'incorrectas' => 0,
                 'en_blanco' => 0,
                 'doble_marca' => 0,
-                'puntaje_total' => 0.0,
+                // Milésimas enteras: evita errores de punto flotante al sumar (p. ej. −1,2).
+                'puntaje_total' => 0,
             ];
 
             $resultadosArea = [];
@@ -214,6 +215,7 @@ class ResultadoService
             foreach ($respuestas as $respuesta) {
                 $estado = $this->clasificarRespuesta($respuesta);
                 $puntaje = $this->calcularPuntaje($estado, $simulacro);
+                $milesimas = (int) round($puntaje * 1000);
 
                 $contador = match ($estado) {
                     'correcta' => 'correctas',
@@ -221,12 +223,12 @@ class ResultadoService
                     default => $estado,
                 };
                 $totales[$contador]++;
-                $totales['puntaje_total'] += $puntaje;
+                $totales['puntaje_total'] += $milesimas;
 
                 $actualizaciones[] = [
                     'id' => $respuesta->id,
                     'estado' => $estado,
-                    'puntaje' => round($puntaje, 3),
+                    'puntaje' => $milesimas / 1000,
                 ];
 
                 $areaId = (int) $respuesta->area_id;
@@ -238,7 +240,7 @@ class ResultadoService
                         'aciertos' => 0,
                         'incorrectas' => 0,
                         'en_blanco' => 0,
-                        'puntaje' => 0.0,
+                        'puntaje' => 0,
                     ];
                 }
 
@@ -252,16 +254,13 @@ class ResultadoService
                     $resultadosArea[$areaId]['en_blanco']++;
                 }
 
-                $resultadosArea[$areaId]['puntaje'] += $puntaje;
+                $resultadosArea[$areaId]['puntaje'] += $milesimas;
             }
 
-            $totales['puntaje_total'] = round(
-                $totales['puntaje_total'],
-                3
-            );
+            $totales['puntaje_total'] = $totales['puntaje_total'] / 1000;
 
             foreach ($resultadosArea as &$area) {
-                $area['puntaje'] = round($area['puntaje'], 3);
+                $area['puntaje'] = $area['puntaje'] / 1000;
 
                 $area['porcentaje'] = round(
                     ($area['aciertos'] / $area['total_preguntas']) * 100,

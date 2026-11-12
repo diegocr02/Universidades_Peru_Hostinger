@@ -142,6 +142,37 @@ class ExamenUniTest extends TestCase
         $this->assertSame(3, DB::table('intentos')->where('usuario_id', $alumno->id)->count());
     }
 
+    public function test_al_terminar_el_alumno_revisa_sus_aciertos_y_errores_con_la_solucion(): void
+    {
+        $this->seed(\Database\Seeders\BancoUniSeeder::class);
+        $alumno = $this->alumno('B');
+        $this->actingAs($alumno, 'web')->post(route('examen.uni.dia', ['dia' => 3]));
+        $intento = DB::table('intentos')->where('usuario_id', $alumno->id)->first();
+        $servicio = app(IntentoService::class);
+        [$primera, $segunda] = $servicio->preguntas($intento->id)->take(2)->values()->all();
+        $clave = fn ($p, bool $correcta) => DB::table('alternativas')
+            ->where('pregunta_id', $p->id)->where('es_correcta', $correcta)->value('id');
+        $servicio->guardarRespuesta($intento->id, $alumno->id, ['pregunta_id' => $primera->id, 'alternativa_id' => $clave($primera, true)]);
+        $servicio->guardarRespuesta($intento->id, $alumno->id, ['pregunta_id' => $segunda->id, 'alternativa_id' => $clave($segunda, false)]);
+
+        // Antes de terminar no se revelan claves ni soluciones.
+        $this->get(route('alumno.resultados', $intento->id))->assertDontSee('Revisión de preguntas');
+
+        $servicio->finalizar($intento->id, $alumno->id);
+        $solucion = DB::table('preguntas')->where('id', $segunda->id)->value('solucion');
+        $this->get(route('alumno.resultados', $intento->id))->assertOk()
+            ->assertSee('Revisión de preguntas y respuestas')
+            ->assertSee('✓ Tu respuesta · correcta')
+            ->assertSee('✕ Tu respuesta')
+            ->assertSee('— Sin responder')
+            ->assertSee($solucion)
+            ->assertSee('Todas (40)')->assertSee('Incorrectas (1)')->assertSee('Correctas (1)')->assertSee('En blanco (38)');
+
+        // Otro alumno no puede ver la revisión ajena.
+        $this->actingAs($this->alumno('B', 'otro'), 'web')
+            ->get(route('alumno.resultados', $intento->id))->assertNotFound();
+    }
+
     public function test_banco_incompleto_vuelve_al_panel_con_el_motivo(): void
     {
         $alumno = $this->alumno('B');
