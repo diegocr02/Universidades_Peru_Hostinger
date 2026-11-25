@@ -10,14 +10,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Simulador de examen' }} · CNI</title>
-    <link rel="stylesheet" href="{{ asset('css/examen-simple.css').'?v='.filemtime(public_path('css/examen-simple.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/examen/examen.css').'?v='.filemtime(public_path('css/examen/examen.css')) }}">
     @stack('styles')
     @livewireStyles
+    @if(auth('web')->user()?->rol === 'estudiante') @include('alumno.partials.accesibilidad-cabecera') @endif
 </head>
 <body>
     <header class="cni-examen-barra">
         <a class="cni-examen-marca" href="{{ route('alumno.panel') }}" aria-label="CNI · Volver a mi panel">
-            <img src="{{ asset('img/examen/escudo-cni.png') }}" width="52" height="58" alt="Escudo del Colegio Nacional de Imperial">
+            <img src="{{ asset('images/cni/escudo-cni-examen.webp') }}" width="52" height="58" alt="Escudo del Colegio Nacional de Imperial">
             <span><strong>CNI</strong><small>Colegio Nacional de Imperial</small></span>
         </a>
         <span class="cni-examen-avatar" title="{{ $nombre }}" aria-label="{{ $nombre }}">{{ $iniciales }}</span>
@@ -27,6 +28,7 @@
         @yield('content')
     </main>
     @stack('scripts')
+    @if(auth('web')->user()?->rol === 'estudiante') <x-alumno.preferencias-accesibilidad /> @endif
     @livewireScripts
 </body>
 </html>

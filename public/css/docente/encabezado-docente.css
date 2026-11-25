@@ -1,0 +1,672 @@
+/*
+ * CNI – Cabecera institucional del panel docente
+ * Una única capa de estilos, sin reglas contradictorias de versiones anteriores.
+ * El resto del panel utiliza docente/panel-docente.css sin modificaciones.
+ */
+.cni-notas .cni-notas-header--v2 {
+    --cni-dorado: #ffdc77;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 186px;
+    padding: 22px clamp(18px, 2.8vw, 42px);
+    overflow: hidden;
+    border-radius: 0 0 18px 18px;
+    border-bottom: 4px solid var(--cni-dorado);
+    background:
+        radial-gradient(ellipse at 11% 10%, rgba(51, 115, 193, .22), transparent 46%),
+        linear-gradient(105deg, #052456 0%, #083d7a 52%, #145da0 78%, #b3d2eb 100%);
+    box-shadow: 0 8px 25px rgba(4, 35, 83, .17);
+}
+
+/* Reflejo muy sutil; es una capa ambiental, no una segunda franja. */
+.cni-notas .cni-notas-header--v2::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,.045) 46%, transparent 67%);
+    pointer-events: none;
+    animation: cni-reflejo-docente 10s ease-in-out infinite alternate;
+}
+.cni-notas .cni-notas-header--v2::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Escudo y textos a la izquierda. */
+.cni-notas .cni-notas-header--v2 .cni-notas-brand {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 1.4vw, 20px);
+    flex: 0 1 49%;
+    max-width: 49%;
+    min-width: 0;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-brand > img {
+    flex: 0 0 auto;
+    width: clamp(67px, 7.2vw, 102px);
+    height: 102px;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 10px rgba(0, 15, 44, .28));
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-brand > div {
+    min-width: 0;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-school {
+    color: #fff;
+    font-size: clamp(10px, .85vw, 12px);
+    letter-spacing: .075em;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-brand h1 {
+    margin: 4px 0 3px;
+    color: #fff;
+    font-size: clamp(27px, 3.05vw, 42px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -.043em;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-contexto {
+    display: block;
+    margin: 6px 0 0;
+    color: #e8ca78;
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1.4;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-subfrase {
+    display: inline-block;
+    max-width: 100%;
+    margin: 8px 0 0;
+    padding: 7px 12px;
+    border: 1px solid rgba(232, 192, 94, .64);
+    border-radius: 9px;
+    background: rgba(255, 255, 255, .055);
+    box-shadow: none;
+    color: #fff2d4;
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.35;
+}
+
+/* La imagen es un paralelogramo, no una fotografía rectangular. */
+.cni-notas .cni-notas-header--v2 .cni-notas-foto {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 auto auto 52% !important;
+    width: 28% !important;
+    height: 100% !important;
+    object-fit: cover;
+    object-position: 50% 36%;
+    opacity: 1 !important;
+    z-index: 1 !important;
+    clip-path: polygon(14% 0, 100% 0, 86% 100%, 0 100%);
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    filter: brightness(1.16) saturate(1.10) contrast(1.04);
+    pointer-events: none;
+}
+
+/* Dos bordes pegados al recorte real de la foto. */
+.cni-notas .cni-notas-header--v2 .cni-notas-foto-marco {
+    position: absolute;
+    left: 52%;
+    top: 0;
+    width: 28%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-foto-marco::before,
+.cni-notas .cni-notas-header--v2 .cni-notas-foto-marco::after {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #e8a624, #ffeb9b 54%, #e0a121);
+    filter: drop-shadow(0 0 5px rgba(255, 215, 100, .36));
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-foto-marco::before {
+    clip-path: polygon(14% 0, 17% 0, 3% 100%, 0 100%);
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-foto-marco::after {
+    clip-path: polygon(97% 0, 100% 0, 86% 100%, 83% 100%);
+}
+
+/* Identidad del docente, a la derecha de la foto. */
+.cni-notas .cni-notas-header--v2 .cni-notas-docente {
+    position: relative;
+    z-index: 3;
+    flex: 0 0 auto;
+    width: min(260px, 24%);
+    min-width: 215px;
+    max-width: 275px;
+    margin-left: auto;
+    padding: 13px 15px;
+    background: rgba(255, 255, 255, .96);
+    border: 1px solid rgba(230, 181, 79, .8);
+    border-radius: 16px;
+    box-shadow: 0 9px 24px rgba(2, 32, 75, .18);
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-docente-icon {
+    background: #e6f2ff;
+    color: #145b9d;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-docente strong { color: #123b72; }
+.cni-notas .cni-notas-header--v2 .cni-notas-docente small { color: #59799d; }
+
+/* Se mantienen los cuatro indicadores con sus bordes dorados existentes. */
+.cni-notas .cni-notas-resumen .cni-notas-kpi {
+    border: 2px solid #e6bf63;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 5px 16px rgba(137, 93, 14, .08);
+}
+.cni-notas .cni-notas-resumen .cni-notas-kpi:hover {
+    border-color: #d5a743;
+    box-shadow: 0 7px 18px rgba(137, 93, 14, .12);
+}
+body:has(.cni-notas) { background: #eff5fd; }
+.cni-notas { background: linear-gradient(180deg, #e9f3ff, #f8fbff 75%); }
+
+@keyframes cni-reflejo-docente {
+    from { opacity: .25; }
+    to { opacity: .65; }
+}
+
+@media (max-width: 1200px) {
+    .cni-notas .cni-notas-header--v2 .cni-notas-brand { gap: 10px; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-brand > img { width: 74px; height: 87px; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-brand h1 { font-size: clamp(25px, 3vw, 35px); }
+    .cni-notas .cni-notas-header--v2 .cni-notas-docente { width: 230px; min-width: 210px; }
+}
+
+/* Tablet: priorizar lectura y la tarjeta del docente. */
+@media (max-width: 930px) {
+    .cni-notas .cni-notas-header--v2 { flex-wrap: wrap; gap: 14px; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-brand { flex: 1 1 100%; width: 100%; max-width: 100%; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-foto { display: none !important; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-foto-marco { display: none !important; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-docente { margin: 0; max-width: 100%; width: min(100%, 330px); }
+}
+
+/* Móvil: distribución de dos filas sin foto superpuesta. */
+@media (max-width: 760px) {
+    .cni-notas .cni-notas-header--v2 {
+        min-height: 0;
+        padding: 17px 16px 20px;
+        border-radius: 0 0 14px 14px;
+        gap: 14px;
+    }
+    .cni-notas .cni-notas-header--v2 .cni-notas-brand > img { width: 58px; height: 70px; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-brand h1 { font-size: clamp(23px, 5vw, 29px); }
+    .cni-notas .cni-notas-header--v2 .cni-notas-school { font-size: 9px; letter-spacing: .025em; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-contexto { font-size: 11px; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-subfrase { padding: 6px 9px; font-size: 11px; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-docente { width: 100%; min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .cni-notas .cni-notas-header--v2::before { animation: none; }
+}
+
+
+/* 03/11 – ondas discretas y símbolos académicos blancos en la cabecera. */
+.cni-notas .cni-notas-header--v2 {
+    background:
+        radial-gradient(ellipse at 17% 4%, rgba(62, 137, 212, .21), transparent 48%),
+        linear-gradient(108deg, #052151 0%, #073776 48%, #0e5698 75%, #0d478a 100%);
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-decoracion {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    color: #eaf5ff;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-ondas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-iconos-academicos {
+    position: absolute;
+    width: clamp(130px, 15vw, 215px);
+    height: auto;
+    left: 38%;
+    top: 8px;
+    opacity: .22;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-laurel {
+    position: absolute;
+    width: 115px;
+    height: 144px;
+    top: 6px;
+    right: 6px;
+    opacity: .14;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-brand { z-index: 3; }
+/* No se modifica el h1 ni se destaca «salón» con otra fuente. */
+.cni-notas .cni-notas-header--v2 .cni-notas-subfrase {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+    margin-top: 12px;
+    padding: 8px 12px;
+    border: 1.5px solid #ffeaa3;
+    border-radius: 999px;
+    background: linear-gradient(110deg, #ffe48a 0%, #ffd05c 70%, #ffdf7d 100%);
+    box-shadow: 0 3px 12px rgba(255, 197, 57, .23);
+    color: #123b70;
+    font-weight: 800;
+    font-size: 12px;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-birrete {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 auto;
+    color: #164776;
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-docente {
+    z-index: 3;
+    border-color: #ffda77;
+    box-shadow: 0 10px 24px rgba(0, 25, 73, .23);
+}
+.cni-notas .cni-notas-header--v2 .cni-notas-docente small {
+    display: block;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: anywhere;
+    font-size: 11px;
+    line-height: 1.35;
+    color: #466994;
+}
+@media (max-width: 1200px) {
+    .cni-notas .cni-notas-header--v2 .cni-notas-iconos-academicos { opacity: .10; left: 40%; }
+}
+@media (max-width: 930px) {
+    .cni-notas .cni-notas-header--v2 .cni-notas-iconos-academicos { display: none; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-laurel { opacity: .08; }
+}
+@media (max-width: 480px) {
+    .cni-notas .cni-notas-header--v2 .cni-notas-subfrase { border-radius: 12px; }
+    .cni-notas .cni-notas-header--v2 .cni-notas-birrete { width: 17px; height: 17px; }
+}
+
+/* Nombre y apellidos completos, y sección asignada sin truncarse. */
+.cni-notas .cni-notas-header--v2 .cni-notas-docente { min-height: 70px; }
+.cni-notas .cni-notas-header--v2 .cni-notas-docente strong,
+.cni-notas .cni-notas-header--v2 .cni-notas-docente small {
+  display: block; white-space: normal; overflow: visible;
+  overflow-wrap: anywhere; text-overflow: clip; line-height: 1.36;
+}
+/* TARJETA DEL DOCENTE - DISEÑO FINAL */
+
+.cni-notas .cni-notas-header--v2 .cni-notas-docente {
+    display: block;
+    width: 290px;
+    min-width: 240px;
+    max-width: 310px;
+    padding: 16px 18px;
+    background: linear-gradient(145deg, #ffffff, #f2f7ff);
+    border: 1.5px solid #ffd76c;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(5, 36, 83, 0.20);
+}
+
+.cni-notas-docente-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cni-notas-docente-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.cni-notas .cni-notas-docente-label {
+    color: #b88620;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.cni-notas .cni-notas-header--v2 .cni-notas-docente strong {
+    color: #103b75;
+    font-size: 16px;
+    line-height: 1.25;
+}
+
+.cni-notas .cni-notas-docente-detalle {
+    color: #617c9c;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.cni-notas .cni-notas-docente-actions {
+    margin-top: 10px;
+    text-align: right;
+}
+
+@media (max-width: 930px) {
+    .cni-notas .cni-notas-header--v2 .cni-notas-docente {
+        width: 100%;
+        max-width: 360px;
+        min-width: 0;
+    }
+}
+/* TARJETA DOCENTE - DISEÑO ELEGANTE FINAL */
+
+.cni-notas .cni-notas-header--v2 .cni-notas-docente {
+    display: block;
+    width: 290px;
+    min-width: 240px;
+    max-width: 310px;
+    padding: 18px;
+    background: linear-gradient(145deg, #ffffff, #f3f8ff);
+    border: 1.5px solid #ffda77;
+    border-radius: 20px;
+    box-shadow: 0 12px 28px rgba(5, 36, 83, .20);
+}
+
+.cni-notas .cni-notas-docente-top {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.cni-notas .cni-notas-docente-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #e7f1ff;
+    color: #164d89;
+}
+
+.cni-notas .cni-notas-docente-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.cni-notas .cni-notas-docente-label {
+    color: #b88620;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.cni-notas .cni-notas-header--v2 .cni-notas-docente strong {
+    color: #103b75;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.3;
+    white-space: normal;
+}
+
+.cni-notas .cni-notas-docente-detalle {
+    color: #617c9c;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.cni-notas .cni-notas-docente-actions {
+    margin-top: 10px;
+    text-align: right;
+}
+
+@media (max-width: 930px) {
+    .cni-notas .cni-notas-header--v2 .cni-notas-docente {
+        width: 100%;
+        max-width: 360px;
+        min-width: 0;
+    }
+}
+/* AJUSTE FINAL DEL ENCABEZADO */
+
+/* La palabra salón en dorado, sin cambiar su fuente */
+.cni-notas .cni-notas-header--v2 .cni-salon-dorado {
+    color: #ffda63;
+    font: inherit;
+    text-shadow: 0 2px 8px rgba(255, 218, 99, 0.15);
+}
+
+/* Fotografía con espacio propio */
+.cni-notas .cni-notas-header--v2 .cni-notas-foto {
+    left: 50% !important;
+    width: 26% !important;
+}
+
+/* Los bordes dorados siguen la posición de la foto */
+.cni-notas .cni-notas-header--v2 .cni-notas-foto-marco {
+    left: 50%;
+    width: 26%;
+}
+
+/* Tarjeta más compacta y ubicada a la derecha */
+.cni-notas .cni-notas-header--v2 .cni-notas-docente {
+    width: clamp(205px, 20vw, 250px);
+    min-width: 0;
+    max-width: 250px;
+    margin-left: auto;
+    padding: 14px;
+}
+
+/* Mantener la distribución adaptable */
+@media (max-width: 930px) {
+    .cni-notas .cni-notas-header--v2 .cni-notas-docente {
+        width: 100%;
+        max-width: 360px;
+    }
+}
+/* ===== AJUSTE FINO DEL ENCABEZADO DOCENTE ===== */
+
+/* Solo la palabra salón en dorado */
+.cni-notas .cni-notas-header--v2 .cni-salon-dorado {
+    color: #ffd86b;
+    font: inherit;
+    text-shadow: 0 2px 8px rgba(255, 216, 107, 0.18);
+}
+
+/* Título un poquito mejor balanceado */
+.cni-notas .cni-notas-header--v2 h1 {
+    font-size: clamp(2.2rem, 3.6vw, 3.4rem);
+    line-height: 1.05;
+}
+
+/* La franja de la foto más ancha */
+.cni-notas .cni-notas-header--v2 .cni-notas-foto,
+.cni-notas .cni-notas-header--v2 .cni-notas-foto-marco {
+    left: 53% !important;
+    width: 31% !important;
+}
+
+/* Mejorar la foto */
+.cni-notas .cni-notas-header--v2 .cni-notas-foto {
+    object-position: 50% 36%;
+    filter: brightness(1.10) contrast(1.08) saturate(1.12);
+}
+
+/* Tarjeta docente más compacta y elegante */
+.cni-notas .cni-notas-header--v2 .cni-notas-docente {
+    width: clamp(190px, 18vw, 235px);
+    max-width: 235px;
+    min-width: 0;
+    margin-left: auto;
+    padding: 12px 14px;
+    border-radius: 18px;
+}
+
+/* Icono un poco más pequeño */
+.cni-notas .cni-notas-docente-icon {
+    width: 42px;
+    height: 42px;
+}
+
+/* Etiqueta superior */
+.cni-notas .cni-notas-docente-label {
+    font-size: 9px;
+    letter-spacing: 1.2px;
+}
+
+/* Nombre/frase principal */
+.cni-notas .cni-notas-header--v2 .cni-notas-docente strong {
+    font-size: 14px;
+    line-height: 1.25;
+}
+
+/* Texto secundario */
+.cni-notas .cni-notas-docente-detalle {
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+/* La píldora dorada también más compacta */
+.cni-notas .cni-notas-header--v2 .cni-notas-subfrase {
+    padding: 7px 12px;
+    font-size: 11px;
+    border-radius: 999px;
+}
+
+/* Responsive */
+@media (max-width: 930px) {
+    .cni-notas .cni-notas-header--v2 .cni-notas-foto,
+    .cni-notas .cni-notas-header--v2 .cni-notas-foto-marco {
+        left: 0 !important;
+        width: 100% !important;
+    }
+
+    .cni-notas .cni-notas-header--v2 .cni-notas-docente {
+        width: 100%;
+        max-width: 330px;
+    }
+}
+.cni-notas .cni-notas-header--v2 .cni-salon-dorado {
+    color: #ffd86b;
+    font: inherit;
+    font-weight: inherit;
+    text-shadow: 0 2px 8px rgba(255, 216, 107, 0.18);
+}
+
+
+/* ===== AJUSTE DEFINITIVO DEL ENCABEZADO ===== */
+
+/* Dar espacio al título y a la etiqueta */
+.cni-notas .cni-notas-header--v2 .cni-notas-brand {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+/* Evitar que el texto de la etiqueta se comprima */
+.cni-notas .cni-notas-header--v2 .cni-notas-subfrase {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: max-content;
+    max-width: none;
+    padding: 9px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: nowrap;
+    letter-spacing: normal;
+}
+
+.cni-notas .cni-notas-header--v2 .cni-notas-subfrase span {
+    display: inline;
+    flex: none;
+    font: inherit;
+    letter-spacing: normal;
+    white-space: nowrap;
+}
+
+/* Foto: más espacio y filtro que evita el exceso de luz */
+@media (min-width: 931px) {
+    .cni-notas .cni-notas-header--v2 .cni-notas-foto {
+        left: 49% !important;
+        width: 30% !important;
+        object-position: center 35%;
+        filter: brightness(.93) contrast(1.14)
+                saturate(1.13) !important;
+    }
+
+    .cni-notas .cni-notas-header--v2 .cni-notas-foto-marco {
+        left: 49% !important;
+        width: 30% !important;
+    }
+}
+
+/* Tarjeta docente compacta */
+.cni-notas .cni-notas-header--v2 .cni-notas-docente {
+    flex: 0 0 210px;
+    width: 210px;
+    min-width: 0;
+    max-width: 210px;
+    margin-left: auto;
+    padding: 11px 12px;
+    border-radius: 15px;
+}
+
+.cni-notas .cni-notas-docente-top {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.cni-notas .cni-notas-header--v2 .cni-notas-docente-icon {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+}
+
+.cni-notas .cni-notas-header--v2 .cni-notas-docente strong {
+    font-size: 13px;
+    line-height: 1.25;
+}
+
+.cni-notas .cni-notas-docente-label {
+    font-size: 9px;
+}
+
+.cni-notas .cni-notas-docente-detalle {
+    font-size: 10px;
+    line-height: 1.35;
+}
+
+/* Pantallas pequeñas */
+@media (max-width: 930px) {
+    .cni-notas .cni-notas-header--v2 .cni-notas-brand {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .cni-notas .cni-notas-header--v2 .cni-notas-subfrase {
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .cni-notas .cni-notas-header--v2 .cni-notas-subfrase span {
+        white-space: normal;
+    }
+
+    .cni-notas .cni-notas-header--v2 .cni-notas-docente {
+        width: 100%;
+        max-width: 330px;
+        flex: 0 1 330px;
+    }
+}

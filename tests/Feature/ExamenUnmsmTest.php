@@ -121,7 +121,7 @@ class ExamenUnmsmTest extends TestCase
                 ->assertSee('Universidad Nacional Mayor de San Marcos')
                 ->assertSee('Área '.$area)
                 ->assertSee('Marcar para revisar')
-                ->assertSee('examen-unmsm.css')->getContent();
+                ->assertSee('examen/examen-unmsm.css')->getContent();
             // Livewire debe montar el componente en la raíz; si no, los clics dejan de funcionar.
             $this->assertMatchesRegularExpression('/<div wire:snapshot="[^"]*"[^>]*class="examen-distribucion"/', $html);
         }
@@ -337,7 +337,7 @@ class ExamenUnmsmTest extends TestCase
         $this->actingAs($uni, 'web')->post(route('examen.uni.dia', ['dia' => 2]))->assertRedirect();
         $intento = DB::table('intentos')->where('usuario_id', $uni->id)->first();
         $html = $this->get(route('examen', $intento->id))->assertOk()
-            ->assertDontSee('examen-unmsm.css')
+            ->assertDontSee('examen/examen-unmsm.css')
             ->assertDontSee('Marcar para revisar')
             ->assertDontSee('data-modalidad="unmsm"', false)
             ->getContent();
@@ -405,13 +405,16 @@ class ExamenUnmsmTest extends TestCase
         $html = $this->get(route('alumno.panel'))->assertOk()->assertViewIs('alumno.unmsm.panel')->getContent();
 
         $this->assertSame(1, preg_match('/<nav class="cni-alumno-menu"[^>]*>(.*?)<\/nav>/s', $html, $menu));
-        $this->assertSame(5, preg_match_all('/<a\b/', $menu[1]));
+        // 4 secciones + Práctica y Mi avance (herramientas de estudio) + Cambiar universidad.
+        $this->assertSame(7, preg_match_all('/<a\b/', $menu[1]));
         $this->assertStringContainsString(route('alumno.universidad.cambiar'), $menu[1]);
+        $this->assertStringContainsString(route('alumno.practica'), $menu[1]);
+        $this->assertStringContainsString(route('alumno.progreso'), $menu[1]);
         foreach (['#inicio' => 'Inicio', '#intentos' => 'Mis intentos', '#historial' => 'Historial', '#perfil' => 'Mi perfil'] as $href => $texto) {
             $this->assertMatchesRegularExpression('/href="'.$href.'"[^>]*>.*?'.$texto.'/s', $menu[1]);
         }
         $this->assertStringContainsString('Simulador CNI — Preparación San Marcos', $html);
-        $this->assertStringContainsString('panel-unmsm.css', $html);
+        $this->assertStringContainsString('alumno/panel-unmsm.css', $html);
         foreach (PerfilExamenUnmsm::AREAS as $codigo => $nombre) {
             $this->assertStringContainsString('id="sm-area-'.$codigo.'"', $html);
         }

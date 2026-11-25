@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/undc-resultados.css') }}?v=2">
+<link rel="stylesheet" href="{{ asset('css/alumno/resultados-undc.css') }}?v=2">
+<link rel="stylesheet" href="{{ asset('css/alumno/estudio.css') }}?v={{ filemtime(public_path('css/alumno/estudio.css')) }}">
 @endpush
 
 @section('content')
@@ -14,7 +15,7 @@
 <div class="ur-shell">
     <header class="ur-header">
         <a href="{{ route('alumno.panel') }}#resultados" class="ur-brand">
-            <img src="{{ asset('images/undc/logo-undc.png') }}" width="58" height="58" alt="Escudo UNDC">
+            <img src="{{ asset('images/universidades/undc-escudo-pequeno.webp') }}" width="58" height="58" alt="Escudo UNDC">
             <span><strong>UNDC</strong><small>Simulador de admisión</small></span>
         </a>
         <a href="{{ route('alumno.panel') }}#resultados" class="ur-return">← Volver a mis resultados</a>
@@ -107,7 +108,7 @@
                             ? 'correctas'
                             : ($pregunta->estado_respuesta === 'incorrecta' ? 'incorrectas' : 'blanco');
                     @endphp
-                    <article class="ur-question" data-ur-status="{{ $estado }}">
+                    <article class="ur-question" data-ur-status="{{ $estado }}" id="pregunta-{{ $pregunta->pregunta_id }}">
                         <div class="ur-question-top">
                             <span>Pregunta {{ $pregunta->orden }} de {{ $preguntas->count() }}</span>
                             <span class="ur-status ur-status-{{ $estado }}">
@@ -117,7 +118,7 @@
                                 @endif
                             </span>
                         </div>
-                        <small class="ur-subject">{{ $pregunta->asignatura }}</small>
+                        <small class="ur-subject">{{ $pregunta->asignatura }}@php $temaVisible = \App\Services\Alumno\ContextoAlumnoService::asignaturaVisible($pregunta->tema); @endphp@if($pregunta->tema && $temaVisible !== \App\Services\Alumno\ContextoAlumnoService::asignaturaVisible($pregunta->asignatura)) · {{ $temaVisible }}@endif</small>
                         <h3>{{ $pregunta->enunciado }}</h3>
                         @if ($pregunta->imagen)
                             <img class="ur-question-image" src="{{ asset($pregunta->imagen) }}" alt="Imagen de la pregunta {{ $pregunta->orden }}">
@@ -153,6 +154,10 @@
                                 <small>Esta pregunta no cuenta con una clave válida registrada. Consulta al administrador del banco.</small>
                             @endif
                         </div>
+                        @include('alumno.partials.acciones-pregunta', [
+                            'preguntaId' => (int) $pregunta->pregunta_id, 'guardada' => in_array((int) $pregunta->pregunta_id, $repasoGuardadas ?? [], true),
+                            'asignatura' => \App\Services\Alumno\ContextoAlumnoService::asignaturaVisible($pregunta->asignatura), 'intentoId' => $repasoIntentoId ?? null,
+                        ])
                     </article>
                 @empty
                     <div class="ur-empty">No se encontraron preguntas para revisar.</div>

@@ -1,0 +1,299 @@
+/*
+  Simulador CNI: corrección real del layout de login.
+  Fondo: cubre la página completa, NO es una imagen rectangular dentro de la escena.
+  Mascota: PNG transparente independiente; permanece visible en celular.
+  Los estilos visuales de la tarjeta blanca se conservan en login/login-base.css.
+*/
+
+/* El fondo ocupa TODA la página; no aparecen bordes del paisaje. */
+.login-screen .login-page.login-cni-v2 {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(380px, 505px);
+  align-items: center;
+  justify-content: space-between;
+  column-gap: clamp(20px, 3.5vw, 66px);
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  min-height: 100svh;
+  height: auto;
+  margin: 0;
+  padding: clamp(16px, 3vh, 45px) clamp(24px, 4.2vw, 80px);
+  overflow: hidden;
+  background-color: #051c48;
+  background-image:
+    linear-gradient(90deg, rgba(4, 22, 57, .22), rgba(4, 24, 60, .04) 55%, rgba(6, 25, 61, .22)),
+    url('../../images/fondos/login-campus-cni.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+/* Elimina las imágenes de fondo de instaladores anteriores. */
+.login-page.login-cni-v2 > .login-background,
+.login-page.login-cni-v2 > .login-backdrop-art {
+  display: none;
+}
+
+/* Encabezado e ilustración son DOS filas verdaderas. */
+.login-page.login-cni-v2 .login-presentation {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  align-items: stretch;
+  align-self: center;
+  flex: none;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: 0;
+  height: clamp(510px, calc(100svh - 45px), 770px);
+  margin: 0;
+  padding: clamp(8px, 2.5vh, 30px) 0 0;
+  overflow: visible;
+  text-align: left;
+}
+.login-page.login-cni-v2 .login-presentation-copy {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  padding: 0 0 0 clamp(10px, 2.2vw, 48px);
+  transform: none;
+  text-align: left;
+}
+.login-page.login-cni-v2 .login-heading {
+  display: block;
+  max-width: 680px;
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.8rem, 4.35vw, 4.8rem);
+  font-weight: 700;
+  line-height: 1.07;
+  letter-spacing: -.035em;
+  color: #fff;
+  text-shadow: 0 3px 15px #001332c9;
+  text-wrap: balance;
+}
+.login-page.login-cni-v2 .login-heading > span {display:block;}
+.login-page.login-cni-v2 .login-heading em {
+  color:#ffdb6c;
+  font-weight:inherit;
+  font-style:italic;
+}
+/* Anteriores adornos de la página no entran en este diseño. */
+.login-page.login-cni-v2 .login-presentation-copy::after,
+.login-page.login-cni-v2 .login-pretitle,
+.login-page.login-cni-v2 .login-presentation-subtitle,
+.login-page.login-cni-v2 .login-academic-icons,
+.login-page.login-cni-v2 .login-presentation-footer {display:none;}
+
+/* Únicamente el gatito y la plataforma viven en esta zona. */
+.login-page.login-cni-v2 .login-cni-scene {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  isolation: isolate;
+  overflow: visible;
+  pointer-events: none;
+}
+.login-page.login-cni-v2 .login-cni-scene::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: 1%;
+  width: min(100%, 720px);
+  height: 70%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 80%, rgba(21, 137, 246, .42), transparent 68%);
+  pointer-events: none;
+}
+.login-page.login-cni-v2 .login-cni-stage {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 5%;
+  width: min(78%, 590px);
+  height: clamp(32px, 5vw, 62px);
+  border: 2px solid #ffdc81;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 40%, #218df17a 2%, #063c89a8 68%, #03285c8c 90%);
+  box-shadow: 0 0 18px #ffc75e7c, 0 0 31px #147eda66, inset 0 0 13px #eaf6ff77;
+  transform: translateX(-50%);
+}
+.login-page.login-cni-v2 .login-cni-stage::after {
+  content: '';
+  position: absolute;
+  top: 33%;
+  left: 1%;
+  width: 98%;
+  height: 95%;
+  border-radius: 50%;
+  background: linear-gradient(#0e55ab80, #001a458a);
+  z-index: -1;
+}
+.login-page.login-cni-v2 .login-cni-cat {
+  display: block;
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 8%;
+  width: auto;
+  height: min(96%, 500px);
+  max-height: 100%;
+  max-width: 90%;
+  object-fit: contain;
+  object-position: bottom center;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 14px 19px #00142c9f);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* La tarjeta conserva su apariencia del stylesheet original. */
+.login-page.login-cni-v2 .login.card {
+  z-index: 5;
+  align-self: center;
+  justify-self: end;
+  width: 100%;
+  max-width: 505px;
+  margin: 0;
+}
+
+/* Laptop baja, conservando las dos columnas. */
+@media (min-width: 1025px) and (max-height: 710px) {
+  .login-screen .login-page.login-cni-v2 {padding-block: 12px;}
+  .login-page.login-cni-v2 .login-presentation {
+    height: calc(100svh - 24px);
+    padding-top: 12px;
+  }
+  .login-page.login-cni-v2 .login-heading {font-size:clamp(2.6rem, 4.1vw, 3.8rem);}
+  .login-page.login-cni-v2 .login-cni-cat {height:min(94%, 390px);}
+}
+@media (min-width: 1025px) and (max-width: 1250px) {
+  .login-screen .login-page.login-cni-v2 {
+    grid-template-columns: minmax(0,1fr) minmax(350px,450px);
+    column-gap: 22px;
+    padding-inline: 25px;
+  }
+  .login-page.login-cni-v2 .login-heading {font-size: clamp(2.5rem,4vw,3.8rem);}
+}
+
+/* Tablet: título, gato y formulario se apilan en ese orden. */
+@media (max-width: 1024px) {
+  .login-screen .login-page.login-cni-v2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    min-height: 100svh;
+    height: auto;
+    padding: 24px 18px 36px;
+    overflow: visible;
+    background-position: center center;
+  }
+  .login-page.login-cni-v2 .login-presentation {
+    display: grid;
+    grid-template-rows: auto 310px;
+    align-self: center;
+    flex: none;
+    width: min(100%, 680px);
+    max-width: 680px;
+    height: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+  .login-page.login-cni-v2 .login-presentation-copy {padding:0;text-align:center;}
+  .login-page.login-cni-v2 .login-heading {
+    font-size:clamp(2.2rem,5.9vw,3.6rem);
+    line-height: 1.09;
+    text-align: center;
+    margin:0;
+  }
+  .login-page.login-cni-v2 .login-cni-scene {height:310px;min-height:310px;}
+  .login-page.login-cni-v2 .login-cni-cat {
+    display:block;
+    visibility: visible;
+    height:min(95%,300px);
+    max-height:300px;
+    max-width:75%;
+    bottom:7%;
+  }
+  .login-page.login-cni-v2 .login-cni-stage {bottom:5%;height:38px;width:min(73%,440px);}
+  .login-page.login-cni-v2 .login.card {
+    align-self:center;
+    justify-self:stretch;
+    width:min(100%,540px);
+    max-width:540px;
+    min-height:0;
+    margin:0;
+  }
+}
+/* CELULAR: reservar altura explícita para la mascota. */
+@media (max-width: 600px) {
+  .login-screen .login-page.login-cni-v2 {
+    gap: 12px;
+    padding: 18px 12px 29px;
+    background-position: center center;
+  }
+  .login-page.login-cni-v2 .login-presentation {
+    width:100%;
+    height:auto;
+    grid-template-rows: auto 235px;
+  }
+  .login-page.login-cni-v2 .login-heading {
+    font-size:clamp(1.9rem,8.7vw,2.55rem);
+    line-height:1.07;
+  }
+  .login-page.login-cni-v2 .login-cni-scene {
+    display:block;
+    width:100%;
+    min-height:235px;
+    height:235px;
+  }
+  .login-page.login-cni-v2 .login-cni-cat {
+    display:block;
+    visibility:visible;
+    opacity:1;
+    bottom:8%;
+    height:216px;
+    max-height:216px;
+    max-width:80%;
+  }
+  .login-page.login-cni-v2 .login-cni-stage {
+    width:min(74%,300px);
+    height:29px;
+    bottom:7%;
+  }
+  .login-page.login-cni-v2 .login.card {
+    width:100%;
+    max-width:540px;
+    margin:0;
+    padding:23px 18px;
+  }
+}
+@media (max-width: 360px) {
+  .login-page.login-cni-v2 .login-heading {font-size:1.78rem;}
+  .login-page.login-cni-v2 .login-presentation {grid-template-rows:auto 213px;}
+  .login-page.login-cni-v2 .login-cni-scene {height:213px;min-height:213px;}
+  .login-page.login-cni-v2 .login-cni-cat {height:196px;max-height:196px;}
+}
+@media (prefers-reduced-motion: reduce) {
+  .login-page.login-cni-v2 *,
+  .login-page.login-cni-v2 *::before,
+  .login-page.login-cni-v2 *::after {transition: none !important;}
+}

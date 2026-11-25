@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/unmsm-resultados.css') }}?v={{ filemtime(public_path('css/unmsm-resultados.css')) }}">
-<link rel="stylesheet" href="{{ asset('css/referencia-ingreso.css') }}?v={{ filemtime(public_path('css/referencia-ingreso.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/alumno/resultados-unmsm.css') }}?v={{ filemtime(public_path('css/alumno/resultados-unmsm.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/alumno/estudio.css') }}?v={{ filemtime(public_path('css/alumno/estudio.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/alumno/referencia-ingreso.css') }}?v={{ filemtime(public_path('css/alumno/referencia-ingreso.css')) }}">
 @endpush
 @section('content')
 @use('App\Support\PerfilExamenUnmsm')
@@ -30,7 +31,7 @@
 <div class="sm-res" data-modalidad="unmsm">
     <header class="sm-res-topbar">
         <a href="{{ route('alumno.panel') }}" class="sm-res-marca">
-            <img src="{{ asset('images/escudo-cni.png') }}" width="44" height="44" alt="">
+            <img src="{{ asset('images/cni/escudo-cni.webp') }}" width="44" height="44" alt="">
             <span><strong>Simulador CNI</strong><small>Preparación San Marcos</small></span>
         </a>
         <a href="{{ route('alumno.panel') }}#historial" class="sm-res-volver">← Volver a mi historial</a>
@@ -139,9 +140,9 @@
                         $elegidaOpcion = $opciones->firstWhere('id', $elegida);
                         $correcta = $opciones->first(fn ($o) => (bool) $o->es_correcta);
                     @endphp
-                    <article class="sm-res-pregunta" data-sm-tipo="{{ $tipo }}">
+                    <article class="sm-res-pregunta" data-sm-tipo="{{ $tipo }}" id="pregunta-{{ $pregunta->pregunta_id }}">
                         <div class="sm-res-pregunta-top">
-                            <span>Pregunta {{ $pregunta->orden }} · {{ PerfilExamenUnmsm::etiqueta($pregunta->asignatura) }}</span>
+                            <span>Pregunta {{ $pregunta->orden }} · {{ PerfilExamenUnmsm::etiqueta($pregunta->asignatura) }}@php $temaVisible = \App\Services\Alumno\ContextoAlumnoService::asignaturaVisible($pregunta->tema); @endphp@if($pregunta->tema && $temaVisible !== \App\Services\Alumno\ContextoAlumnoService::asignaturaVisible($pregunta->asignatura)) · {{ $temaVisible }}@endif</span>
                             <span class="sm-res-estado sm-res-estado-{{ $tipo }}">
                                 @if($tipo === 'actitudinal') {{ $puntos($pregunta->puntaje_obtenido ?? 0) }} / 20 pts
                                 @elseif($tipo === 'correcta') ✓ Correcta (+20)
@@ -177,6 +178,12 @@
                         @if(! $esActitudinal && trim((string) $pregunta->solucion) !== '')
                             <div class="sm-res-explicacion"><strong>Explicación</strong><p>{{ $pregunta->solucion }}</p></div>
                         @endif
+                        @unless($esActitudinal)
+                            @include('alumno.partials.acciones-pregunta', [
+                                'preguntaId' => (int) $pregunta->pregunta_id, 'guardada' => in_array((int) $pregunta->pregunta_id, $repasoGuardadas ?? [], true),
+                                'asignatura' => \App\Services\Alumno\ContextoAlumnoService::asignaturaVisible($pregunta->asignatura), 'intentoId' => $repasoIntentoId ?? null,
+                            ])
+                        @endunless
                     </article>
                 @endforeach
             </div>

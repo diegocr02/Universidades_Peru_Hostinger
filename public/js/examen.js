@@ -11,8 +11,52 @@ document.addEventListener('alpine:init', () => {
         desfase: 0,
         reloj: null,
         clave: `cni.examen.${intentoId}.revisar`,
+        // Guardado de respuestas: estado ligado a la respuesta real del servidor.
+        estado: '',            // '', guardando, guardado, error, sin_conexion, reintentando
+        preguntaEstado: null,  // pregunta a la que corresponde el estado mostrado
+        pendiente: null,       // { alternativa, pregunta } aún sin confirmar
+        secuencia: 0,          // solo la petición más reciente puede cambiar el estado
+
+        estadoDe(preguntaId) {
+            return this.preguntaEstado === preguntaId ? this.estado : '';
+        },
+
+        responder(alternativaId, preguntaId) {
+            this.pendiente = { alternativa: alternativaId, pregunta: preguntaId };
+            this.preguntaEstado = preguntaId;
+            if (!navigator.onLine) {
+                this.estado = 'sin_conexion'; // se reintenta al volver la conexión
+                return;
+            }
+            this.enviar('guardando');
+        },
+
+        reintentar() {
+            if (this.pendiente) this.enviar('reintentando');
+        },
+
+        enviar(estadoInicial) {
+            const n = ++this.secuencia;
+            const envio = this.pendiente;
+            this.estado = estadoInicial;
+            // Sin respuesta en 12 s se avisa el error; la petición puede completarse después.
+            const espera = setTimeout(() => { if (n === this.secuencia && this.estado !== 'guardado') this.estado = navigator.onLine ? 'error' : 'sin_conexion'; }, 12000);
+            this.$wire.responder(envio.alternativa, envio.pregunta)
+                .then(() => {
+                    clearTimeout(espera);
+                    if (n !== this.secuencia) return; // una respuesta antigua no pisa a la más reciente
+                    this.pendiente = null;
+                    this.estado = 'guardado';
+                })
+                .catch(() => {
+                    clearTimeout(espera);
+                    if (n === this.secuencia) this.estado = navigator.onLine ? 'error' : 'sin_conexion';
+                });
+        },
 
         init() {
+            window.addEventListener('offline', () => { if (this.pendiente) this.estado = 'sin_conexion'; });
+            window.addEventListener('online', () => { if (this.pendiente) this.enviar('reintentando'); });
             try {
                 const guardadas = JSON.parse(localStorage.getItem(this.clave));
                 this.revisar = Array.isArray(guardadas) ? guardadas : [];

@@ -23,7 +23,7 @@
                 </figure>
             @endif
         </div>
-        <img class="inicio-banner__buho" src="{{ asset('img/alumno/buho-derecho.png') }}" width="640" height="407"
+        <img class="inicio-banner__buho" src="{{ asset('images/mascotas/buho-humanidades.webp') }}" width="640" height="407"
             alt="Ilustración de un búho con toga y balanza">
     </section>
 

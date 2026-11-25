@@ -1,5 +1,5 @@
 <div class="docente-calificaciones">
-    <link rel="stylesheet" href="{{ asset('css/docente.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/docente/calificaciones-docente.css') }}">
 
     <header class="calificaciones-encabezado">
         <div class="calificaciones-encabezado-texto">
@@ -7,7 +7,7 @@
             <h1>Calificaciones de mi salón</h1>
             <p>Sección {{ $seccion?->nombre ?? 'sin asignar' }} · Resultados de los simulacros de tus estudiantes.</p>
         </div>
-        <img src="{{ asset('img/escudo-cni.png') }}" alt="Escudo del CNI" class="calificaciones-escudo">
+        <img src="{{ asset('images/cni/escudo-cni-docentes.webp') }}" alt="Escudo del CNI" class="calificaciones-escudo">
     </header>
 
     <section class="calificaciones-resumen" aria-label="Resumen académico">

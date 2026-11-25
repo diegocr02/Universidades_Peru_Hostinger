@@ -1,0 +1,197 @@
+/* "Resultados de tu examen" (resources/views/examen/resultados.blade.php). Se carga solo en esa pantalla. */
+@font-face {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../../fonts/inter/InterVariable.woff2") format("woff2");
+}
+
+:root {
+    --res-azul: #0f2f5a;
+    --res-azul-claro: #1d5ea8;
+    --res-texto: #13243a;
+    --res-suave: #5d6b7c;
+    --res-borde: #dde5ef;
+    --res-verde: #2e9a4b;
+    --res-rojo: #d9443a;
+    --res-ambar: #e8b020;
+    font-family: Inter, system-ui, sans-serif;
+    color: var(--res-texto);
+}
+
+body { background: #f4f7fb; }
+
+/* Cabecera del layout */
+header { background: var(--res-azul); padding: 14px 40px; }
+.brand { font-size: 1.6rem; font-weight: 700; letter-spacing: -.01em; }
+header nav { gap: 0; }
+header nav > a,
+header nav > span { padding: 0 32px; border-left: 1px solid #ffffff59; font-size: 1.15rem; }
+header nav > span { border-right: 1px solid #ffffff59; }
+.cabecera-regresa {
+    display: inline-flex; align-items: center; gap: 8px; margin-left: 32px;
+    padding: 9px 20px; border-radius: 10px; background: #fff; color: var(--res-azul);
+    font-weight: 700; font-size: 1.1rem;
+}
+.cabecera-regresa:hover { background: #e8eff8; }
+
+main:has(.resultados) { max-width: none; margin: 0; padding: 0; }
+.resultados { padding: 0 52px 40px; }
+
+/* Portada: escudo, título y una fachada sugerida con franjas */
+.resultados-portada {
+    position: relative; display: flex; align-items: center; gap: 36px;
+    margin: 0 -52px; padding: 6px 52px 10px; overflow: hidden;
+    background:
+        linear-gradient(90deg, #f4f7fb 45%, #f4f7fb00 75%),
+        repeating-linear-gradient(90deg, #dfe8f4 0 70px, #eaf0f8 70px 140px);
+}
+.resultados-portada::after {
+    content: ""; position: absolute; inset: 0 0 0 auto; width: 260px; pointer-events: none;
+    background:
+        linear-gradient(135deg, #f4f7fb00 0 40%, #3f7fc6cc 40% 48%, #f4f7fb00 48% 56%, #8fb4dfaa 56% 70%, #f4f7fb00 70%);
+}
+.resultados-portada__escudo { width: 200px; height: auto; flex: none; }
+.resultados-portada__mascota {
+    position: relative; z-index: 1; flex: none; align-self: flex-start;
+    margin: -2px 44px 0 auto; width: auto; height: 158px; pointer-events: none;
+}
+.resultados-portada__titulo { position: relative; z-index: 1; padding-left: 38px; border-left: 2px solid #9fb0c6; }
+.resultados-portada__titulo p { margin: 0; color: var(--res-azul-claro); font-weight: 800; font-size: 1.15rem; }
+.resultados-portada__titulo h1 { margin: 4px 0 6px; color: var(--res-azul); font-size: 2.75rem; font-weight: 800; letter-spacing: -.02em; }
+.resultados-portada__titulo span { color: var(--res-suave); font-size: 1.35rem; }
+
+/* Aviso de envío y botón para volver */
+.resultados-barra { position: relative; z-index: 1; display: flex; align-items: flex-end; gap: 200px; margin-top: -24px; }
+.resultados-aviso {
+    flex: 1; display: flex; align-items: center; gap: 14px; margin: 0;
+    padding: 9px 18px; border: 1px solid #c9d8ec; border-radius: 10px;
+    background: #e6eef9; color: var(--res-texto); font-size: 1.05rem;
+}
+.resultados-aviso svg { flex: none; color: #fff; fill: #1d5ec7; stroke: #fff; }
+.resultados-volver {
+    margin-left: auto; margin-bottom: 26px; display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 20px; border: 1.5px solid var(--res-azul-claro); border-radius: 10px;
+    background: #fff; color: var(--res-azul); font-weight: 700; font-size: 1.1rem; text-decoration: none;
+}
+.resultados-volver:hover { background: #eef4fb; }
+
+/* Cifras */
+.resultados-cifras { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin: 20px 0 26px; padding: 0; }
+.resultados-cifras li {
+    display: flex; align-items: center; gap: 22px; padding: 14px 24px; min-height: 92px;
+    background: #fff; border: 1px solid var(--res-borde); border-left: 6px solid var(--acento);
+    border-radius: 12px; box-shadow: 0 4px 14px #17395712;
+}
+.resultados-cifras__icono {
+    display: grid; place-items: center; width: 50px; height: 50px; flex: none;
+    border-radius: 9px; background: var(--acento); color: #fff;
+}
+.resultados-cifras small { display: block; font-size: 1.2rem; font-weight: 500; }
+.resultados-cifras strong { display: block; font-size: 2.3rem; font-weight: 800; line-height: 1.1; color: var(--res-azul); }
+.is-puntaje { --acento: var(--res-azul); }
+.is-correctas { --acento: var(--res-verde); }
+.is-incorrectas { --acento: var(--res-rojo); }
+.is-blanco { --acento: var(--res-ambar); }
+.is-correctas strong, .is-incorrectas strong, .is-blanco strong { color: var(--res-texto); }
+
+/* Resultados por asignatura */
+.resultados-asignaturas { background: #fff; border-radius: 14px; box-shadow: 0 4px 16px #1739571a; overflow: hidden; }
+.resultados-asignaturas header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 24px; background: var(--res-azul); color: #fff;
+}
+.resultados-asignaturas h2 { display: flex; align-items: center; gap: 18px; margin: 0; font-size: 1.5rem; font-weight: 700; }
+.resultados-asignaturas header span { font-size: 1.05rem; }
+.resultados-tablas { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 0 46px; padding: 14px 22px 24px; }
+.resultados-tablas table + table { position: relative; }
+.resultados-tablas table + table::before {
+    content: ""; position: absolute; left: -24px; top: 0; bottom: 0; border-left: 1px solid var(--res-borde);
+}
+.resultados-tablas table { width: 100%; border-collapse: collapse; font-size: 1.1rem; }
+.resultados-tablas thead th { background: #e6edf6; font-weight: 700; padding: 6px 14px; }
+.resultados-tablas th, .resultados-tablas td { padding: 2px 14px; text-align: center; font-variant-numeric: tabular-nums; }
+.resultados-tablas th:first-child { text-align: left; font-weight: 500; }
+.resultados-tablas thead th:first-child { font-weight: 700; }
+.resultados-tablas th:last-child, .resultados-tablas td:last-child { text-align: right; }
+.resultados-tablas tbody tr:nth-child(even) { background: #f3f6fa; }
+.resultados-vacio { padding: 24px; margin: 0; }
+
+/* Desglose de un día UNI: ganados, descontados y puntaje final sobre el máximo del día. */
+.resultados-uni { margin-bottom: 28px; background: #fff; border-radius: 14px; box-shadow: 0 4px 16px #1739571a; overflow: hidden; }
+.resultados-uni header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 24px; background: var(--res-azul); color: #fff; }
+.resultados-uni h2 { margin: 0; font-size: 1.3rem; font-weight: 800; }
+.resultados-uni__grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 18px 24px 4px; }
+.resultados-uni__grid div { padding: 10px 12px; border: 1px solid var(--res-borde); border-radius: 10px; }
+.resultados-uni__grid dt { font-size: .85rem; color: var(--res-suave); }
+.resultados-uni__grid dd { margin: 4px 0 0; font-size: 1.35rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.resultados-uni__grid dd.is-mas { color: var(--res-verde); }
+.resultados-uni__grid dd.is-menos { color: var(--res-rojo); }
+.resultados-uni__final { margin: 12px 24px 4px; font-size: 1.15rem; }
+.resultados-uni__final strong { font-size: 1.4rem; color: var(--res-azul); }
+.resultados-uni__nota { margin: 4px 24px 0; font-size: .9rem; color: var(--res-suave); }
+.resultados-uni__nota:last-child { margin-bottom: 18px; }
+@media (max-width: 1200px) { .resultados-uni__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .resultados-uni__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 14px; } }
+
+/* Revisión de preguntas (después de calificar): clave en verde, error del alumno en rojo. */
+.revision { margin-top: 28px; padding: 26px; background: #fff; border: 1px solid var(--res-borde); border-radius: 14px; box-shadow: 0 4px 16px #1739571a; }
+.revision-cabecera { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; flex-wrap: wrap; margin-bottom: 6px; }
+.revision-kicker { margin: 0; font-size: .8rem; font-weight: 800; letter-spacing: .13em; color: #9e792b; }
+.revision h2 { margin: 4px 0 0; font-size: 1.5rem; color: var(--res-azul); }
+.revision-ayuda { margin: 6px 0 0; font-size: .95rem; color: var(--res-suave); }
+.revision-filtro { display: flex; align-items: center; gap: 8px; font-size: .95rem; font-weight: 700; color: var(--res-suave); }
+.revision-filtro select { padding: 8px 12px; border: 1px solid var(--res-borde); border-radius: 9px; background: #fff; font: inherit; color: var(--res-texto); }
+.revision-pregunta { margin-top: 18px; padding: 20px; border: 1px solid var(--res-borde); border-radius: 13px; }
+.revision-pregunta[hidden] { display: none; }
+.revision-pregunta__top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font-size: .8rem; font-weight: 800; color: #718199; }
+.revision-pregunta__top em { font-style: normal; border-radius: 99px; padding: 5px 11px; background: #eef2f7; color: var(--res-suave); }
+.revision-pregunta__top em.is-correctas { background: #e7f8ed; color: #13814e; }
+.revision-pregunta__top em.is-incorrectas { background: #ffeced; color: #b32940; }
+.revision-pregunta h3 { margin: 12px 0 16px; font-size: 1.1rem; line-height: 1.45; color: #193e62; white-space: pre-line; }
+.revision-imagen { display: block; max-width: 100%; max-height: 320px; margin: 8px 0; border-radius: 8px; }
+.revision-opciones { display: grid; gap: 9px; }
+.revision-opcion { display: flex; align-items: center; gap: 12px; padding: 12px 13px; border: 1px solid #dce4ee; border-radius: 9px; font-size: 1rem; }
+.revision-letra { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border: 1px solid #a9bdd0; border-radius: 50%; font-size: .8rem; font-weight: 800; }
+.revision-texto { min-width: 0; }
+.revision-opcion strong { margin-left: auto; font-size: .8rem; white-space: nowrap; }
+.revision-opcion.is-correcta { background: #e7f8ed; border: 2px solid #2ea765; color: #08723c; }
+.revision-opcion.is-correcta .revision-letra { background: #21874d; border-color: #21874d; color: #fff; }
+.revision-opcion.is-error { background: #ffeded; border: 2px solid #df5a65; color: #af273a; }
+.revision-opcion.is-error .revision-letra { background: #d83c4b; border-color: #d83c4b; color: #fff; }
+.revision-explicacion { margin-top: 16px; padding: 14px; border-left: 4px solid #3379b6; border-radius: 0 10px 10px 0; background: #eff5fc; font-size: .95rem; color: #315371; }
+.revision-explicacion strong { display: block; margin-bottom: 5px; }
+.revision-explicacion p { margin: 0; white-space: pre-line; }
+.revision-vacio { margin: 18px 0 0; color: var(--res-suave); }
+@media (max-width: 720px) {
+    .revision { padding: 16px; }
+    .revision-opcion { flex-wrap: wrap; }
+    .revision-opcion strong { margin-left: 38px; }
+}
+
+@media (max-width: 1200px) {
+    .resultados-cifras { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .resultados-barra { gap: 24px; }
+    .resultados-tablas { grid-template-columns: 1fr; gap: 16px; }
+    .resultados-tablas table + table::before { display: none; }
+}
+
+@media (max-width: 720px) {
+    header { padding: 14px 16px; }
+    header nav { gap: 6px 16px; }
+    header nav > a, header nav > span { padding: 0; border: 0; font-size: 1rem; }
+    .resultados-portada::after { display: none; }
+    .resultados-portada__mascota { position: absolute; top: 12px; right: 12px; margin: 0; height: 110px; }
+    .cabecera-regresa { margin-left: 0; }
+    .resultados { padding: 0 16px 32px; }
+    .resultados-portada { flex-direction: column; align-items: flex-start; gap: 12px; margin: 0 -16px; padding: 16px; }
+    .resultados-portada__escudo { width: 120px; }
+    .resultados-portada__titulo { padding-left: 16px; }
+    .resultados-portada__titulo h1 { font-size: 2rem; }
+    .resultados-barra { flex-direction: column; align-items: stretch; margin-top: 8px; gap: 12px; }
+    .resultados-volver { margin: 0; justify-content: center; }
+    .resultados-cifras { grid-template-columns: 1fr; }
+    .resultados-tablas { padding: 12px; }
+    .resultados-tablas th, .resultados-tablas td { padding: 2px 6px; font-size: .95rem; }
+}

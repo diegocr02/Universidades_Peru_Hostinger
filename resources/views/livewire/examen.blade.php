@@ -9,7 +9,7 @@
 @endpush
 @push('styles')
     {{-- El @if va dentro del @push: fuera de él deja texto antes de la raíz y Livewire la pierde. --}}
-    @if($unmsm)<link rel="stylesheet" href="{{ asset('css/examen-unmsm.css').'?v='.filemtime(public_path('css/examen-unmsm.css')) }}">@endif
+    @if($unmsm)<link rel="stylesheet" href="{{ asset('css/examen/examen-unmsm.css').'?v='.filemtime(public_path('css/examen/examen-unmsm.css')) }}">@endif
 @endpush
 <div class="examen-distribucion" :class="{ 'is-mapa-abierto': mapaAbierto }" x-data="examen({{ $intentoId }}, @js($limiteMs))" data-ahora="{{ $ahoraMs }}"
      @if($unmsm) data-modalidad="unmsm" @endif
@@ -69,8 +69,8 @@
                             @php $marcada = $elegida === (int) $alternativa->id; @endphp
                             <button type="button" role="radio" aria-checked="{{ $marcada ? 'true' : 'false' }}"
                                     @class(['examen-opcion', 'is-elegida' => $marcada])
-                                    wire:key="alternativa-{{ $alternativa->id }}" wire:click="responder({{ $alternativa->id }})"
-                                    wire:loading.attr="disabled" wire:target="responder">
+                                    :class="{ 'is-pendiente': pendiente && pendiente.alternativa === {{ $alternativa->id }} }"
+                                    wire:key="alternativa-{{ $alternativa->id }}" @click="responder({{ $alternativa->id }}, {{ $pregunta->id }})">
                                 <span class="examen-radio" aria-hidden="true"></span>
                                 <span>{{ $alternativa->texto }}
                                     @if($alternativa->imagen ?? null)
@@ -92,9 +92,15 @@
                             </button>
                         </div>
                     @endif
-                    <span class="examen-guardado" aria-live="polite">
-                        <span wire:loading wire:target="responder">Guardando…</span>
-                        <span wire:loading.remove wire:target="responder">@if($elegida) Respuesta guardada @endif</span>
+                    {{-- Estado real del guardado de ESTA pregunta (examen.js); sin actividad, lo que ya está en el servidor. --}}
+                    <span class="examen-guardado" aria-live="polite" role="status">
+                        <span x-show="estadoDe({{ $pregunta->id }}) === 'guardando'" x-cloak>⟳ Guardando respuesta…</span>
+                        <span x-show="estadoDe({{ $pregunta->id }}) === 'guardado'" x-cloak>✓ Respuesta guardada</span>
+                        <span x-show="estadoDe({{ $pregunta->id }}) === 'reintentando'" x-cloak>⟳ Reintentando…</span>
+                        <span x-show="estadoDe({{ $pregunta->id }}) === 'sin_conexion'" x-cloak class="examen-guardado-alerta">⚠ Se perdió la conexión. Tu respuesta se enviará al volver.</span>
+                        <span x-show="estadoDe({{ $pregunta->id }}) === 'error'" x-cloak class="examen-guardado-alerta">✕ Error al guardar.
+                            <button type="button" class="examen-guardado-reintentar" @click="reintentar()">Reintentar</button></span>
+                        <span x-show="estadoDe({{ $pregunta->id }}) === ''">@if($elegida) ✓ Respuesta guardada @endif</span>
                     </span>
                 </div>
             </div>

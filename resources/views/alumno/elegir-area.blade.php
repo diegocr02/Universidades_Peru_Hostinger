@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/selector-areas.css') }}?v={{ filemtime(public_path('css/selector-areas.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/alumno/selector-universidad.css') }}?v={{ filemtime(public_path('css/alumno/selector-universidad.css')) }}">
 @endpush
 
 @section('content')
@@ -15,10 +15,10 @@
         ->sortBy(fn ($area) => $ordenVisual[$area->codigo] ?? 99);
     // Logos institucionales.
     $mascotas = [
-        'B' => 'UNI_logo.png',
-        'A' => 'UNDC_LOGO.png',
-        'C' => 'villareal_logo.png',
-        'E' => 'San_Marcos_logo.png',
+        'B' => 'uni-logo.webp',
+        'A' => 'undc-logo.webp',
+        'C' => 'villarreal-logo.webp',
+        'E' => 'san-marcos-logo.webp',
     ];
 
     $presentaciones = [
@@ -74,7 +74,7 @@
                 <div class="area-opcion__ilustracion" aria-hidden="true">
                     @if (isset($mascotas[$area->codigo]))
                         @php
-                            $imagenMascota = 'images/mascotas/'.$mascotas[$area->codigo];
+                            $imagenMascota = 'images/universidades/'.$mascotas[$area->codigo];
                         @endphp
                         <div class="area-opcion__mascota">
                             <img src="{{ asset($imagenMascota).'?v='.filemtime(public_path($imagenMascota)) }}"

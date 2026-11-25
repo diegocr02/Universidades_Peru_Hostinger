@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/panel-alumno.css') }}?v={{ filemtime(public_path('css/panel-alumno.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/alumno/panel-alumno.css') }}?v={{ filemtime(public_path('css/alumno/panel-alumno.css')) }}">
 @endpush
 @section('content')
 <div class="cni-alumno cni-alumno-topic-detail" data-area="{{ $area->codigo }}">

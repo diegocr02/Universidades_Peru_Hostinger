@@ -114,7 +114,7 @@ class OrientacionAlumnoTest extends TestCase
         $this->alumno('persistente', $this->carrera('Derecho'));
         $this->post('/login', ['usuario' => 'persistente', 'password' => 'ClaveCNI2026!'])
             ->assertRedirect(route('alumno.panel'));
-        $this->get(route('alumno.panel'))->assertOk()->assertSee('panel-alumno.css');
+        $this->get(route('alumno.panel'))->assertOk()->assertSee('alumno/panel-alumno.css');
         $this->get(route('alumno.inicio'))->assertRedirect(route('alumno.panel'));
         $this->post(route('alumno.area.guardar'), ['area_id' => $this->area('C')])->assertForbidden();
         $this->post(route('alumno.carrera.guardar'), ['carrera_id' => $this->carrera('Ingeniería de Sistemas')])

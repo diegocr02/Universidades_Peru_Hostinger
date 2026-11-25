@@ -44,6 +44,6 @@
     </div>
 
     <div class="portal-lateral__pie derecho-ilustracion">
-        <img src="{{ asset('img/alumno/edificio-justicia.png') }}" alt="Ilustración de un edificio con la palabra JUSTICIA">
+        <img src="{{ asset('images/fondos/edificio-justicia-humanidades.webp') }}" alt="Ilustración de un edificio con la palabra JUSTICIA">
     </div>
 </aside>

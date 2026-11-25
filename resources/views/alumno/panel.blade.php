@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/panel-alumno.css') }}?v={{ filemtime(public_path('css/panel-alumno.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/alumno/panel-alumno.css') }}?v={{ filemtime(public_path('css/alumno/panel-alumno.css')) }}">
 @endpush
 @section('content')
 @php
@@ -8,7 +8,7 @@
     $esVistaPrevia = $esVistaPrevia ?? false;
     // Una sola plantilla para cinco áreas; los datos y la carrera vienen de MariaDB.
     $temaArea = config('panel_alumno.areas.'.$area->codigo);
-    $rutaMascota = $temaArea['mascota_png'];
+    $rutaMascota = $temaArea['logo'];
     $tituloArea = $temaArea['titulo'] ?? $area->nombre;
     $nombreCompleto = trim($usuario->nombres.' '.($usuario->apellidos ?? ''));
     $iniciales = mb_strtoupper(mb_substr($usuario->nombres, 0, 1).mb_substr($usuario->apellidos ?? '', 0, 1));
@@ -27,7 +27,7 @@
     <aside class="cni-alumno-sidebar" id="cni-alumno-sidebar" aria-label="Menú del estudiante">
         <div class="cni-alumno-sidebar-top">
             <a class="cni-alumno-marca" href="{{ route('alumno.panel') }}">
-                <span class="cni-alumno-marca-icon" aria-hidden="true"><img src="{{ asset('images/escudo-cni.png') }}" width="36" height="36" alt=""></span>
+                <span class="cni-alumno-marca-icon" aria-hidden="true"><img src="{{ asset('images/cni/escudo-cni.webp') }}" width="36" height="36" alt=""></span>
                 <span><strong>Simulador</strong><small>CNI · Imperial</small></span>
             </a>
             <span class="cni-alumno-area-chip"><span aria-hidden="true">{{ $temaArea['icono'] }}</span> {{ $tituloArea }}</span>
@@ -35,6 +35,7 @@
                 <a href="#perfil" class="is-active" aria-current="location"><span aria-hidden="true">♙</span> Mi perfil</a>
                 <a href="#progreso"><span aria-hidden="true">▤</span> Mi progreso</a>
                 <a href="#historial"><span aria-hidden="true">◷</span> Historial</a>
+                @include('alumno.partials.menu-estudio')
                 <a href="{{ route('alumno.universidad.cambiar') }}"><span aria-hidden="true">&#8644;</span> Cambiar universidad</a>
         </nav>
         </div>
@@ -66,6 +67,7 @@
             @if(session('status')) <div class="cni-alumno-alert cni-alumno-alert-ok" role="status">{{ session('status') }}</div> @endif
 
             <section class="cni-alumno-vista cni-alumno-vista-perfil" id="perfil" data-panel-view="perfil" aria-label="Mi perfil">
+                @include('alumno.partials.resumen-inicio')
                 <div class="cni-alumno-banner" aria-labelledby="bienvenida-titulo">
                 <div class="cni-alumno-welcome">
                     <span class="cni-alumno-overline">TU ESPACIO DE PREPARACIÓN · ÁREA {{ $area->codigo }}</span>

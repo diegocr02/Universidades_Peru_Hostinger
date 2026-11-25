@@ -8,7 +8,7 @@
       - $variante: "cni" (por defecto, azul marino; la usa el examen) o "derecho"
         (guinda: menú de config/alumno.php, barra con campana y menú de usuario).
         Las piezas de la variante "derecho" están en layouts/partes/.
-    Usa su propia hoja public/css/alumno-derecho.css; no carga app.css para no mezclar estilos globales.
+    Usa su propia hoja public/css/alumno/portal-humanidades.css; no carga app.css para no mezclar estilos globales.
 --}}
 @php
     $usuario = auth('web')->user();
@@ -37,8 +37,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Simulador de examen' }} · CNI</title>
     {{-- ?v= con la fecha del archivo: el navegador descarga la hoja nueva después de cada cambio. --}}
-    <link rel="stylesheet" href="{{ asset('css/alumno-derecho.css').'?v='.filemtime(public_path('css/alumno-derecho.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/alumno/portal-humanidades.css').'?v='.filemtime(public_path('css/alumno/portal-humanidades.css')) }}">
     @livewireStyles
+    @if(auth('web')->user()?->rol === 'estudiante') @include('alumno.partials.accesibilidad-cabecera') @endif
 </head>
 <body @class(['portal', 'portal--derecho' => $variante === 'derecho'])>
     @if ($variante === 'derecho')
@@ -49,7 +50,7 @@
         <div class="portal-lateral__principal">
             <div class="portal-lateral__cabecera">
                 <a class="portal-identidad" href="{{ $enlaceInicio }}">
-                    <img class="portal-identidad__escudo" src="{{ asset('img/examen/escudo-cni.png') }}" alt="Escudo institucional CNI">
+                    <img class="portal-identidad__escudo" src="{{ asset('images/cni/escudo-cni-examen.webp') }}" alt="Escudo institucional CNI">
                     <span class="portal-identidad__nombre">
                         <strong>CNI</strong>
                         <small>Portal del alumno</small>
@@ -69,7 +70,7 @@
                     {{-- Las rutas con "#" aún no existen en el proyecto. --}}
                     <a href="{{ $enlace }}" @class(['portal-menu__enlace', 'is-activo' => $clave === $seccionActiva])
                         @if ($clave === $seccionActiva) aria-current="page" @endif>
-                        <img src="{{ asset('img/examen/'.$icono) }}" width="18" height="18" alt="">
+                        <img src="{{ asset('images/iconos/'.$icono) }}" width="18" height="18" alt="">
                         {{ $texto }}
                     </a>
                 @endforeach
@@ -78,7 +79,7 @@
 
         <div class="portal-lateral__pie" id="portal-lateral-pie">
             <div class="portal-ayuda">
-                <span class="portal-ayuda__icono"><img src="{{ asset('img/examen/ayuda-tarjeta.svg') }}" width="14" height="12.9986" alt=""></span>
+                <span class="portal-ayuda__icono"><img src="{{ asset('images/iconos/ayuda-tarjeta.svg') }}" width="14" height="12.9986" alt=""></span>
                 <strong>Estamos para ayudarte</strong>
                 <p>Resuelve tus dudas sobre el portal o tus próximos pasos.</p>
                 <a href="#">Contactar con CNI →</a>
@@ -94,7 +95,7 @@
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="portal-salir">
-                    <span class="portal-salir__icono"><img src="{{ asset('img/examen/cerrar-sesion.svg') }}" width="16.0521" height="15.7" alt=""></span>
+                    <span class="portal-salir__icono"><img src="{{ asset('images/iconos/cerrar-sesion.svg') }}" width="16.0521" height="15.7" alt=""></span>
                     Cerrar sesión
                 </button>
             </form>
@@ -117,7 +118,7 @@
                 </nav>
                 <div class="portal-cuenta">
                     <a class="portal-cuenta__ayuda" href="#">
-                        <img src="{{ asset('img/examen/ayuda.svg') }}" width="15" height="15" alt="">
+                        <img src="{{ asset('images/iconos/ayuda.svg') }}" width="15" height="15" alt="">
                         Ayuda
                     </a>
                     <span class="portal-cuenta__separador" aria-hidden="true"></span>
@@ -144,6 +145,7 @@
         </footer>
     </div>
     @stack('scripts')
+    @if(auth('web')->user()?->rol === 'estudiante') <x-alumno.preferencias-accesibilidad /> @endif
     @livewireScripts
 </body>
 </html>

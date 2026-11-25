@@ -341,6 +341,9 @@ class OrientacionController extends Controller
 
         // Las soluciones sólo se consultan después de validar propietario y finalización.
         [$preguntas, $alternativas] = $this->revisionDelIntento($intento);
+        // Acciones de repaso por pregunta (guardar, reportar, practicar, tutor) en las tres vistas.
+        view()->share('repasoIntentoId', $intento);
+        view()->share('repasoGuardadas', app(\App\Services\Alumno\RepasoService::class)->idsGuardados($usuario, $preguntas->pluck('pregunta_id')));
 
         if ($areaUnmsm !== null) {
             return view('alumno.unmsm.resultados', [
@@ -411,7 +414,7 @@ class OrientacionController extends Controller
             ->select(
                 're.orden', 're.alternativa_id', 're.estado_respuesta', 're.puntaje_obtenido',
                 'p.id as pregunta_id', 'p.enunciado', 'p.imagen', 'p.solucion',
-                'a.nombre as asignatura'
+                'a.nombre as asignatura', 't.nombre as tema'
             )
             ->get();
     }

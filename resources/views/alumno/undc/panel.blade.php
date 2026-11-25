@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/undc-panel.css') }}?v=4">
+<link rel="stylesheet" href="{{ asset('css/alumno/panel-undc.css') }}?v=4">
 @endpush
 
 @section('content')
@@ -15,7 +15,7 @@
     // El controlador ya entrega solo intentos de exámenes UNDC (UniversidadExamen).
     $historialUndc = $intentos->getCollection();
     $nombreEstudiante = trim($usuario->nombres.' '.($usuario->apellidos ?? ''));
-    $logoUndc = asset('images/undc/logo-undc.png');
+    $logoUndc = asset('images/universidades/undc-escudo-pequeno.webp');
 @endphp
 
 <div class="ud-shell">
@@ -30,6 +30,7 @@
             <a href="#inicio" class="ud-active" data-ud-nav="inicio">⌂ <span>Inicio</span></a>
             <a href="#examenes" data-ud-nav="examenes">▤ <span>Exámenes</span></a>
             <a href="#resultados" data-ud-nav="resultados">◷ <span>Mis resultados</span></a>
+            @include('alumno.partials.menu-estudio', ['estilo' => 'undc'])
                 <a href="{{ route('alumno.universidad.cambiar') }}"><span aria-hidden="true">&#8644;</span> Cambiar universidad</a>
         </nav>
 
@@ -60,8 +61,9 @@
             @endif
 
             <section class="ud-screen" id="inicio" data-ud-screen="inicio" aria-label="Inicio UNDC">
+                @include('alumno.partials.resumen-inicio')
             <section class="ud-hero" aria-labelledby="ud-hero-title">
-                <img class="ud-campus-photo" src="{{ asset('images/undc/campus-undc.webp') }}" alt="Ingreso principal a la Universidad Nacional de Cañete">
+                <img class="ud-campus-photo" src="{{ asset('images/universidades/undc-campus.webp') }}" alt="Ingreso principal a la Universidad Nacional de Cañete">
                 <div class="ud-hero-text">
                     <span class="ud-pill">UNIVERSIDAD NACIONAL DE CAÑETE</span>
                     <h2 id="ud-hero-title">Tu camino a la universidad comienza aquí.</h2>

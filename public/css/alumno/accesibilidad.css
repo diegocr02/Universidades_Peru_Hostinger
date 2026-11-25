@@ -1,0 +1,32 @@
+/* Preferencias de accesibilidad del alumno (clases en <html>). La mayoría de estilos usan px,
+   por eso el tamaño se ajusta con zoom en lugar de rem. */
+html.a11y-texto-grande body{zoom:1.12}
+html.a11y-texto-muy-grande body{zoom:1.25}
+
+/* Alto contraste: textos secundarios oscuros, bordes marcados y enlaces subrayados. */
+html.a11y-contraste .cni-alumno,html.a11y-contraste .cni-estudio{--muted:#1f2a40;--line:#7f93b5;--ink:#000}
+html.a11y-contraste body :is(p,small,li,td,th,label,dd,dt,span){color:inherit}
+html.a11y-contraste body{color:#000}
+html.a11y-contraste :is(.estudio-ayuda,.tutor-pie,.cni-alumno-empty,.estudio-tabla th){color:#1f2a40!important}
+html.a11y-contraste :is(.estudio-tarjeta,.tutor-tarjeta,.pregunta-alternativa,.tutor-alternativa,.estudio-campo select,.estudio-campo input){border-color:#5d6f91!important}
+html.a11y-contraste main a{text-decoration:underline!important}
+html.a11y-contraste :focus-visible{outline:4px solid #000!important;outline-offset:3px!important;box-shadow:0 0 0 7px #ffbe3f!important}
+
+/* Sin animaciones (elección del alumno o preferencia del sistema). */
+html.a11y-sin-animaciones *,html.a11y-sin-animaciones *::before,html.a11y-sin-animaciones *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+
+/* Control flotante */
+.a11y-widget{position:fixed;right:16px;bottom:16px;z-index:60;font-family:Inter,'Segoe UI',Arial,sans-serif;font-size:14px;color:#14234b}
+.a11y-widget summary{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:#101e44;color:#fff;font-weight:900;font-size:17px;cursor:pointer;list-style:none;box-shadow:0 8px 20px #0003}
+.a11y-widget summary::-webkit-details-marker{display:none}
+.a11y-widget summary:focus-visible{outline:3px solid #ffbe3f;outline-offset:3px}
+.a11y-panel{position:absolute;right:0;bottom:58px;width:240px;padding:14px 16px;border-radius:16px;background:#fff;border:1px solid #c9d8f3;box-shadow:0 14px 34px #1a3a7a33;display:grid;gap:10px}
+.a11y-titulo{margin:0;font-weight:900;font-size:15px}
+.a11y-panel fieldset{margin:0;padding:0;border:0;display:grid;gap:6px}
+.a11y-panel legend{font-weight:800;font-size:13px;margin-bottom:4px}
+.a11y-panel label{display:flex;align-items:center;gap:8px;min-height:32px;cursor:pointer}
+.a11y-panel input{width:18px;height:18px}
+.a11y-nota{margin:0;font-size:12px;color:#4d5d7d}
+.a11y-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:680px){.a11y-widget{bottom:78px;right:12px}.a11y-widget summary{width:44px;height:44px}}
+@media print{.a11y-widget{display:none}}

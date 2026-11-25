@@ -21,6 +21,8 @@ Las rutas `/api/*` se conservan para reutilizar el trabajo de los módulos, pero
 - `/panel`: componente Livewire que lista simulacros e intentos propios, incluidos puntajes ya registrados.
 - `/logout`: cierre de sesión por POST.
 - Módulos JSON existentes unificados con la misma sesión; pruebas adaptadas al guard `web`.
+- `/alumno/tutor`: Tutor CNI (Tutor IA) en los paneles de las cinco universidades. Se activa con `TUTOR_ENABLED=true`; configuración, reglas y costos en `docs/tutor-cni.md`.
+- Herramientas de estudio del alumno (práctica por temas, revisión de errores, historial visual, guardadas, reportes, meta semanal, PDF y accesibilidad): `docs/estudio-alumno.md`.
 
 **Alcance:** establece la arquitectura y el acceso web. El panel inicial no sustituye las pantallas completas de gestión de preguntas, creación de simulacros y resolución del examen. El recorrido backend de simulacro (asignación, respuestas, cierre y calificación) cuenta con pruebas de integración; consulta `docs/recorrido-backend.md` para sus reglas y límites. Las pantallas completas siguen pendientes.
 

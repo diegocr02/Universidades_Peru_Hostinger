@@ -1,6 +1,6 @@
 @extends('admin.shell')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/vaciar-banco.css') }}?v={{ filemtime(public_path('css/vaciar-banco.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/admin/vaciar-banco.css') }}?v={{ filemtime(public_path('css/admin/vaciar-banco.css')) }}">
 @endpush
 @section('admin-page', 'Preguntas')
 @section('admin-content')

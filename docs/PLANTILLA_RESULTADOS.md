@@ -15,7 +15,7 @@ Este HTML es una **maqueta fija independiente**: se abre con doble clic en cualq
 
 La versión **dinámica conectada a los datos UNDC** está en:
 - \`resources/views/alumno/undc/resultados.blade.php\`
-- \`public/css/undc-resultados.css\`
+- \`public/css/alumno/resultados-undc.css\`
 - \`app/Http/Controllers/Alumno/OrientacionController.php\`
 
 La plantilla fija es un ejemplo visual para compartir; no sustituye la implementación dinámica.

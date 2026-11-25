@@ -76,7 +76,7 @@ try {
   // Administrador: interfaz renderizada y rutas de gestión (no insertar datos adicionales).
   await login('admin_demo', '/administracion');
   await page.getByRole('heading', { name: 'Panel del administrador' }).waitFor();
-  await verificarCss('/css/admin.css');
+  await verificarCss('/css/admin/admin.css');
   await captura('03-panel-admin');
   await page.goto(base + '/administracion/preguntas/nueva');
   await page.locator('form').first().waitFor();
@@ -106,7 +106,7 @@ try {
   const intento = page.url().match(/\/intentos\/(\d+)\/examen/);
   assert.ok(intento, 'El navegador debe recibir la ruta real del intento creado');
   await page.getByRole('heading', { name: /Simulador de examen/ }).waitFor();
-  await verificarCss('/css/examen-simple.css');
+  await verificarCss('/css/examen/examen.css');
   assert.equal(await page.locator('.examen-mapa__preguntas button').count(), 20);
   await captura('10-examen-livewire');
 

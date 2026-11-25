@@ -1,0 +1,140 @@
+/* Páginas de estudio del alumno (práctica, historial visual, guardadas, tutor) y bloques
+   compartidos en los paneles (resumen de inicio, acciones de revisión, reporte).
+   Los colores de universidad vienen de alumno/panel-alumno.css (--accent, --navy, --pale…). */
+.cni-estudio{--azul:#1559e8;--azul-osc:#0f45b8;--azul-palido:#e9f1ff;--fondo:#eef4fc;background:var(--fondo)}
+.cni-estudio .cni-alumno-workspace{flex:1;min-width:0;display:flex;flex-direction:column}
+.cni-estudio :where(textarea,input,select){font:inherit}
+.cni-estudio :where(button,textarea,input,select,summary,[tabindex]):focus-visible{outline:3px solid #ffbe3f;outline-offset:2px}
+.cni-estudio .cni-alumno-content{width:100%;padding:22px 24px 24px}
+.estudio-top-icono{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--pale,#fde8ea);color:var(--accent-dark,#d2445a);font-size:22px}
+.estudio-top-titulo{margin:0;font-size:27px;font-weight:900;letter-spacing:-.02em;color:#101e44}
+.estudio-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Tarjetas, títulos y botones */
+.estudio-grid{display:grid;gap:18px}
+.estudio-tarjeta{background:#fff;border:1px solid #e1e9f6;border-radius:20px;box-shadow:0 10px 30px #1a3a7a12;padding:22px}
+.estudio-tarjeta h2{margin:0 0 6px;font-size:21px;font-weight:900;color:#101e44;letter-spacing:-.02em}
+.estudio-ayuda{margin:0 0 14px;color:#4d5d7d;font-size:14px}
+.estudio-acciones{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.estudio-boton{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 18px;border:1px solid transparent;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer;text-decoration:none;transition:transform .15s ease,background .15s ease}
+.estudio-boton--primario{background:var(--azul);color:#fff!important;box-shadow:0 6px 16px #1559e833}
+.estudio-boton--primario:hover:not(:disabled){transform:translateY(-1px)}
+.estudio-boton--secundario{background:#fff;border-color:#c9d8f3;color:var(--azul-osc)!important}
+.estudio-boton--secundario:hover:not(:disabled){background:var(--azul-palido)}
+.estudio-boton:disabled{opacity:.55;cursor:not-allowed}
+.estudio-chip{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:7px 14px;border:1px solid #c5d6f7;border-radius:999px;background:#fff;color:var(--azul-osc);font-size:13px;font-weight:750;cursor:pointer}
+.estudio-chip[aria-pressed="true"],.estudio-chip.is-activo{background:var(--azul);border-color:var(--azul);color:#fff}
+
+/* Estados con texto + ícono (no solo color) */
+.estado{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.estado--correcta{background:#e2f6e9;color:#17643a}
+.estado--incorrecta{background:#fde6e6;color:#8f1d1d}
+.estado--blanco{background:#eef1f6;color:#3c4a63}
+.estado--pendiente{background:#fff4d6;color:#7a5200}
+.estado--info{background:var(--azul-palido);color:var(--azul-osc)}
+
+/* Avisos */
+.estudio-aviso{padding:12px 16px;border-radius:14px;font-size:14px;border:1px solid #d7e2f6;background:#f5f9ff;color:#14234b}
+.estudio-aviso--ok{background:#ecfaf1;border-color:#bfe6cd;color:#17643a}
+.estudio-aviso--error{background:#fdf0f0;border-color:#f1c2c2;color:#8a1f1f}
+.estudio-aviso--alerta{background:#fff6dc;border-color:#f0d58c;color:#5c4300}
+.estudio-vacio{padding:26px;text-align:center;color:#4d5d7d;border:1px dashed #c9d8f3;border-radius:16px;background:#fbfdff}
+
+/* Formularios */
+.estudio-campos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.estudio-campo{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:800;color:#24365e}
+.estudio-campo :where(select,input,textarea){min-height:44px;padding:9px 12px;border:1.5px solid #c3d3ef;border-radius:12px;background:#fff;color:#14234b;font-weight:500}
+.estudio-campo :where(select,input,textarea):focus{border-color:var(--azul);outline:none;box-shadow:0 0 0 4px #1559e822}
+
+/* Tablas adaptables: en celular cada fila se vuelve una tarjeta */
+.estudio-tabla-marco{overflow-x:auto}
+.estudio-tabla{width:100%;border-collapse:collapse;font-size:14px}
+.estudio-tabla th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#4d5d7d;padding:10px;border-bottom:2px solid #e1e9f6}
+.estudio-tabla td{padding:11px 10px;border-bottom:1px solid #edf1f8;vertical-align:middle}
+.estudio-tabla a{color:var(--azul-osc);font-weight:800;text-decoration:underline}
+
+/* Pregunta (práctica, revisión y guardadas) */
+.pregunta-tarjeta{display:flex;flex-direction:column;gap:12px}
+.pregunta-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12px;font-weight:800;color:#3c5fa8;text-transform:uppercase;letter-spacing:.04em}
+.pregunta-enunciado{font-size:17px;font-weight:650;line-height:1.55;color:#101e44;white-space:pre-line;overflow-wrap:anywhere}
+.pregunta-figura{display:block;max-width:100%;max-height:320px;height:auto;border-radius:12px;background:#fff;object-fit:contain}
+.pregunta-alternativas{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.pregunta-alternativa{display:flex;align-items:flex-start;gap:12px;width:100%;min-height:52px;padding:12px 14px;border:1.5px solid #d5e1f6;border-radius:14px;background:#fff;color:#14234b;text-align:left;font-size:15px;line-height:1.45;cursor:pointer;transition:border-color .15s ease,background .15s ease}
+button.pregunta-alternativa:hover:not(:disabled){border-color:var(--azul);background:#f5f9ff}
+button.pregunta-alternativa:disabled{cursor:default}
+.pregunta-alternativa.is-clave{border-color:#3aa76d;background:#effaf3}
+.pregunta-alternativa.is-error{border-color:#e06a6a;background:#fdf1f1}
+.pregunta-letra{display:grid;place-items:center;width:30px;height:30px;flex-shrink:0;border-radius:9px;background:var(--azul-palido);color:var(--azul);font-weight:900}
+.is-clave .pregunta-letra{background:#3aa76d;color:#fff}.is-error .pregunta-letra{background:#e06a6a;color:#fff}
+.pregunta-marca{display:block;margin-top:4px;font-size:12px;font-weight:800;color:#3c4a63}
+.pregunta-solucion{padding:14px 16px;border-radius:14px;background:#fff;border:1px solid #cfe9d9;white-space:pre-line}
+.pregunta-solucion strong{display:block;margin-bottom:4px;color:#17643a}
+
+/* Acciones de repaso por pregunta (revisión de resultados) */
+.repaso-acciones{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.repaso-acciones form{margin:0}
+.repaso-acciones :where(button,a,summary){display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:7px 13px;border:1px solid #c9d8f3;border-radius:999px;background:#fff;color:#0f45b8;font-size:13px;font-weight:750;cursor:pointer;text-decoration:none}
+.repaso-acciones :where(button,a,summary):hover{background:#e9f1ff}
+.repaso-acciones .repaso-reporte-form button{color:#fff;background:#1559e8;border-color:#1559e8;border-radius:12px}
+.repaso-acciones .is-guardada{background:#fff6dc;border-color:#f0d58c;color:#5c4300}
+.repaso-reporte summary{list-style:none}
+.repaso-reporte summary::-webkit-details-marker{display:none}
+.repaso-reporte[open] summary{background:#fdf0f0;border-color:#f1c2c2;color:#8a1f1f}
+.repaso-reporte-form{display:grid;gap:10px;margin-top:10px;padding:14px;border:1px solid #e1e9f6;border-radius:14px;background:#fbfdff;max-width:520px}
+.repaso-reporte-form fieldset{border:0;margin:0;padding:0;display:grid;gap:6px}
+.repaso-reporte-form legend{font-weight:800;font-size:13px;margin-bottom:4px}
+.repaso-reporte-form label{display:flex;gap:8px;align-items:center;font-size:14px}
+.repaso-reporte-form textarea{min-height:70px;padding:9px 12px;border:1.5px solid #c3d3ef;border-radius:12px;font:inherit;resize:vertical}
+
+/* Práctica */
+.practica-progreso{height:8px;border-radius:99px;background:#e3eaf7;overflow:hidden}
+.practica-progreso span{display:block;height:100%;background:linear-gradient(90deg,var(--azul),var(--accent,#1559e8));transition:width .3s ease}
+.practica-resumen{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.practica-resumen div{padding:14px;border-radius:14px;background:var(--pale,#f2f6ff);text-align:center}
+.practica-resumen strong{display:block;font-size:28px;font-weight:900;color:#101e44}
+.practica-resumen span{font-size:13px;color:#4d5d7d}
+
+/* Historial visual */
+.progreso-grupo{display:grid;gap:12px}
+.progreso-grafico{width:100%;height:auto;max-height:240px;background:#fbfdff;border:1px solid #e1e9f6;border-radius:14px}
+.progreso-grafico .eje{stroke:#dbe4f3;stroke-width:1}
+.progreso-grafico .linea{fill:none;stroke:var(--azul);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.progreso-grafico circle{fill:#fff;stroke:var(--azul);stroke-width:3}
+.progreso-grafico text{font-size:11px;fill:#4d5d7d}
+.progreso-datos{display:flex;flex-wrap:wrap;gap:10px}
+.progreso-datos span{padding:6px 12px;border-radius:10px;background:#f2f6ff;font-size:13px}
+
+/* Resumen de inicio dentro de los paneles */
+.inicio-resumen{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;margin:0 0 18px;font-family:Inter,'Segoe UI',Arial,sans-serif}
+.inicio-resumen *{box-sizing:border-box}
+.inicio-resumen .estudio-tarjeta{padding:18px}
+.inicio-resumen h2{margin:0 0 4px;font-size:20px;font-weight:900;color:#101e44}
+.inicio-resumen p{margin:0}
+.inicio-dato{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;font-size:14px;color:#24365e}
+.inicio-dato strong{color:#101e44}
+.inicio-accesos{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.inicio-accesos a{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;border:1px solid #c9d8f3;background:#fff;color:#0f45b8!important;font-size:13px;font-weight:800;text-decoration:none!important}
+.inicio-accesos a:hover{background:#e9f1ff}
+.inicio-continuar{display:inline-flex;align-items:center;gap:8px;min-height:46px;margin-top:6px;padding:11px 20px;border-radius:12px;background:#1559e8;color:#fff!important;font-weight:850;text-decoration:none!important;box-shadow:0 6px 16px #1559e833}
+.inicio-continuar--examen{background:#b45309;box-shadow:0 6px 16px #b4530933}
+.meta-barra{height:10px;border-radius:99px;background:#e3eaf7;overflow:hidden;margin:8px 0}
+.meta-barra span{display:block;height:100%;background:#1d8f52}
+.meta-form{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-top:8px}
+.meta-form label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:800;color:#24365e}
+.meta-form input{width:110px;min-height:40px;padding:6px 10px;border:1.5px solid #c3d3ef;border-radius:10px;font:inherit}
+.meta-form button{min-height:40px;padding:6px 14px;border:0;border-radius:10px;background:#101e44;color:#fff;font-weight:800;cursor:pointer}
+
+@media (prefers-reduced-motion:reduce){.cni-estudio *,.inicio-resumen *{animation:none!important;transition:none!important}}
+@media (max-width:960px){.inicio-resumen{grid-template-columns:1fr}}
+@media (max-width:680px){
+    .cni-estudio .cni-alumno-content{padding:12px 12px 84px}
+    .estudio-top-titulo{font-size:20px}.estudio-top-icono{width:36px;height:36px;font-size:18px}
+    .estudio-tarjeta{padding:16px;border-radius:16px}
+    .pregunta-enunciado{font-size:16px}
+    .pregunta-alternativa{min-height:56px;font-size:15px}
+    .estudio-tabla thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+    .estudio-tabla tr{display:block;margin-bottom:10px;padding:10px;border:1px solid #e1e9f6;border-radius:12px;background:#fff}
+    .estudio-tabla td{display:flex;justify-content:space-between;gap:10px;border:0;padding:5px 0}
+    .estudio-tabla td::before{content:attr(data-etiqueta);font-weight:800;color:#4d5d7d;font-size:12px}
+    .estudio-boton{width:100%}
+}

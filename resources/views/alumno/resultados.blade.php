@@ -25,23 +25,24 @@
 @endphp
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/resultados.css').'?v='.filemtime(public_path('css/resultados.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/alumno/resultados.css').'?v='.filemtime(public_path('css/alumno/resultados.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/alumno/estudio.css').'?v='.filemtime(public_path('css/alumno/estudio.css')) }}">
     @if($evaluacionIngreso ?? null)
-        <link rel="stylesheet" href="{{ asset('css/referencia-ingreso.css').'?v='.filemtime(public_path('css/referencia-ingreso.css')) }}">
+        <link rel="stylesheet" href="{{ asset('css/alumno/referencia-ingreso.css').'?v='.filemtime(public_path('css/alumno/referencia-ingreso.css')) }}">
     @endif
 @endpush
 
 @section('content')
 <div class="resultados">
     <section class="resultados-portada">
-        <img class="resultados-portada__escudo" src="{{ asset('img/examen/escudo-cni.png') }}" width="206" height="184"
+        <img class="resultados-portada__escudo" src="{{ asset('images/cni/escudo-cni-examen.webp') }}" width="206" height="184"
             alt="Escudo institucional CNI">
         <div class="resultados-portada__titulo">
             <p>SIMULADOR CNI</p>
             <h1>Resultados de tu examen</h1>
             <span>Intento #{{ $numeroIntento }} · {{ $usuario->nombres }}</span>
         </div>
-        <img class="resultados-portada__mascota" src="{{ asset('img/examen/gato-cni.webp') }}" width="331" height="380" alt="">
+        <img class="resultados-portada__mascota" src="{{ asset('images/mascotas/gatito-cni.webp') }}" width="331" height="380" alt="">
     </section>
 
     <div class="resultados-barra">
@@ -172,9 +173,9 @@
                     $etiquetas = ['correctas' => '✓ Correcta', 'incorrectas' => '✕ Incorrecta',
                         'blanco' => $pregunta->estado_respuesta === 'doble_marca' ? '— Doble marca' : '— Sin responder'];
                 @endphp
-                <article class="revision-pregunta" data-revision-estado="{{ $estado }}">
+                <article class="revision-pregunta" data-revision-estado="{{ $estado }}" id="pregunta-{{ $pregunta->pregunta_id }}">
                     <div class="revision-pregunta__top">
-                        <span>PREGUNTA {{ $pregunta->orden }} DE {{ $preguntas->count() }} · {{ mb_strtoupper($pregunta->asignatura) }}</span>
+                        <span>PREGUNTA {{ $pregunta->orden }} DE {{ $preguntas->count() }} · {{ mb_strtoupper($pregunta->asignatura) }}@php $temaVisible = \App\Services\Alumno\ContextoAlumnoService::asignaturaVisible($pregunta->tema); @endphp@if($pregunta->tema && $temaVisible !== \App\Services\Alumno\ContextoAlumnoService::asignaturaVisible($pregunta->asignatura)) · {{ $temaVisible }}@endif</span>
                         <em class="is-{{ $estado }}">{{ $etiquetas[$estado] }}</em>
                     </div>
                     <h3>{{ $pregunta->enunciado }}</h3>
@@ -208,6 +209,10 @@
                         <strong>Explicación</strong>
                         <p>{{ $pregunta->solucion ?: 'Esta pregunta aún no tiene explicación registrada.' }}</p>
                     </div>
+                    @include('alumno.partials.acciones-pregunta', [
+                        'preguntaId' => (int) $pregunta->pregunta_id, 'guardada' => in_array((int) $pregunta->pregunta_id, $repasoGuardadas ?? [], true),
+                        'asignatura' => \App\Services\Alumno\ContextoAlumnoService::asignaturaVisible($pregunta->asignatura), 'intentoId' => $repasoIntentoId ?? null,
+                    ])
                 </article>
             @endforeach
             <p class="revision-vacio" data-revision-vacio hidden>No hay preguntas en esta categoría.</p>

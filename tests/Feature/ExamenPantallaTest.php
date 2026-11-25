@@ -88,7 +88,7 @@ class ExamenPantallaTest extends TestCase
             ->assertDontSee('portal-lateral')
             ->assertSee('Ver preguntas')
             ->assertSee('js/examen.js?v='.filemtime(public_path('js/examen.js')))
-            ->assertSee('css/examen-simple.css?v='.filemtime(public_path('css/examen-simple.css')))
+            ->assertSee('css/examen/examen.css?v='.filemtime(public_path('css/examen/examen.css')))
             ->assertDontSee('La respuesta correcta es')
             ->assertDontSee('es_correcta');
     }

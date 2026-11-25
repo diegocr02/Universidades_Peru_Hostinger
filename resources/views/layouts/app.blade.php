@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @stack('styles')
     @livewireStyles
+    @if(auth('web')->user()?->rol === 'estudiante') @include('alumno.partials.accesibilidad-cabecera') @endif
 </head>
 <body class="{{ request()->routeIs('login') ? 'login-screen' : (request()->routeIs('admin.*') ? 'admin-shell-page' : (request()->routeIs('alumno.elegir-area', 'alumno.preview-areas') ? 'selector-areas-screen' : '')) }}">
     @unless (request()->routeIs('login') || request()->routeIs('admin.*') || request()->routeIs('alumno.elegir-area', 'alumno.preview-areas'))
@@ -23,6 +24,8 @@
                     @endif
                     <span>{{ auth('web')->user()->nombres }} · {{ auth('web')->user()->rol }}</span>
                     @if(request()->routeIs('alumno.resultados'))
+                        <a href="{{ route('alumno.resultados.pdf', ['intento' => request()->route('intento')]) }}">⬇ Descargar PDF</a>
+                        @if(config('tutor.enabled'))<a href="{{ route('alumno.tutor') }}">✦ Pregúntale al Tutor IA</a>@endif
                         <form method="GET" action="{{ route('alumno.panel') }}"><button type="submit">Regresa</button></form>
                     @else
                         <form method="POST" action="{{ route('logout') }}">@csrf<button>Salir</button></form>
@@ -38,6 +41,7 @@
         {{ $slot ?? '' }}
         @yield('content')
     </main>
+    @if(auth('web')->user()?->rol === 'estudiante') <x-alumno.preferencias-accesibilidad /> @endif
     @livewireScripts
 </body>
 </html>

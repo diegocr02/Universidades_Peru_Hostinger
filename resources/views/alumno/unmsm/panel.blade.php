@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/panel-alumno.css') }}?v={{ filemtime(public_path('css/panel-alumno.css')) }}">
-<link rel="stylesheet" href="{{ asset('css/panel-unmsm.css') }}?v={{ filemtime(public_path('css/panel-unmsm.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/alumno/panel-alumno.css') }}?v={{ filemtime(public_path('css/alumno/panel-alumno.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/alumno/panel-unmsm.css') }}?v={{ filemtime(public_path('css/alumno/panel-unmsm.css')) }}">
 @endpush
 @section('content')
 @use('App\Support\PerfilExamenUnmsm')
 @php
     $temaArea = config('panel_alumno.areas.E');
-    $rutaLogo = $temaArea['mascota_png'];
+    $rutaLogo = $temaArea['logo'];
     $nombreCompleto = trim($usuario->nombres.' '.($usuario->apellidos ?? ''));
     $iniciales = mb_strtoupper(mb_substr($usuario->nombres, 0, 1).mb_substr($usuario->apellidos ?? '', 0, 1));
     $seccionAlumno = $usuario->seccion;
@@ -41,7 +41,7 @@
     <aside class="cni-alumno-sidebar" id="cni-alumno-sidebar" aria-label="Menú del estudiante">
         <div class="cni-alumno-sidebar-top">
             <a class="cni-alumno-marca" href="{{ route('alumno.panel') }}">
-                <span class="cni-alumno-marca-icon" aria-hidden="true"><img src="{{ asset('images/escudo-cni.png') }}" width="36" height="36" alt=""></span>
+                <span class="cni-alumno-marca-icon" aria-hidden="true"><img src="{{ asset('images/cni/escudo-cni.webp') }}" width="36" height="36" alt=""></span>
                 <span><strong>Simulador</strong><small>CNI · Imperial</small></span>
             </a>
             <span class="cni-alumno-area-chip"><span aria-hidden="true">{{ $temaArea['icono'] }}</span> San Marcos{{ $areaAlumno ? ' · Área '.$areaAlumno : '' }}</span>
@@ -49,6 +49,7 @@
                 <a href="#inicio" class="is-active" aria-current="location"><span aria-hidden="true">⌂</span> Inicio</a>
                 <a href="#intentos"><span aria-hidden="true">▶</span> Mis intentos</a>
                 <a href="#historial"><span aria-hidden="true">◷</span> Historial</a>
+                @include('alumno.partials.menu-estudio')
                 <a href="#perfil"><span aria-hidden="true">♙</span> Mi perfil</a>
                 <a href="{{ route('alumno.universidad.cambiar') }}"><span aria-hidden="true">&#8644;</span> Cambiar universidad</a>
             </nav>
@@ -76,6 +77,7 @@
 
             {{-- Inicio --}}
             <section class="cni-alumno-vista" id="inicio" data-panel-view="inicio" aria-labelledby="sm-titulo">
+                @include('alumno.partials.resumen-inicio')
                 <header class="sm-hero">
                     <div class="sm-hero-copy">
                         <span class="sm-hero-overline">Admisión {{ config('unmsm.proceso') }} · Formato San Marcos</span>

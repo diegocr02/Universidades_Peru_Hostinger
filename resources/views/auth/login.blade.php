@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/login-cni-v2.css') }}?v=8">
-    <link rel="stylesheet" href="{{ asset('css/login-cni-final.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/login/login-base.css') }}?v=8">
+    <link rel="stylesheet" href="{{ asset('css/login/login.css') }}?v=1">
 @endpush
 
 @section('content')
     <div class="login-page login-cni-v2">
-        <img src="{{ asset('images/Fondo_General.png') }}"
+        <img src="{{ asset('images/fondos/fondo-login.webp') }}"
              alt="" class="login-background" aria-hidden="true">
 
         <svg class="login-backdrop-art" viewBox="0 0 1600 900" preserveAspectRatio="none"
@@ -45,14 +45,14 @@
     <div class="login-cni-scene" role="img" aria-label="Mascota del CNI en una plataforma luminosa">
         <div class="login-cni-stage" aria-hidden="true"></div>
         <img class="login-cni-cat"
-             src="{{ asset('images/gatito-cni.png') }}"
+             src="{{ asset('images/mascotas/gatito-cni.webp') }}"
              alt="Gatito del Simulador CNI con uniforme y laptop">
     </div>
 </section>
 
         <section class="login card" aria-labelledby="login-title">
             <div class="login-school-identity">
-                <img src="{{ asset('images/escudo-cni.png') }}"
+                <img src="{{ asset('images/cni/escudo-cni.webp') }}"
                      alt="Escudo del Colegio Nacional de Imperial"
                      class="login-school-mark">
                 <p class="login-form-kicker">COLEGIO NACIONAL DE IMPERIAL</p>

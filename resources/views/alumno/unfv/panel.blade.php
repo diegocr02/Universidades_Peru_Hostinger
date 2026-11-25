@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/panel-alumno.css') }}?v={{ filemtime(public_path('css/panel-alumno.css')) }}">
-<link rel="stylesheet" href="{{ asset('css/panel-unfv.css') }}?v={{ filemtime(public_path('css/panel-unfv.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/alumno/panel-alumno.css') }}?v={{ filemtime(public_path('css/alumno/panel-alumno.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/alumno/panel-unfv.css') }}?v={{ filemtime(public_path('css/alumno/panel-unfv.css')) }}">
 @endpush
 @section('content')
 @php
     $temaArea = config('panel_alumno.areas.C');
-    $rutaMascota = $temaArea['mascota_png'];
+    $rutaMascota = $temaArea['logo'];
     $nombreCompleto = trim($usuario->nombres.' '.($usuario->apellidos ?? ''));
     $iniciales = mb_strtoupper(mb_substr($usuario->nombres, 0, 1).mb_substr($usuario->apellidos ?? '', 0, 1));
     $primeraPalabra = explode(' ', trim($usuario->nombres))[0];
@@ -27,7 +27,7 @@
     <aside class="cni-alumno-sidebar" id="cni-alumno-sidebar" aria-label="Menú del estudiante">
         <div class="cni-alumno-sidebar-top">
             <a class="cni-alumno-marca" href="{{ route('alumno.panel') }}">
-                <span class="cni-alumno-marca-icon" aria-hidden="true"><img src="{{ asset('images/escudo-cni.png') }}" width="36" height="36" alt=""></span>
+                <span class="cni-alumno-marca-icon" aria-hidden="true"><img src="{{ asset('images/cni/escudo-cni.webp') }}" width="36" height="36" alt=""></span>
                 <span><strong>Simulador</strong><small>CNI · Imperial</small></span>
             </a>
             <span class="cni-alumno-area-chip"><span aria-hidden="true">{{ $temaArea['icono'] }}</span> {{ $temaArea['titulo'] }}</span>
@@ -35,6 +35,7 @@
                 <a href="#examen" class="is-active" aria-current="location"><span aria-hidden="true">▶</span> Examen UNFV</a>
                 <a href="#progreso"><span aria-hidden="true">▤</span> Mi progreso</a>
                 <a href="#historial"><span aria-hidden="true">◷</span> Historial</a>
+                @include('alumno.partials.menu-estudio')
                 <a href="#perfil"><span aria-hidden="true">♙</span> Mi perfil</a>
                 <a href="{{ route('alumno.universidad.cambiar') }}"><span aria-hidden="true">&#8644;</span> Cambiar universidad</a>
             </nav>
@@ -62,6 +63,7 @@
 
             {{-- Examen: práctica general UNFV --}}
             <section class="cni-alumno-vista" id="examen" data-panel-view="examen" aria-labelledby="unfv-titulo">
+                @include('alumno.partials.resumen-inicio')
                 <div class="cni-alumno-banner">
                     <div class="cni-alumno-welcome">
                         <span class="cni-alumno-overline">PRÁCTICA DE ADMISIÓN · FORMATO UNFV</span>

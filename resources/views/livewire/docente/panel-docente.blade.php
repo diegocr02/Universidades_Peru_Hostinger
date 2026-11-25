@@ -1,6 +1,6 @@
 <div class="cni-notas" id="cni-notas">
-    <link rel="stylesheet" href="{{ asset('css/panel-docente-nuevo.css') }}?v=36">
-    <link rel="stylesheet" href="{{ asset('css/docente-encabezado-v2.css') }}?v=8">
+    <link rel="stylesheet" href="{{ asset('css/docente/panel-docente.css') }}?v=36">
+    <link rel="stylesheet" href="{{ asset('css/docente/encabezado-docente.css') }}?v=8">
     @php
         $esPreview = app()->environment('local') && (request()->is('docente-preview') || request()->is('preview-docente'));
         $seccionActual = isset($seccion) && $seccion && $seccion->activo ? '5.º '.$seccion->nombre : 'Sin sección';
@@ -56,10 +56,10 @@
                 <path d="M94 20C78 15 73 7 70 1C88 2 94 11 94 20Zm5 18C80 33 73 24 73 17C93 23 99 30 99 38Zm2 18C84 51 77 45 73 37C92 40 102 49 101 56Zm-2 20C82 71 74 65 69 56C89 57 98 66 99 76Zm-5 20C74 91 68 86 62 76C82 78 92 88 94 96Zm-9 17C67 108 61 104 55 94C73 95 84 104 85 113Zm-12 17C55 127 48 124 43 115C60 116 69 124 73 130Z" fill="currentColor" stroke="none"/>
             </svg>
         </div>
-        <img class="cni-notas-foto" src="{{ asset('images/foto-personal-cni.png') }}" alt="Personal docente del Colegio Nacional de Imperial">
+        <img class="cni-notas-foto" src="{{ asset('images/cni/foto-personal-docentes.webp') }}" alt="Personal docente del Colegio Nacional de Imperial">
         <div class="cni-notas-foto-marco" aria-hidden="true"></div>
         <div class="cni-notas-brand">
-            <img src="{{ asset('img/escudo-cni.png') }}" alt="Escudo del Colegio Nacional de Imperial">
+            <img src="{{ asset('images/cni/escudo-cni-docentes.webp') }}" alt="Escudo del Colegio Nacional de Imperial">
             <div>
                
             <span class="cni-notas-school">COLEGIO NACIONAL DE IMPERIAL</span>

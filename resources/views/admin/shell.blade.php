@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/admin.css') }}?v={{ filemtime(public_path('css/admin.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/admin/admin.css') }}?v={{ filemtime(public_path('css/admin/admin.css')) }}">
 @endpush
 
 @section('content')
@@ -8,7 +8,7 @@
     <aside class="cni-sidebar" id="cni-admin-sidebar" aria-label="Menú de administración">
         <button type="button" class="cni-admin-sidebar-close" data-admin-menu-close aria-label="Cerrar menú lateral">×</button>
         <a class="cni-brand" href="{{ route('admin.inicio') }}" aria-label="CNI · Ir al panel">
-            <span class="cni-brand__seal"><img src="{{ asset('images/escudo-cni.png') }}" alt="" loading="eager"></span>
+            <span class="cni-brand__seal"><img src="{{ asset('images/cni/escudo-cni.webp') }}" alt="" loading="eager"></span>
             <span class="cni-brand__copy"><strong>SIMULADOR CNI</strong><small>Colegio Nacional de Imperial</small></span>
         </a>
         <div class="cni-sidebar__scroll">
@@ -18,6 +18,7 @@
                     ['admin.subtemas.index', 'Categorías', '▤', 'admin.subtemas.*'],
                     ['admin.preguntas.index', 'Preguntas', '▢', 'admin.preguntas.*'],
                     ['admin.importar.index', 'Importar Excel', '⇧', 'admin.importar.*'],
+                    ['admin.reportes.index', 'Reportes de alumnos', '⚑', 'admin.reportes.*'],
                 ] as [$ruta, $texto, $icono, $patron])
                     <a href="{{ route($ruta) }}" @class(['cni-nav__link', 'is-current' => request()->routeIs($patron)])
                        @if(request()->routeIs($patron)) aria-current="page" @endif>
@@ -43,7 +44,7 @@
                 </a>
             </nav>
         </div>
-        <div class="cni-sidebar__mascota" aria-hidden="true"><img src="{{ asset('images/gatito-menu-admin.webp') }}" alt="" width="431" height="500"></div>
+        <div class="cni-sidebar__mascota" aria-hidden="true"><img src="{{ asset('images/mascotas/gatito-menu-admin.webp') }}" alt="" width="431" height="500"></div>
     </aside>
 
     <button type="button" class="cni-admin-backdrop" data-admin-menu-backdrop aria-label="Cerrar menú lateral" hidden></button>

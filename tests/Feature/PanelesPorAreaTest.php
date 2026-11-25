@@ -49,7 +49,7 @@ class PanelesPorAreaTest extends TestCase
             $respuesta = $this->get(route('alumno.panel'))->assertOk();
             // La UNDC (A) tiene su panel propio con otra estructura.
             if ($codigo === 'A') {
-                $respuesta->assertViewIs('alumno.undc.panel')->assertSee('undc-panel.css');
+                $respuesta->assertViewIs('alumno.undc.panel')->assertSee('alumno/panel-undc.css');
 
                 continue;
             }
@@ -60,13 +60,13 @@ class PanelesPorAreaTest extends TestCase
 
             // La UNI (B) tiene su panel de tres días; las demás comparten la plantilla general.
             if ($codigo === 'B') {
-                $respuesta->assertViewIs('alumno.uni.panel')->assertSee('panel-uni.css');
+                $respuesta->assertViewIs('alumno.uni.panel')->assertSee('alumno/panel-uni.css');
 
                 continue;
             }
             // Villarreal (C) tiene su panel propio con la práctica general UNFV.
             if ($codigo === 'C') {
-                $respuesta->assertViewIs('alumno.unfv.panel')->assertSee('panel-unfv.css')
+                $respuesta->assertViewIs('alumno.unfv.panel')->assertSee('alumno/panel-unfv.css')
                     ->assertSee(route('examen.independiente'), false)
                     ->assertSee('href="#progreso"', false)
                     ->assertSee('href="#historial"', false);
@@ -75,12 +75,12 @@ class PanelesPorAreaTest extends TestCase
             }
             // San Marcos (E) tiene su panel propio con las áreas A, C y E.
             if ($codigo === 'E') {
-                $respuesta->assertViewIs('alumno.unmsm.panel')->assertSee('panel-unmsm.css');
+                $respuesta->assertViewIs('alumno.unmsm.panel')->assertSee('alumno/panel-unmsm.css');
 
                 continue;
             }
             $respuesta->assertViewIs('alumno.panel')
-                ->assertSee('panel-alumno.css')
+                ->assertSee('alumno/panel-alumno.css')
                 ->assertSee('Dar examen')
                 ->assertSee('Mascota del área de')
                 ->assertSee('href="#perfil"', false)
@@ -145,7 +145,10 @@ class PanelesPorAreaTest extends TestCase
             $html,
             $navegacion
         ));
-        $this->assertSame(4, preg_match_all('/<a\\b/', $navegacion[1]));
+        // 3 secciones + Práctica y Mi avance (herramientas de estudio) + Cambiar universidad.
+        $this->assertSame(6, preg_match_all('/<a\\b/', $navegacion[1]));
+        $this->assertStringContainsString('Práctica', $navegacion[1]);
+        $this->assertStringContainsString('Mi avance', $navegacion[1]);
         $this->assertStringContainsString('Mi perfil', $navegacion[1]);
         $this->assertStringContainsString('Mi progreso', $navegacion[1]);
         $this->assertStringContainsString('Historial', $navegacion[1]);

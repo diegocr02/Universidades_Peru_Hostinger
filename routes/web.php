@@ -50,6 +50,8 @@ Route::middleware(['auth:web', EnsureActiveUser::class, FeatureAlumnoAreas::clas
 // Portales de área independientes; los grupos internos ya aplican guard web y permisos.
 require __DIR__.'/alumno-ciencias-basicas.php';
 require __DIR__.'/alumno-humanidades.php';
+require __DIR__.'/alumno-tutor.php';
+require __DIR__.'/alumno-estudio.php';
 
 // Herramientas internas de administración; nunca disponibles para estudiantes/docentes.
 Route::middleware(['auth:web', EnsureActiveUser::class, SoloAdministrador::class])
@@ -71,6 +73,10 @@ Route::middleware(['auth:web', EnsureActiveUser::class, SoloAdministrador::class
         Route::delete('/preguntas/todas', VaciarBancoPreguntasController::class)->middleware('throttle:3,10')->name('preguntas.destroy-all');
         Route::get('/preguntas/{pregunta}', [BancoPreguntasController::class, 'show'])->whereNumber('pregunta')->name('preguntas.show');
         Route::delete('/preguntas/{pregunta}', [BancoPreguntasController::class, 'destroy'])->whereNumber('pregunta')->name('preguntas.destroy');
+        // Reportes de preguntas enviados por alumnos: se revisan antes de cambiar cualquier pregunta.
+        Route::get('/reportes', [\App\Http\Controllers\Admin\ReportesPreguntaController::class, 'index'])->name('reportes.index');
+        Route::patch('/reportes/{reporte}', [\App\Http\Controllers\Admin\ReportesPreguntaController::class, 'actualizar'])
+            ->whereNumber('reporte')->name('reportes.actualizar');
         Route::get('/simulacros', [SimulacrosController::class, 'index'])->name('simulacros.index');
         Route::get('/simulacros/nuevo', [SimulacrosController::class, 'create'])->name('simulacros.create');
         Route::post('/simulacros', [SimulacrosController::class, 'store'])->name('simulacros.store');

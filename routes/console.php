@@ -34,3 +34,13 @@ Artisan::command('intentos:cerrar-vencidos', function (IntentoService $servicio)
 })->purpose('Finaliza y califica los intentos cuyo tiempo terminó');
 
 Schedule::command('intentos:cerrar-vencidos')->everyMinute()->withoutOverlapping();
+
+// Tutor CNI: las conversaciones sin actividad se borran tras el plazo de retención
+// (los mensajes se eliminan en cascada). No toca intentos ni resultados.
+Artisan::command('tutor:limpiar {--dias= : Días sin actividad (por defecto, config tutor.retencion_dias)}', function () {
+    $dias = max(1, (int) ($this->option('dias') ?? config('tutor.retencion_dias', 120)));
+    $borradas = \App\Models\TutorConversacion::query()->where('updated_at', '<', now()->subDays($dias))->delete();
+    $this->info("Conversaciones del tutor borradas: {$borradas} (sin actividad en {$dias} días).");
+})->purpose('Borra conversaciones antiguas del Tutor CNI');
+
+Schedule::command('tutor:limpiar')->dailyAt('03:30')->withoutOverlapping();

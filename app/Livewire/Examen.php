@@ -77,12 +77,22 @@ class Examen extends Component
         return $this->sinBanco ? collect() : $this->servicio()->preguntas($this->intentoId)->values();
     }
 
-    public function responder(int $alternativaId): void
+    /**
+     * $preguntaId (opcional) fija la pregunta respondida: un reintento tras perder la conexión
+     * guarda en la pregunta correcta aunque el alumno ya esté en otra. guardarRespuesta valida
+     * que la pregunta sea del intento y la alternativa de la pregunta.
+     */
+    public function responder(int $alternativaId, ?int $preguntaId = null): void
     {
         if ($this->sinBanco) {
             return;
         }
-        $pregunta = $this->preguntas->get($this->actual);
+        $pregunta = $preguntaId !== null
+            ? $this->preguntas->firstWhere('id', $preguntaId)
+            : $this->preguntas->get($this->actual);
+        if (! $pregunta) {
+            return;
+        }
         $guardado = $this->mientrasSigaEnCurso(fn () => $this->servicio()->guardarRespuesta(
             $this->intentoId, $this->usuarioId(),
             ['pregunta_id' => $pregunta->id, 'alternativa_id' => $alternativaId],

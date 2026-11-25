@@ -69,7 +69,7 @@ class CienciasBasicasPanelTest extends TestCase
         $this->get(route('alumno.panel'))->assertOk()
             // El área B (UNI) usa su panel propio de tres días.
             ->assertViewIs('alumno.uni.panel')
-            ->assertSee('panel-uni.css')->assertSee('Examen UNI')
+            ->assertSee('alumno/panel-uni.css')->assertSee('Examen UNI')
             ->assertSee('Diego Andrés')
             ->assertDontSee('1240 preguntas');
     }
